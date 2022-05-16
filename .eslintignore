@@ -1,0 +1,14 @@
+**/node_modules/*
+**/out/*
+**/.next/*
+**/build/*
+build
+coverage
+yarn.lock
+.eslintcache
+.eslintrc.js
+**/*.test.ts*
+
+craco.config.js
+react-app-env.d.ts
+
