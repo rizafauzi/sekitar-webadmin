@@ -6,6 +6,7 @@
         "root": ["./src"],
         "alias": {
           "features": "./features",
+          "assets": "./assets",
           "routes": "./routes",
           "underscore": "lodash"
         }

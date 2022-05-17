@@ -4,6 +4,11 @@ const CracoAlias = require('craco-alias')
 // const { compilerOptions } = require("./tsconfig.json");
 
 module.exports = {
+  style: {
+    postOptions: {
+      plugins: [require('tailwindcss'), require('autoprefixer')]
+    }
+  },
   plugins: [
     {
       plugin: CracoAlias,
@@ -22,6 +27,7 @@ module.exports = {
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
       '@features': path.resolve(__dirname, 'src/features'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
       '@routes': path.resolve(__dirname, 'src/routes')
     }
   },

@@ -24,8 +24,7 @@ const Sidebar = () => {
           style={{
             height: 'calc(100vh - 4em)',
             background: 'white',
-            borderRightWidth: 1,
-            borderRightColor: '#b5ffef'
+            borderRightWidth: 1
           }}
         >
           {/* <BookOutlined /> */}

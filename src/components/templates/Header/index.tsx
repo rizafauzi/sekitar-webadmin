@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { Container, LogoWrapper, MenuWrapper } from './Header.style'
+import SekitarLogo from '../../../assets/images/sekitar.png'
+
+import { Container, MenuWrapper } from './Header.style'
 
 const Header: React.FC = () => (
   <Container>
-    <LogoWrapper />
-    <h2>Sekitar</h2>
+    <img src={SekitarLogo} alt="sekitar-logo" className="h-10" />
     <MenuWrapper />
   </Container>
 )
