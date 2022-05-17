@@ -1,20 +1,20 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { Menu, Layout } from 'antd'
-import { Link, useLocation } from 'react-router-dom'
-import { UserOutlined, CalendarOutlined, PieChartOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { UserOutlined, HomeOutlined, PieChartOutlined } from '@ant-design/icons'
 
-import SidebarList from './enum'
+// import SidebarList from './enum'
 
 const Sidebar = () => {
   const isOpen = true
-  const { SubMenu } = Menu
+  // const { SubMenu } = Menu
   const { Sider } = Layout
 
-  const { pathname } = useLocation()
-  const [openKeys, setOpenKeys] = useState(pathname)
-  const handleOpenChange = (subMenuId: string) => {
-    setOpenKeys(subMenuId)
-  }
+  // const { pathname } = useLocation()
+  // const [openKeys, setOpenKeys] = useState(pathname)
+  // const handleOpenChange = (subMenuId: string) => {
+  //   setOpenKeys(subMenuId)
+  // }
 
   return (
     <div>
@@ -31,22 +31,25 @@ const Sidebar = () => {
           {/* <BookOutlined /> */}
           <Menu
             mode="inline"
-            openKeys={[openKeys]}
+            // openKeys={[openKeys]}
             style={{
               background: 'transparent',
               borderRight: 0
             }}
           >
-            <Menu.Item key="schedule" icon={<CalendarOutlined />}>
-              <Link to="/schedule">Schedule</Link>
-            </Menu.Item>
-            <Menu.Item key="dashboard" icon={<PieChartOutlined />}>
+            <Menu.Item key="dashboard" icon={<HomeOutlined />}>
               <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
-            <Menu.Item key="user" icon={<UserOutlined />}>
-              <Link to="/customer">Customer</Link>
+            <Menu.Item key="merchants" icon={<HomeOutlined />}>
+              <Link to="/merchants">Merchants</Link>
             </Menu.Item>
-            {SidebarList.map(data => (
+            <Menu.Item key="categories" icon={<PieChartOutlined />}>
+              <Link to="/categories">Product Categories</Link>
+            </Menu.Item>
+            <Menu.Item key="master-data" icon={<UserOutlined />}>
+              <Link to="/master-data">Master Data</Link>
+            </Menu.Item>
+            {/* {SidebarList.map(data => (
               <SubMenu
                 key={data.key}
                 icon={data.icon}
@@ -64,7 +67,7 @@ const Sidebar = () => {
                   </Menu.Item>
                 ))}
               </SubMenu>
-            ))}
+            ))} */}
           </Menu>
         </Sider>
       )}

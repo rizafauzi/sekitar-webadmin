@@ -1,7 +1,10 @@
 import React from 'react'
 import { Layout as AntdLayout } from 'antd'
-import { ContainerWrapper, LayoutWrapper } from './Layout.styles'
+
 import Sidebar from '../Sidebar'
+import Header from '../Header'
+
+import { ContainerWrapper, LayoutWrapper } from './Layout.styles'
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   // const [isSidebarOpened, setIsSidebarOpened] = useState(true)
@@ -12,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
 
   <div>
     <ContainerWrapper>
-      {/* <Header toggle={toggleSidebar} /> */}
+      <Header />
       <AntdLayout>
         <Sidebar />
         <AntdLayout>

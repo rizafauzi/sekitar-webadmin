@@ -4,8 +4,8 @@ import ListLayout from '@components/organisms/ListLayout'
 
 import { columnMerchant, dummyMerchant } from './enum'
 
-const MasterData: React.FC = () => (
-  <ListLayout title="Merchants" data={dummyMerchant} columns={columnMerchant} />
+const Dashboard: React.FC = () => (
+  <ListLayout title="Dashboard" data={dummyMerchant} columns={columnMerchant} />
 )
 
-export default MasterData
+export default Dashboard

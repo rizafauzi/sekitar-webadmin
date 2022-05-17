@@ -10,7 +10,7 @@ export const ContainerWrapper = styled.div`
 `
 export const LayoutWrapper = styled.div`
   z-index: 1;
-  padding: 0.8em;
+  padding: 2.5em;
   overflow-y: auto;
   transition: 0.2s;
   background: white;
