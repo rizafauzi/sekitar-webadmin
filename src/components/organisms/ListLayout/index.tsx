@@ -19,7 +19,7 @@ const ListLayout: React.FC<IListLayout> = ({ title, columns, data }) => {
   return (
     <div>
       <h1>{title}</h1>
-      <Search placeholder={`Search any ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
+      <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
       <Table size="small" columns={columns} dataSource={data} className="my-6" />
     </div>
   )

@@ -17,3 +17,11 @@ export const MenuWrapper = styled.div`
   height: 2em;
   width: 2em;
 `
+
+export const Avatar = styled.div`
+  width: 2em;
+  height: 2em;
+  img {
+    object-fit: cover;
+  }
+`

@@ -23,14 +23,11 @@ const Sidebar = () => {
           width={226}
           style={{
             height: 'calc(100vh - 4em)',
-            background: 'white',
-            borderRightWidth: 1
+            background: 'white'
           }}
         >
-          {/* <BookOutlined /> */}
           <Menu
             mode="inline"
-            // openKeys={[openKeys]}
             style={{
               background: 'transparent',
               borderRight: 0
@@ -48,25 +45,6 @@ const Sidebar = () => {
             <Menu.Item key="master-data" icon={<UserOutlined />}>
               <Link to="/master-data">Master Data</Link>
             </Menu.Item>
-            {/* {SidebarList.map(data => (
-              <SubMenu
-                key={data.key}
-                icon={data.icon}
-                title={data.label}
-                onTitleClick={() => handleOpenChange(data.key)}
-              >
-                {data.menuItem.map(item => (
-                  <Menu.Item key={item.key}>
-                    <Link to={item.path}>
-                      <div className="right-sub-menu">
-                        <div className="w-6">{item.icon}</div>
-                        <span>{item.label}</span>
-                      </div>
-                    </Link>
-                  </Menu.Item>
-                ))}
-              </SubMenu>
-            ))} */}
           </Menu>
         </Sider>
       )}
