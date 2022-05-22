@@ -8,6 +8,7 @@
           "features": "./features",
           "assets": "./assets",
           "routes": "./routes",
+          "configs": "./configs",
           "underscore": "lodash"
         }
       }

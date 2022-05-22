@@ -8,9 +8,12 @@ import MerchantPage from '@features/Merchant'
 import CategoryPage from '@features/Categories'
 import MasterDataPage from '@features/MasterData'
 import Layout from '@components/templates/Layout'
+import MerchantDetail from '@features/Merchant/screens/Detail'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
+  const queryClient = new QueryClient()
 
   if (_isEmpty(token)) {
     return (
@@ -24,23 +27,24 @@ const AppRouter: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="Dashboard" element={<Dashboard />} />
-          <Route path="merchants" element={<MerchantPage />}>
-            <Route path=":merchantId" element={<div />} />
-          </Route>
-          <Route path="categories" element={<CategoryPage />}>
-            <Route path=":categoryId" element={<div />} />
-          </Route>
-          <Route path="master-data" element={<MasterDataPage />}>
-            <Route path=":categoryId" element={<div />} />
-          </Route>
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="Dashboard" element={<Dashboard />} />
+            <Route path="merchants" element={<MerchantPage />} />
+            <Route path="merchants/:merchantId" element={<MerchantDetail />} />
+            <Route path="categories" element={<CategoryPage />}>
+              <Route path=":categoryId" element={<div />} />
+            </Route>
+            <Route path="master-data" element={<MasterDataPage />}>
+              <Route path=":categoryId" element={<div />} />
+            </Route>
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+    </QueryClientProvider>
   )
 }
 
