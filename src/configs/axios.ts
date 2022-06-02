@@ -45,6 +45,7 @@ export const apiRequest = (arguments_: ApiRequestProperties): AxiosPromise => {
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
       Authorization: `bearer ${token}`
     },
     url: `${baseUrl}${path}`,
