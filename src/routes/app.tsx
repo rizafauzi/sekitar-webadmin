@@ -6,6 +6,7 @@ import LoginPage from '@features/Login'
 import Dashboard from '@features/Dashboard'
 import MerchantPage from '@features/Merchant'
 import CategoryPage from '@features/Categories'
+import CategoryProductDetail from '@features/Categories/screens/Detail'
 import MasterDataPage from '@features/MasterData'
 import Layout from '@components/templates/Layout'
 import MerchantDetail from '@features/Merchant/screens/Detail'
@@ -35,9 +36,8 @@ const AppRouter: React.FC = () => {
             <Route path="Dashboard" element={<Dashboard />} />
             <Route path="merchants" element={<MerchantPage />} />
             <Route path="merchants/:merchantId" element={<MerchantDetail />} />
-            <Route path="categories" element={<CategoryPage />}>
-              <Route path=":categoryId" element={<div />} />
-            </Route>
+            <Route path="categories" element={<CategoryPage />} />
+            <Route path="categories/:categoryId" element={<CategoryProductDetail />} />
             <Route path="master-data" element={<MasterDataPage />}>
               <Route path=":categoryId" element={<div />} />
             </Route>

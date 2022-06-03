@@ -243,6 +243,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         detail: '40% 60%'
+      },
+      maxWidth: {
+        20: '80px'
       }
     },
     fontFamily: {
