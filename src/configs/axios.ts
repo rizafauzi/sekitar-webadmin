@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import axios, { Method, AxiosRequestConfig, AxiosPromise } from 'axios'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 type ApiRequestProperties = {
   path: string
@@ -41,12 +41,11 @@ const BASE_URL = 'https://api.setoko.co'
 export const apiRequest = (arguments_: ApiRequestProperties): AxiosPromise => {
   const { method, bodyRequest, params, path, url, timeout, headers } = arguments_
   const baseUrl = url || (BASE_URL as string)
-  const token = Cookies.get('token') as string
+  // const token = Cookies.get('token') as string
   const config: AxiosRequestConfig = {
     headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: `bearer ${token}`
+      'Content-Type': 'application/json'
+      // Authorization: `bearer ${token}`
     },
     url: `${baseUrl}${path}`,
     method
