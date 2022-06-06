@@ -1,0 +1,27 @@
+.section-category-lv-1 {
+  @apply flex;
+  @apply flex-row;
+  @apply justify-between;
+  @apply w-96;
+  @apply px-3 py-4;
+  @apply mb-8;
+  @apply bg-white;
+  @apply rounded-lg;
+
+  box-shadow: 0 0 8px 1px rgba(120, 120, 120, 0.4);
+}
+
+.section-left {
+  @apply w-4/5;
+}
+
+.wrapper-field {
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+  @apply gap-2;
+}
+
+.label-field {
+  @apply w-2/5;
+}
