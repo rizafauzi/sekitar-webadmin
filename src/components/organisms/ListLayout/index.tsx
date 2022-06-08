@@ -6,6 +6,7 @@ import { Table, Input, TableProps, TablePaginationConfig } from 'antd'
 // import {  } from 'react-router-dom'
 
 interface IListLayout {
+  isSearch?: boolean
   title: string
   source: {
     data: any
@@ -21,7 +22,7 @@ interface IColumn {
   dataIndex: string
 }
 
-const ListLayout: React.FC<IListLayout> = ({ title, columns, source }) => {
+const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source }) => {
   const { data, isError, isLoading } = source
   const { Search } = Input
 
@@ -95,8 +96,10 @@ const ListLayout: React.FC<IListLayout> = ({ title, columns, source }) => {
   return (
     <div>
       <h1>{title}</h1>
-      <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
-      <Table {...tableProperties} columns={columns} dataSource={data} className="my-6" />
+      {isSearch && (
+        <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
+      )}
+      <Table {...tableProperties} className="my-6" />
     </div>
   )
 }

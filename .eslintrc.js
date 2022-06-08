@@ -40,6 +40,7 @@ module.exports = {
   rules: {
     'react/default-props-match-prop-types': 'off',
     'unicorn/prevent-abbreviations': 'off',
+    'react/require-default-props': 'off',
     'unicorn/numeric-separators-style': 'off',
     'unicorn/prefer-array-some': 'off',
     'no-plusplus': 'off',
