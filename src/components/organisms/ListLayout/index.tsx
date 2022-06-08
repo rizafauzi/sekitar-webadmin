@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from 'react'
+import qs from 'query-string'
+import { isEmpty } from 'lodash'
 import { Table, Input, TableProps, TablePaginationConfig } from 'antd'
-// import {  } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 interface IListLayout {
   isSearch?: boolean
@@ -23,56 +25,31 @@ interface IColumn {
 }
 
 const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source }) => {
+  const { pathname, search } = useLocation()
+  const pagination = qs.parse(search)
+  const history = useHistory()
   const { data, isError, isLoading } = source
   const { Search } = Input
 
+  // console.info('location:', qs.parse(location.search))
+
   const handleChange = (_pagination: TablePaginationConfig) => {
     console.info('_pagination:', _pagination)
-    // const sort = sorter as SorterResult<any>
-    // const selectedColumn = field?.find(dt => dt?.dataIndex === sort?.field)
-    // const sortOrderParameter = selectedColumn?.sortOrderParam || 'sort_order'
-    // const sortNameParameter = selectedColumn?.sortNameParam || 'sort_name'
+    const { current, pageSize } = _pagination
 
-    // const getOrder = () => {
-    //   switch (sort.order) {
-    //     case 'ascend':
-    //       return 'asc'
-    //     case 'descend':
-    //       return 'desc'
-    //     default:
-    //       return ''
-    //   }
-    // }
-
-    // const getSortName = () => {
-    //   if (sort.columnKey === 'trans_amount') {
-    //     return 'amount'
-    //   }
-    //   if (sort.order) {
-    //     if (selectedColumn?.noSortName) {
-    //       return ''
-    //     }
-    //     return sort.field as string
-    //   }
-    //   return ''
-    // }
-
-    // router.push({
-    //   pathname,
-    //   query: clearEmptyObject({
-    //     ...query,
-    //     page: query.page || '1',
-    //     limit: query.limit || '50',
-    //     [sortNameParameter]: getSortName(),
-    //     [sortOrderParameter]: getOrder()
-    //   })
-    // })
+    history.push({
+      pathname,
+      search: qs.stringify({
+        page: current,
+        limit: pageSize
+      })
+    })
   }
 
   const paginationConfig: TablePaginationConfig = {
-    current: 1,
     total: 100,
-    pageSize: 50
+    current: !isEmpty(pagination) ? Number(pagination?.page) : 1,
+    pageSize: !isEmpty(pagination) ? Number(pagination?.limit) : 20
   }
 
   const tableProperties: TableProps<any> = {
@@ -80,12 +57,8 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
     size: 'small',
     bordered: true,
     loading: isLoading,
-    // scroll: { y: '48vh' },
     dataSource: data,
     pagination: paginationConfig,
-    /**
-     * Callback executed when pagination, filters or sorter is changed
-     */
     onChange: handleChange
   }
 

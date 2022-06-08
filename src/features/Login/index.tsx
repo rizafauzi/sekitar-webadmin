@@ -1,13 +1,13 @@
 import { Input, Button } from 'antd'
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import React, { useState, ChangeEvent } from 'react'
 
 import SekitarLogo from '../../assets/images/sekitar.png'
 import { AuthWrapper, CardWrapper, Copyright, BackgroundGradient, Logo } from './Login.style'
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate()
+  const history = useHistory()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
 
     if (username === hardcodedUsername && password === hardcodedPassword) {
       Cookies.set('token', 'U0VLSVRBUi5JRA==')
-      navigate('/merchants')
+      history.push('/merchants')
       window.location.reload()
     }
   }

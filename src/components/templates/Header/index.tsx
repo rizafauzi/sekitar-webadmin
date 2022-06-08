@@ -6,7 +6,7 @@ import React from 'react'
 import Cookies from 'js-cookie'
 import { Menu, Dropdown, Space } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import SekitarLogo from '../../../assets/images/sekitar.png'
 import SekitarAvatar from '../../../assets/images/sekitar-logo.png'
@@ -14,11 +14,11 @@ import SekitarAvatar from '../../../assets/images/sekitar-logo.png'
 import { Container, Avatar } from './Header.style'
 
 const Header: React.FC = () => {
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const handleLogout = () => {
     Cookies.remove('token')
-    navigate('/login')
+    history.push('/login')
     window.location.reload()
   }
 

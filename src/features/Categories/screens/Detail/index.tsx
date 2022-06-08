@@ -10,9 +10,10 @@ import columnMerchant from './enum'
 import './style.css'
 
 const CategoryProductDetail: React.FC = () => {
-  const { categoryId } = useParams()
+  const { categoryId }: { categoryId: string } = useParams()
+
   const { listCategory } = useFetchListCategoryProduct()
-  const { listCategoryLv2 } = useFetchListCategoryProductLv2(categoryId as string)
+  const { listCategoryLv2 } = useFetchListCategoryProductLv2(categoryId)
   const listData = listCategoryLv2?.map((item, index) => ({ ...item, index: index + 1 }))
   const detailData = listCategory?.find(item => String(item.id) === categoryId)
   return (

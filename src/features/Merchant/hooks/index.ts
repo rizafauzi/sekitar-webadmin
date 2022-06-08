@@ -24,7 +24,7 @@ export const useFetchMerchantList = (params: IListParams) => {
     const response: ApiResponse<object[]> = await getStoreList(params)
     return response.data.Data
   })
-  console.info('data:', data)
+  // console.info('data:', data)
 
   return {
     isLoading,

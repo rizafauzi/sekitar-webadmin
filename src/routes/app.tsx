@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import _isEmpty from 'lodash/isEmpty'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import LoginPage from '@features/Login'
 import Dashboard from '@features/Dashboard'
@@ -19,10 +19,14 @@ const AppRouter: React.FC = () => {
   if (_isEmpty(token)) {
     return (
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<LoginPage />} />
-        </Routes>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="*">
+            <LoginPage />
+          </Route>
+        </Switch>
       </BrowserRouter>
     )
   }
@@ -31,17 +35,32 @@ const AppRouter: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Layout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="Dashboard" element={<Dashboard />} />
-            <Route path="merchants" element={<MerchantPage />} />
-            <Route path="merchants/:merchantId" element={<MerchantDetail />} />
-            <Route path="categories" element={<CategoryPage />} />
-            <Route path="categories/:categoryId" element={<CategoryProductDetail />} />
-            <Route path="master-data" element={<MasterDataPage />}>
-              <Route path=":categoryId" element={<div />} />
+          <Switch>
+            <Route exact path="/">
+              <Dashboard />
             </Route>
-          </Routes>
+            <Route exact path="/Dashboard">
+              <Dashboard />
+            </Route>
+            <Route exact path="/merchants">
+              <MerchantPage />
+            </Route>
+            <Route exact path="/merchants/:merchantId">
+              <MerchantDetail />
+            </Route>
+            <Route exact path="/categories">
+              <CategoryPage />
+            </Route>
+            <Route exact path="/categories/:categoryId">
+              <CategoryProductDetail />
+            </Route>
+            <Route exact path="/master-data">
+              <MasterDataPage />
+            </Route>
+            <Route path="/master-data/:id">
+              <MasterDataPage />
+            </Route>
+          </Switch>
         </Layout>
       </BrowserRouter>
     </QueryClientProvider>

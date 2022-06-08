@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 type AnchorType = {
   url: string
@@ -8,10 +8,10 @@ type AnchorType = {
 
 const Anchor: React.FC<AnchorType> = props => {
   const { url, label } = props
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const handleSelected = () => {
-    navigate(url)
+    history.push(url)
   }
 
   return (
