@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Input } from 'antd'
 
 interface IListLayout {
+  isSearch?: boolean
   title: string
   data: object[]
   columns: IColumn[]
@@ -13,13 +14,15 @@ interface IColumn {
   dataIndex: string
 }
 
-const ListLayout: React.FC<IListLayout> = ({ title, columns, data }) => {
+const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, data }) => {
   const { Search } = Input
 
   return (
     <div>
       <h1>{title}</h1>
-      <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
+      {isSearch && (
+        <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
+      )}
       <Table size="small" columns={columns} dataSource={data} className="my-6" />
     </div>
   )

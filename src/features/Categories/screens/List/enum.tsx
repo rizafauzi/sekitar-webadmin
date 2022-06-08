@@ -2,6 +2,12 @@ import CategoriesButton from '@features/Categories/components/Button'
 
 const columnMerchant = [
   {
+    width: '3em',
+    title: 'No',
+    dataIndex: 'index',
+    key: 'index'
+  },
+  {
     title: '',
     dataIndex: 'images',
     key: 'images',
@@ -20,12 +26,6 @@ const columnMerchant = [
     align: 'left',
     className: 'max-w-20',
     key: 'name'
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    align: 'left',
-    key: 'description'
   },
   {
     width: '18em',
