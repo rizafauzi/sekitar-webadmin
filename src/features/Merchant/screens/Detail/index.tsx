@@ -1,31 +1,15 @@
 import React from 'react'
 import { Button, Card } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+import { useLocation } from 'react-router-dom'
 
 import useFetchMerchantById from '@features/Merchant/hooks'
 import TextField from '@components/atoms/TextField'
 
 const MerchantDetail: React.FC = () => {
-  const { data, isError, isLoading } = useFetchMerchantById('nazfat')
-
-  console.info('data;', data)
-  const {
-    address,
-    category_name,
-    description,
-    has_offline_store,
-    has_whatsapp,
-    image,
-    is_verified,
-    name,
-    path,
-    operation_hour
-    // phone_number,
-  } = data
-
-  if (isError) {
-    return <span>Something is wrong... Try again later.</span>
-  }
+  const { pathname } = useLocation()
+  const storePath = pathname.replace('/merchants/', '')
+  const { data, isError, isLoading } = useFetchMerchantById(storePath)
 
   if (isLoading) {
     return (
@@ -35,10 +19,33 @@ const MerchantDetail: React.FC = () => {
     )
   }
 
+  if (isError || !data) {
+    return <span>Something is wrong... Try again later.</span>
+  }
+
+  const {
+    name,
+    path,
+    image,
+    address,
+    description,
+    is_verified,
+    has_whatsapp,
+    category_name,
+    operation_hour,
+    has_offline_store
+  } = data
+
   return (
     <div>
       <div className="flex flex-row w-full mb-6  items-center justify-center">
-        <img className="rounded-full" height={75} width={75} src={image[0]} alt="img-merchant" />
+        <img
+          width={75}
+          height={75}
+          alt="img-merchant"
+          src={image ? image[0] : ''}
+          className="rounded-full h-20 w-20 object-cover"
+        />
         <div className="w-full ml-4">
           <h1>{name}</h1>
           <h2>{category_name}</h2>
@@ -70,7 +77,7 @@ const MerchantDetail: React.FC = () => {
           </Button>
         }
       >
-        {operation_hour.map(dt => (
+        {operation_hour?.map(dt => (
           <TextField label={dt.key}>{dt.value}</TextField>
         ))}
       </Card>

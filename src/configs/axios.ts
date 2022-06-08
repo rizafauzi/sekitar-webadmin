@@ -29,7 +29,7 @@ export type GetTypes = {
 export type ApiResponse<T> = {
   data: {
     message: string
-    data: T
+    Data: T
     total?: number
   }
   status: number

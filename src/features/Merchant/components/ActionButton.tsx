@@ -1,17 +1,20 @@
 import React from 'react'
 import { Button } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
 
-const ActionButton: React.FC = () => (
-  <div className="flex flex-row items-center justify-center">
-    <Button type="primary">
+const ActionButton: React.FC<{ path: string }> = ({ path }) => {
+  const navigate = useNavigate()
+
+  const handleSelected = () => {
+    navigate(`/merchants/${path}`)
+  }
+
+  return (
+    <Button type="primary" onClick={handleSelected}>
       <EditOutlined />
     </Button>
-    <div className="mx-1" />
-    <Button style={{ background: 'red', borderColor: 'red' }}>
-      <DeleteOutlined style={{ color: 'white' }} />
-    </Button>
-  </div>
-)
+  )
+}
 
 export default ActionButton

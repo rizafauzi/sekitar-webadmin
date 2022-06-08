@@ -1,9 +1,27 @@
+/* eslint-disable unicorn/prevent-abbreviations */
+
 import { apiRequest } from '@configs/axios'
 
-export const getStoreById = (id: number) =>
+export interface IListParams {
+  page: number
+  limit: number
+  keyword?: string
+}
+
+export const getStoreById = (id: string) =>
   apiRequest({
-    path: `/api/dashboard/stores2/${id}?access_token=a79f01bc57edb585f41fd2b7b09b4585b09c0ca6`,
+    path: `/api/v1/stores/${id}`,
     method: 'GET'
+  })
+
+export const getStoreList = ({ limit, page }: IListParams) =>
+  apiRequest({
+    path: '/api/v3/stores',
+    method: 'GET',
+    params: {
+      p: page,
+      c: limit
+    }
   })
 
 export default getStoreById

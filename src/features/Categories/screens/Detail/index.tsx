@@ -7,12 +7,18 @@ import columnMerchant from './enum'
 
 const CategoryProductDetail: React.FC = () => {
   const { categoryId } = useParams()
-  const { listCategoryLv2 } = useFetchListCategoryProductLv2(categoryId as string)
+  const { listCategoryLv2, isError, isLoading } = useFetchListCategoryProductLv2(
+    categoryId as string
+  )
   return (
     <div>
       <ListLayout
         title="Detail Product Categories Lv 2"
-        data={listCategoryLv2}
+        source={{
+          isError,
+          isLoading,
+          data: listCategoryLv2
+        }}
         columns={columnMerchant}
       />
     </div>

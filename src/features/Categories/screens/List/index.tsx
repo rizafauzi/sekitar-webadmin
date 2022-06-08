@@ -6,10 +6,18 @@ import { useFetchListCategoryProduct } from '@features/Categories/hooks'
 import columnMerchant from './enum'
 
 const CategoryList: React.FC = () => {
-  const { listCategory } = useFetchListCategoryProduct()
+  const { listCategory, isError, isLoading } = useFetchListCategoryProduct()
   return (
     <div>
-      <ListLayout title="Product Categories" data={listCategory} columns={columnMerchant} />
+      <ListLayout
+        title="Product Categories"
+        source={{
+          data: listCategory,
+          isError,
+          isLoading
+        }}
+        columns={columnMerchant}
+      />
     </div>
   )
 }

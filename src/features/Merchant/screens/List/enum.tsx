@@ -1,34 +1,50 @@
 import Anchor from '@components/atoms/Anchor'
 import ActionButton from '@features/Merchant/components/ActionButton'
-import { IMerchantList } from '../../Merchant.type'
+import { IMerchant } from '../../Merchant.type'
 
 export const columnMerchant = [
   {
+    width: '25em',
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: (_: null, { id, name }: IMerchantList) => (
-      <Anchor label={name} url={`/merchants/${id}`} />
+    render: (_: null, { path, name }: IMerchant) => (
+      <Anchor label={name} url={`/merchants/${path}`} />
     )
   },
   {
+    width: '15em',
     title: 'Merchant Link',
     dataIndex: 'path',
     key: 'path'
   },
   {
-    width: '18em',
-    key: 'status',
+    width: '20em',
+    title: 'Category',
+    dataIndex: 'category_name',
+    key: 'category_name'
+  },
+  {
+    width: '10em',
     title: 'Status',
-    dataIndex: 'status'
+    key: 'is_active',
+    dataIndex: 'is_active',
+    render: ({ is_active }: IMerchant) => <span>{is_active ? 'Yes' : 'No'}</span>
+  },
+  {
+    width: '10em',
+    title: 'Is Verified',
+    key: 'is_verified',
+    dataIndex: 'is_verified',
+    render: ({ is_verified }: IMerchant) => <span>{is_verified === '0' ? 'No' : 'Yes'}</span>
   },
   {
     width: '18em',
-    key: '*',
+    key: 'path',
     title: '*',
-    dataIndex: '*',
+    dataIndex: 'path',
     align: 'center',
-    render: () => <ActionButton />
+    render: (data: string) => <ActionButton path={data} />
   }
 ]
 
