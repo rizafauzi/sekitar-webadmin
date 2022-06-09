@@ -29,7 +29,9 @@ module.exports = {
       '@features': path.resolve(__dirname, 'src/features'),
       '@configs': path.resolve(__dirname, 'src/configs'),
       '@assets': path.resolve(__dirname, 'src/assets'),
-      '@routes': path.resolve(__dirname, 'src/routes')
+      '@routes': path.resolve(__dirname, 'src/routes'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@utils': path.resolve(__dirname, 'src/utils')
     }
   },
   jest: {

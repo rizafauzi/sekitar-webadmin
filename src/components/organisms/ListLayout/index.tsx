@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import qs from 'query-string'
 import { isEmpty } from 'lodash'
 import { Table, Input, TableProps, TablePaginationConfig } from 'antd'
 import { useLocation, useHistory } from 'react-router-dom'
+import useDebounce from '@hooks/useDebounce'
+import clearEmptyObject from '@utils/object-utils'
 
 interface IListLayout {
   isSearch?: boolean
@@ -25,25 +30,44 @@ interface IColumn {
 }
 
 const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source }) => {
+  const { data, isError, isLoading } = source
+  const { Search } = Input
+
   const { pathname, search } = useLocation()
   const pagination = qs.parse(search)
   const history = useHistory()
-  const { data, isError, isLoading } = source
-  const { Search } = Input
+
+  const [keyword, setKeyword] = useState('')
+  const searchDebounce = useDebounce(keyword, 1000)
 
   // console.info('location:', qs.parse(location.search))
 
   const handleChange = (_pagination: TablePaginationConfig) => {
-    console.info('_pagination:', _pagination)
     const { current, pageSize } = _pagination
-
     history.push({
       pathname,
       search: qs.stringify({
+        ...pagination,
         page: current,
         limit: pageSize
       })
     })
+  }
+
+  useEffect(() => {
+    history.push({
+      pathname,
+      search: qs.stringify(
+        clearEmptyObject({
+          ...pagination,
+          keyword: searchDebounce
+        })
+      )
+    })
+  }, [searchDebounce])
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(event.target.value)
   }
 
   const paginationConfig: TablePaginationConfig = {
@@ -70,7 +94,12 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
     <div>
       <h1>{title}</h1>
       {isSearch && (
-        <Search placeholder={`Search ${title} here`} onSearch={() => {}} style={{ width: 400 }} />
+        <Search
+          value={keyword}
+          placeholder={`Search ${title} here`}
+          onChange={handleSearch}
+          style={{ width: 400 }}
+        />
       )}
       <Table {...tableProperties} className="my-6" />
     </div>

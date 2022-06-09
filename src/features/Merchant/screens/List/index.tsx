@@ -16,16 +16,14 @@ const MerchantPage: React.FC = () => {
 
   const { data, isError, isLoading } = useFetchMerchantList({
     page: Number(pagination?.page) || 1,
-    limit: Number(pagination?.limit) || 20
+    limit: Number(pagination?.limit) || 20,
+    keyword: String(pagination?.keyword)
   })
-
-  if (!data || isError) {
-    return <div />
-  }
 
   return (
     <ListLayout
       title="Merchants"
+      isSearch
       source={{
         isError,
         isLoading,

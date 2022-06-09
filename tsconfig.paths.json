@@ -6,7 +6,9 @@
       "@features/*": ["./features/*"],
       "@configs/*": ["./configs/*"],
       "@assets/*": ["./assets/*"],
-      "@routes/*": ["./routes/*"]
+      "@routes/*": ["./routes/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@utils/*": ["./utils/*"]
     }
   }
 }

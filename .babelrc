@@ -9,6 +9,8 @@
           "assets": "./assets",
           "routes": "./routes",
           "configs": "./configs",
+          "hooks": "./hooks",
+          "utils": "./utils",
           "underscore": "lodash"
         }
       }
