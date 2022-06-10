@@ -27,9 +27,11 @@ export const columnMerchant = [
   {
     width: '10em',
     title: 'Merchant',
-    key: 'is_active',
-    dataIndex: 'is_active',
-    render: ({ is_active }: IMerchant) => <span>{is_active ? 'Sekitar' : 'Setoko'}</span>
+    key: 'merchant_flag',
+    dataIndex: 'merchant_flag',
+    render: ({ merchant_flag }: IMerchant) => (
+      <span>{merchant_flag === 0 ? 'Sekitar' : 'Setoko'}</span>
+    )
   },
   {
     width: '18em',
