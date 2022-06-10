@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import useFetchMerchantById from '@features/Merchant/hooks'
 import TextField from '@components/atoms/TextField'
+import EditMerchant from '@features/Merchant/components/EditMerchant'
 
 const MerchantDetail: React.FC = () => {
   const { pathname } = useLocation()
@@ -51,14 +52,7 @@ const MerchantDetail: React.FC = () => {
           <h2>{category_name}</h2>
         </div>
       </div>
-      <Card
-        title="Merchant Data"
-        extra={
-          <Button style={{ padding: '0px 25px' }} type="primary">
-            Edit
-          </Button>
-        }
-      >
+      <Card title="Merchant Data" extra={<EditMerchant data={data} />}>
         <TextField label="Name">{name}</TextField>
         <TextField label="Path">{path}</TextField>
         <TextField label="Category">{category_name}</TextField>

@@ -4,6 +4,7 @@
 
 import { apiRequest } from '@configs/axios'
 import clearEmptyObject from '@utils/object-utils'
+import { IMerchant } from '../Merchant.type'
 
 export interface IListParams {
   page: number
@@ -26,6 +27,13 @@ export const getStoreList = ({ limit, page, keyword }: IListParams) =>
       c: String(limit),
       k: keyword
     })
+  })
+
+export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
+  apiRequest({
+    path: `/api/dashboard/stores_update/${id}`,
+    method: 'GET',
+    bodyRequest
   })
 
 export default getStoreById

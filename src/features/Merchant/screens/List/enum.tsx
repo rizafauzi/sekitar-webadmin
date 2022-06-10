@@ -26,17 +26,10 @@ export const columnMerchant = [
   },
   {
     width: '10em',
-    title: 'Status',
+    title: 'Merchant',
     key: 'is_active',
     dataIndex: 'is_active',
-    render: ({ is_active }: IMerchant) => <span>{is_active ? 'Yes' : 'No'}</span>
-  },
-  {
-    width: '10em',
-    title: 'Is Verified',
-    key: 'is_verified',
-    dataIndex: 'is_verified',
-    render: ({ is_verified }: IMerchant) => <span>{is_verified === '0' ? 'No' : 'Yes'}</span>
+    render: ({ is_active }: IMerchant) => <span>{is_active ? 'Sekitar' : 'Setoko'}</span>
   },
   {
     width: '18em',
