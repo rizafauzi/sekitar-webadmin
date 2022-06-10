@@ -30,7 +30,7 @@ export const columnMerchant = [
     key: 'merchant_flag',
     dataIndex: 'merchant_flag',
     render: ({ merchant_flag }: IMerchant) => (
-      <span>{merchant_flag === 0 ? 'Sekitar' : 'Setoko'}</span>
+      <span>{merchant_flag === 0 ? 'Setoko' : 'Sekitar'}</span>
     )
   },
   {
