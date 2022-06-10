@@ -58,6 +58,7 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
       search: qs.stringify(
         clearEmptyObject({
           ...pagination,
+          page: '1',
           keyword: searchDebounce
         })
       )
