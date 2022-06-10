@@ -12,8 +12,6 @@ const MerchantPage: React.FC = () => {
   const { search } = useLocation()
   const pagination = qs.parse(search)
 
-  console.info('pagination:', pagination)
-
   const { data, isError, isLoading } = useFetchMerchantList({
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,

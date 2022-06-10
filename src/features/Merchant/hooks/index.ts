@@ -11,7 +11,6 @@ export const useFetchMerchantById = (id: string) => {
     return response.data.Data
   })
 
-  console.info('id:', data)
   return {
     data,
     isError,
@@ -24,7 +23,6 @@ export const useFetchMerchantList = (params: IListParams) => {
     const response: ApiResponse<object[]> = await getStoreList(params)
     return response.data.Data
   })
-  // console.info('data:', data)
 
   return {
     isLoading,

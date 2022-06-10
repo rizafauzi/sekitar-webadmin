@@ -20,7 +20,7 @@ export const getStoreById = (id: string) =>
 
 export const getStoreList = ({ limit, page, keyword }: IListParams) =>
   apiRequest({
-    path: '/api/v3/stores',
+    path: keyword === 'undefined' ? '/api/v3/stores' : '/api/dashboard/stores/search',
     method: 'GET',
     params: clearEmptyObject({
       p: String(page),
@@ -32,7 +32,7 @@ export const getStoreList = ({ limit, page, keyword }: IListParams) =>
 export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
   apiRequest({
     path: `/api/dashboard/stores_update/${id}`,
-    method: 'GET',
+    method: 'POST',
     bodyRequest
   })
 

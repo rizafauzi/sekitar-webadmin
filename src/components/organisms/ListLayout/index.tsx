@@ -40,8 +40,6 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
   const [keyword, setKeyword] = useState('')
   const searchDebounce = useDebounce(keyword, 1000)
 
-  // console.info('location:', qs.parse(location.search))
-
   const handleChange = (_pagination: TablePaginationConfig) => {
     const { current, pageSize } = _pagination
     history.push({
