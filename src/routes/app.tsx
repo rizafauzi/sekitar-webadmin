@@ -3,6 +3,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import LoginPage from '@features/Login'
+import OrderPage from '@features/Order'
 import Dashboard from '@features/Dashboard'
 import MerchantPage from '@features/Merchant'
 import CategoryPage from '@features/Categories'
@@ -58,6 +59,12 @@ const AppRouter: React.FC = () => {
               <MasterDataPage />
             </Route>
             <Route path="/master-data/:id">
+              <MasterDataPage />
+            </Route>
+            <Route path="/orders">
+              <OrderPage />
+            </Route>
+            <Route path="/couriers">
               <MasterDataPage />
             </Route>
           </Switch>

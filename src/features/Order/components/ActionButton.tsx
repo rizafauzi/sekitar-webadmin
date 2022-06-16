@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@components/atoms/Button'
-import { EditOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
+import { Space } from 'antd'
 
 const ActionButton: React.FC<{ path: string }> = ({ path }) => {
   const history = useHistory()
@@ -11,9 +11,15 @@ const ActionButton: React.FC<{ path: string }> = ({ path }) => {
   }
 
   return (
-    <Button onClick={handleSelected}>
-      <EditOutlined />
-    </Button>
+    <Space>
+      <Button variant="secondary" onClick={handleSelected}>
+        Edit
+      </Button>
+      <Button onClick={handleSelected}>Aktifkan</Button>
+      <Button variant="destructive" onClick={handleSelected}>
+        Hapus
+      </Button>
+    </Space>
   )
 }
 

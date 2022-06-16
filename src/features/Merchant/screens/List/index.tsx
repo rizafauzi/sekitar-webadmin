@@ -19,16 +19,19 @@ const MerchantPage: React.FC = () => {
   })
 
   return (
-    <ListLayout
-      title="Merchants"
-      isSearch
-      source={{
-        isError,
-        isLoading,
-        data: data as IMerchant[] | undefined
-      }}
-      columns={columnMerchant}
-    />
+    <div>
+      <h2 className="font-bold">Merchants</h2>
+      <ListLayout
+        title="Daftar Merchant"
+        isSearch
+        source={{
+          isError,
+          isLoading,
+          data: data as IMerchant[] | undefined
+        }}
+        columns={columnMerchant}
+      />
+    </div>
   )
 }
 

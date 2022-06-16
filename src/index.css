@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;1,200&display=swap');
 
 body {
   margin: 0;
@@ -16,4 +17,20 @@ code {
 
 h1 {
   font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+span,
+label,
+th,
+td {
+  font-family: 'Nunito', sans-serif;
 }

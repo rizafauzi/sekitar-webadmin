@@ -2,9 +2,9 @@ import React from 'react'
 import { Layout as AntdLayout } from 'antd'
 
 import Sidebar from '../Sidebar'
-import Header from '../Header'
+// import Header from '../Header'
 
-import { ContainerWrapper, LayoutWrapper, LayoutCard } from './Layout.styles'
+import { ContainerWrapper, LayoutWrapper } from './Layout.styles'
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
   // const [isSidebarOpened, setIsSidebarOpened] = useState(true)
@@ -15,14 +15,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
 
   <div>
     <ContainerWrapper>
-      <Header />
       <AntdLayout>
         <Sidebar />
-        <AntdLayout>
-          <LayoutWrapper>
-            <LayoutCard>{children}</LayoutCard>
-          </LayoutWrapper>
-        </AntdLayout>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </AntdLayout>
     </ContainerWrapper>
   </div>

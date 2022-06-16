@@ -6,15 +6,17 @@
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import qs from 'query-string'
-import { isEmpty } from 'lodash'
-import { Table, Input, TableProps, TablePaginationConfig } from 'antd'
+import { Input, Space } from 'antd'
 import { useLocation, useHistory } from 'react-router-dom'
 import useDebounce from '@hooks/useDebounce'
 import clearEmptyObject from '@utils/object-utils'
+import Table from '@components/atoms/Table'
+import { Wrapper } from './ListLayout.style'
 
 interface IListLayout {
   isSearch?: boolean
   title: string
+  extendButton?: React.ReactNode[]
   source: {
     data: any
     isError: boolean
@@ -29,7 +31,13 @@ interface IColumn {
   dataIndex: string
 }
 
-const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source }) => {
+const ListLayout: React.FC<IListLayout> = ({
+  title,
+  source,
+  columns,
+  isSearch,
+  extendButton = []
+}) => {
   const { data, isError, isLoading } = source
   const { Search } = Input
 
@@ -39,18 +47,6 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
 
   const [keyword, setKeyword] = useState('')
   const searchDebounce = useDebounce(keyword, 1000)
-
-  const handleChange = (_pagination: TablePaginationConfig) => {
-    const { current, pageSize } = _pagination
-    history.push({
-      pathname,
-      search: qs.stringify({
-        ...pagination,
-        page: current,
-        limit: pageSize
-      })
-    })
-  }
 
   useEffect(() => {
     history.push({
@@ -69,39 +65,28 @@ const ListLayout: React.FC<IListLayout> = ({ isSearch, title, columns, source })
     setKeyword(event.target.value)
   }
 
-  const paginationConfig: TablePaginationConfig = {
-    total: 100,
-    current: !isEmpty(pagination) ? Number(pagination?.page) : 1,
-    pageSize: !isEmpty(pagination) ? Number(pagination?.limit) : 20
-  }
-
-  const tableProperties: TableProps<any> = {
-    columns,
-    size: 'small',
-    bordered: true,
-    loading: isLoading,
-    dataSource: data,
-    pagination: paginationConfig,
-    onChange: handleChange
-  }
-
   if (isError) {
     return <div>Something wrong....</div>
   }
 
   return (
-    <div>
-      <h1>{title}</h1>
-      {isSearch && (
-        <Search
-          value={keyword}
-          placeholder={`Search ${title} here`}
-          onChange={handleSearch}
-          style={{ width: 400 }}
-        />
-      )}
-      <Table {...tableProperties} className="my-6" />
-    </div>
+    <Wrapper>
+      <div className="px-5 pt-5 flex flex-row justify-between items-center">
+        <h2 className="font-bold">{title}</h2>
+        <Space>
+          {isSearch && (
+            <Search
+              value={keyword}
+              style={{ width: 400 }}
+              onChange={handleSearch}
+              placeholder={`Search ${title} here`}
+            />
+          )}
+          {extendButton?.length > 0 && extendButton.map(element => <div>{element}</div>)}
+        </Space>
+      </div>
+      <Table columns={columns} data={data} loading={isLoading} className="my-6" />
+    </Wrapper>
   )
 }
 
