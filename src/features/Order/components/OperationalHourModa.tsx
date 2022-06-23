@@ -3,7 +3,7 @@
 import React, { useState, ChangeEvent } from 'react'
 import { Modal, Input, Button } from 'antd'
 
-import { IMerchant } from '../Merchant.type'
+import { IMerchant } from '../Order.type'
 
 interface ModalTypes {
   visible: boolean

@@ -6,16 +6,18 @@ import Button from '@components/atoms/Button'
 import { useHistory } from 'react-router-dom'
 import Flex from '@components/atoms/Flex'
 
-const ActionButton: React.FC<{ path: string }> = ({ path }) => {
+const ActionButton: React.FC<{ cartId: string }> = ({ cartId }) => {
   const history = useHistory()
   const [showCancelModal, setShowCancelModal] = useState(false)
 
+  console.info('path:', cartId)
   const toggleCancelModal = () => {
     setShowCancelModal(!showCancelModal)
   }
 
   const handleSelected = () => {
-    history.push(`/orders/${path}`)
+    console.info('HIYAA')
+    history.push(`/orders/${cartId}`)
   }
 
   const handleEditCourier = () => {
@@ -32,7 +34,7 @@ const ActionButton: React.FC<{ path: string }> = ({ path }) => {
         {
           key: '1',
           label: (
-            <button type="button" onClick={handleSelected}>
+            <button type="button" className="w-full text-left" onClick={handleSelected}>
               Detail Pengiriman
             </button>
           )
@@ -40,7 +42,7 @@ const ActionButton: React.FC<{ path: string }> = ({ path }) => {
         {
           key: '2',
           label: (
-            <button type="button" onClick={handleEditCourier}>
+            <button type="button" className="w-full text-left" onClick={handleEditCourier}>
               Ubah Kurir
             </button>
           )
@@ -48,7 +50,7 @@ const ActionButton: React.FC<{ path: string }> = ({ path }) => {
         {
           key: '3',
           label: (
-            <button type="button" onClick={toggleCancelModal}>
+            <button type="button" className="w-full text-left" onClick={toggleCancelModal}>
               Batalkan Pesanan
             </button>
           )

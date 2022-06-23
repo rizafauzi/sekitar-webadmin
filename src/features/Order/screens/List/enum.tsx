@@ -6,7 +6,7 @@
 import TableRow from '@features/Order/components/TableRow'
 import moment from 'moment'
 import ActionButton from '../../components/ActionButton'
-import { IOrder } from '../../Merchant.type'
+import { IOrder } from '../../Order.type'
 
 export const columnMerchant = [
   {
@@ -49,7 +49,7 @@ export const columnMerchant = [
     key: 'path',
     title: 'Action',
     dataIndex: 'path',
-    render: (data: string) => <ActionButton path={data} />
+    render: (_: null, { cart_id }: IOrder) => <ActionButton cartId={cart_id} />
   }
 ]
 

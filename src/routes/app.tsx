@@ -62,10 +62,10 @@ const AppRouter: React.FC = () => {
             <Route path="/master-data/:id">
               <MasterDataPage />
             </Route>
-            <Route path="/orders">
+            <Route exact path="/orders">
               <OrderPage />
             </Route>
-            <Route path="/orders/:id">
+            <Route exact path="/orders/:id">
               <OrderDetailPage />
             </Route>
             <Route path="/couriers">

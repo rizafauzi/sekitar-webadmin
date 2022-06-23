@@ -2,8 +2,8 @@
 
 import { ApiResponse } from '@configs/axios'
 import { useQuery } from 'react-query'
-import { getStoreById, getOrderList, IListParams, getTotalOrder } from '../api'
-import { IMerchant } from '../Merchant.type'
+import { getStoreById, getOrderList, IListParams, getTotalOrder, getOrderDetail } from '../api'
+import { IMerchant, IOrderDetail } from '../Order.type'
 
 export const useFetchMerchantById = (id: string) => {
   const { data, isError, isLoading } = useQuery(['order-detail', id], async () => {
@@ -50,28 +50,17 @@ export const useFetchTotalOrder = () => {
   }
 }
 
-export const useFetchTotalOrderByStatus = () =>
-  // const { data, isError, isLoading } = useQuery(['total-order'], async () => {
-  //   const response: ApiResponse<object[]> = await getOrderList()
-  //   return response.data.Data
-  // })
-
-  // return {
-  //   isLoading,
-  //   isError,
-  //   data
-  // }
-
-  ({
-    isLoading: false,
-    isError: false,
-    data: {
-      all: 1000,
-      created: 123,
-      processed: 50,
-      completed: 45,
-      canceled: 20
-    }
+export const useFetchOrderDetail = (id: string) => {
+  const { data, isError, isLoading } = useQuery(['order-detail', id], async () => {
+    const response: ApiResponse<IOrderDetail> = await getOrderDetail(id)
+    return response.data.Data
   })
+
+  return {
+    isLoading,
+    isError,
+    data
+  }
+}
 
 export default useFetchMerchantById

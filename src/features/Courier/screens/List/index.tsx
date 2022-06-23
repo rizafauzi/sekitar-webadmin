@@ -6,7 +6,7 @@ import ListLayout from '@components/organisms/ListLayout'
 
 // import { IMerchant } from '@features/Merchant/Merchant.type'
 import { useLocation } from 'react-router-dom'
-import { IOrder } from '@features/Order/Merchant.type'
+import { IOrder } from '@features/Order/Order.type'
 import OrderCard from '@features/Order/components/OrderCard'
 import Button from '@components/atoms/Button'
 import styled from 'styled-components'

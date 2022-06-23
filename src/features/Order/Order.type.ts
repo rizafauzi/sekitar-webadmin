@@ -59,3 +59,12 @@ export interface IOrder {
   courier_id: string
   courier_name: string
 }
+
+export interface IOrderDetail {
+  cart_id: string
+  processed_hour: string
+  shipped_hour: string
+  completed_hour: string
+  courier_name: string
+  courier_area: string
+}

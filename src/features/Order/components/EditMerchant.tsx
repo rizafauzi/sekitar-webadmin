@@ -8,7 +8,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Modal, Input, Button, Switch } from 'antd'
 
 import { toast } from 'react-toastify'
-import { IMerchant } from '../Merchant.type'
+import { IMerchant } from '../Order.type'
 import { postEditMerchant } from '../api'
 
 interface IEditMerchant {
