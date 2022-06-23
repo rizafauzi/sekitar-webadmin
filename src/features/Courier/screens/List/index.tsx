@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable arrow-body-style */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import qs from 'query-string'
 
 import ListLayout from '@components/organisms/ListLayout'
@@ -12,7 +10,7 @@ import { IOrder } from '@features/Order/Merchant.type'
 import OrderCard from '@features/Order/components/OrderCard'
 import Button from '@components/atoms/Button'
 import styled from 'styled-components'
-import { useFetchOrderList, useFetchTotalOrder } from '../../hooks'
+import { useFetchOrderList, useFetchTotalOrderByStatus } from '../../hooks'
 import { columnMerchant } from './enum'
 
 const TableWrapper = styled.div`
@@ -21,25 +19,16 @@ const TableWrapper = styled.div`
   grid-template-columns: auto auto auto auto auto;
 `
 
-export type StatusType = 'all' | 'created' | 'processed' | 'completed' | 'canceled'
-
 const OrderPage: React.FC = () => {
   const { search } = useLocation()
   const pagination = qs.parse(search)
 
-  const [status, setStatus] = useState<StatusType>('all')
-  const { data: totalData } = useFetchTotalOrder()
+  const { data: totalData } = useFetchTotalOrderByStatus()
   const { data, isError, isLoading } = useFetchOrderList({
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,
     status: String(pagination?.status) || 'all'
   })
-
-  useEffect(() => {
-    if (pagination?.status) {
-      setStatus(pagination.status as StatusType)
-    }
-  }, [pagination])
 
   return (
     <div>
@@ -52,11 +41,10 @@ const OrderPage: React.FC = () => {
         <OrderCard label="Pesanan Baru" total={totalData?.created} value="created" />
         <OrderCard label="Diproses" total={totalData?.processed} value="processed" />
         <OrderCard label="Selesai" total={totalData?.completed} value="completed" />
-        <OrderCard label="Dibatalkan" total={totalData?.canceled} value="canceled" />
+        <OrderCard label="Dibatalkan" total={totalData.canceled} value="canceled" />
       </TableWrapper>
       <ListLayout
         title="Semua Pesanan"
-        total={totalData ? totalData[status] : 0}
         isSearch
         source={{
           isError,

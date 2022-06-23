@@ -14,6 +14,7 @@ import Table from '@components/atoms/Table'
 import { Wrapper } from './ListLayout.style'
 
 interface IListLayout {
+  total?: any
   isSearch?: boolean
   title: string
   extendButton?: React.ReactNode[]
@@ -32,6 +33,7 @@ interface IColumn {
 }
 
 const ListLayout: React.FC<IListLayout> = ({
+  total,
   title,
   source,
   columns,
@@ -85,7 +87,7 @@ const ListLayout: React.FC<IListLayout> = ({
           {extendButton?.length > 0 && extendButton.map(element => <div>{element}</div>)}
         </Space>
       </div>
-      <Table columns={columns} data={data} loading={isLoading} className="my-6" />
+      <Table columns={columns} total={total} data={data} loading={isLoading} className="my-6" />
     </Wrapper>
   )
 }

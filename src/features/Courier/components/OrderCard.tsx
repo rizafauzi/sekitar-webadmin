@@ -6,7 +6,7 @@ import styled from 'styled-components'
 interface ICard {
   label: string
   value: string
-  total: number | null | number | undefined
+  total: string | null | number
 }
 
 interface WrapperStyle {
@@ -51,8 +51,6 @@ const OrderCard: React.FC<ICard> = ({ label, total, value }) => {
   const history = useHistory()
   const { pathname, search } = useLocation()
   const params = qs.parse(search)
-  const { status } = params
-  const activeStatus = status ? value === status : value === 'all'
 
   const handleClick = () => {
     history.replace({
@@ -66,7 +64,7 @@ const OrderCard: React.FC<ICard> = ({ label, total, value }) => {
   }
 
   return (
-    <Wrapper onClick={handleClick} active={activeStatus}>
+    <Wrapper onClick={handleClick} active={value === params?.status}>
       <h3>{label}</h3>
       <h4>{total}</h4>
     </Wrapper>

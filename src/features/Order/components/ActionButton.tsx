@@ -1,25 +1,89 @@
-import React from 'react'
+/* eslint-disable unicorn/consistent-function-scoping */
+import React, { useState } from 'react'
+import { Dropdown, Menu, Modal, Space } from 'antd'
+
 import Button from '@components/atoms/Button'
 import { useHistory } from 'react-router-dom'
-import { Space } from 'antd'
+import Flex from '@components/atoms/Flex'
 
 const ActionButton: React.FC<{ path: string }> = ({ path }) => {
   const history = useHistory()
+  const [showCancelModal, setShowCancelModal] = useState(false)
 
-  const handleSelected = () => {
-    history.push(`/merchants/${path}`)
+  const toggleCancelModal = () => {
+    setShowCancelModal(!showCancelModal)
   }
 
+  const handleSelected = () => {
+    history.push(`/orders/${path}`)
+  }
+
+  const handleEditCourier = () => {
+    console.info('HIYA')
+  }
+
+  // const handleCancelOrder = () => {
+  //   console.info('HIYA')
+  // }
+
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: '1',
+          label: (
+            <button type="button" onClick={handleSelected}>
+              Detail Pengiriman
+            </button>
+          )
+        },
+        {
+          key: '2',
+          label: (
+            <button type="button" onClick={handleEditCourier}>
+              Ubah Kurir
+            </button>
+          )
+        },
+        {
+          key: '3',
+          label: (
+            <button type="button" onClick={toggleCancelModal}>
+              Batalkan Pesanan
+            </button>
+          )
+        }
+      ]}
+    />
+  )
+
   return (
-    <Space>
-      <Button variant="secondary" onClick={handleSelected}>
-        Edit
-      </Button>
-      <Button onClick={handleSelected}>Aktifkan</Button>
-      <Button variant="destructive" onClick={handleSelected}>
-        Hapus
-      </Button>
-    </Space>
+    <>
+      <Dropdown overlay={menu} placement="bottomLeft" arrow>
+        <Button>Options</Button>
+      </Dropdown>
+
+      <Modal
+        centered
+        maskClosable
+        closable={false}
+        visible={showCancelModal}
+        onCancel={toggleCancelModal}
+        footer={
+          <Flex justifyContent="center" alignItems="center">
+            <Space>
+              <Button>Options</Button>
+              <Button>Options</Button>
+            </Space>
+          </Flex>
+        }
+      >
+        <Flex justifyContent="center" alignItems="center" flexDirection="column">
+          <h2 className="font-bold">Apakah kamu yakin akan membatalkan pesanan?</h2>
+          <h3>Pesanan yang telah dibatalkan tidak dapat diaktifkan kembali</h3>
+        </Flex>
+      </Modal>
+    </>
   )
 }
 

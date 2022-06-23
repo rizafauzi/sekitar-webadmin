@@ -2,7 +2,7 @@
 
 import { ApiResponse } from '@configs/axios'
 import { useQuery } from 'react-query'
-import { getStoreById, getOrderList, IListParams, getTotalOrder } from '../api'
+import { getStoreById, getOrderList, IListParams } from '../api'
 import { IMerchant } from '../Merchant.type'
 
 export const useFetchMerchantById = (id: string) => {
@@ -21,25 +21,6 @@ export const useFetchMerchantById = (id: string) => {
 export const useFetchOrderList = (params: IListParams) => {
   const { data, isError, isLoading } = useQuery(['order-list', params], async () => {
     const response: ApiResponse<object[]> = await getOrderList(params)
-    return response.data.Data
-  })
-
-  return {
-    isLoading,
-    isError,
-    data
-  }
-}
-
-export const useFetchTotalOrder = () => {
-  const { data, isError, isLoading } = useQuery('order-list-total', async () => {
-    const response: ApiResponse<{
-      all: number
-      created: number
-      processed: number
-      completed: number
-      canceled: number
-    }> = await getTotalOrder()
     return response.data.Data
   })
 

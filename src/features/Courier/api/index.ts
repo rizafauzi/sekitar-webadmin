@@ -32,7 +32,7 @@ export const getOrderList = ({ limit, page, status }: IListParams) =>
 
 export const getTotalOrder = () =>
   apiRequest({
-    path: '/api/v1/courier/count/order',
+    path: '/api/v1/courier/order/total',
     method: 'GET'
   })
 

@@ -13,6 +13,7 @@ import { TableWrapper } from './Table.style'
 
 interface IListLayout {
   data: any
+  total?: number
   loading: boolean
   columns: IColumn[]
   className: string
@@ -24,7 +25,7 @@ interface IColumn {
   dataIndex: string
 }
 
-const Table: React.FC<IListLayout> = ({ columns, data, loading, ...rest }) => {
+const Table: React.FC<IListLayout> = ({ columns, data, loading, total, ...rest }) => {
   const { pathname, search } = useLocation()
   const pagination = qs.parse(search)
   const history = useHistory()
@@ -41,8 +42,10 @@ const Table: React.FC<IListLayout> = ({ columns, data, loading, ...rest }) => {
     })
   }
 
+  console.info('total:', total)
+
   const paginationConfig: TablePaginationConfig = {
-    total: 100,
+    total,
     current: !isEmpty(pagination?.page) ? Number(pagination?.page) : 1,
     pageSize: !isEmpty(pagination?.limit) ? Number(pagination?.limit) : 20
   }
