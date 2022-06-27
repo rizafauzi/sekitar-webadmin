@@ -54,7 +54,7 @@ export const patchDeleteOrder = (cartId: string) =>
     path: `/api/v1/courier/order/cancel/${cartId}`,
     method: 'PATCH',
     headers: {
-      Authorization: 'bearer e5dec26680524f7bde132a7381aa7d6da3da13e8'
+      access_token: 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
     }
   })
 

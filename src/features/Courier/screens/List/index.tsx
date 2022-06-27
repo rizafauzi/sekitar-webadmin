@@ -5,11 +5,11 @@
 import React from 'react'
 import qs from 'query-string'
 
-import Button from '@components/atoms/Button'
 import ListLayout from '@components/organisms/ListLayout'
 
 // import { IMerchant } from '@features/Merchant/Merchant.type'
 import { useLocation } from 'react-router-dom'
+import AddCourier from '@features/Courier/components/AddCourier'
 import { ICourier } from '../../Courier.type'
 import { useFetchCourierList } from '../../hooks'
 import { columnMerchant } from './enum'
@@ -30,13 +30,12 @@ const CourierPage: React.FC = () => {
       <ListLayout
         title="Manage Kurir"
         total={0}
-        isSearch
         source={{
           isError,
           isLoading,
           data: data as ICourier[] | undefined
         }}
-        extendButton={[<Button>Export to CSV</Button>]}
+        extendButton={[<AddCourier />]}
         columns={columnMerchant}
       />
     </div>

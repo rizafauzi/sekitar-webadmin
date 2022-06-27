@@ -56,3 +56,8 @@ export interface ICourier {
   is_active: number
   phone_number: string
 }
+
+export interface ICourierPayload {
+  area: string
+  name: string
+}

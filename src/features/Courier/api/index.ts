@@ -4,7 +4,7 @@
 
 import { apiRequest } from '@configs/axios'
 // import clearEmptyObject from '@utils/object-utils'
-import { IMerchant } from '../Courier.type'
+import { ICourierPayload, IMerchant } from '../Courier.type'
 
 export interface IListParams {
   page: number
@@ -43,7 +43,25 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
     bodyRequest
   })
 
-export default getStoreById
+export const postAddCourier = (bodyRequest: ICourierPayload) =>
+  apiRequest({
+    path: '/api/v1/courier',
+    method: 'POST',
+    bodyRequest
+  })
+
+export const patchEditCourier = (id: number, bodyRequest: ICourierPayload) =>
+  apiRequest({
+    path: `/api/v1/courier/${id}`,
+    method: 'POST',
+    bodyRequest
+  })
+
+export const deleteCourier = (id: number) =>
+  apiRequest({
+    path: `/api/v1/courier/${id}`,
+    method: 'DELETE'
+  })
 
 // https://api.setoko.co
 

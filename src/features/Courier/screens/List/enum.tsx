@@ -29,11 +29,11 @@ export const columnMerchant = [
     render: (_: null, { phone_number }: ICourier) => <span>{phone_number}</span>
   },
   {
+    key: 'id',
     width: '20em',
-    key: 'path',
     title: 'Action',
-    dataIndex: 'path',
-    render: (data: string) => <ActionButton path={data} />
+    dataIndex: 'id',
+    render: (_: null, data: ICourier) => <ActionButton data={data} />
   }
 ]
 
