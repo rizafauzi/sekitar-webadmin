@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons'
 
 import SekitarLogo from '../../../assets/images/logo-white.png'
-import { Container } from './Sidebar.style'
+import { Container, Wrapper } from './Sidebar.style'
 
 // import SidebarList from './enum'
 
@@ -30,53 +30,55 @@ const Sidebar = () => {
     <div>
       {isOpen && (
         <Container>
-          <Sider
-            width={226}
-            style={{
-              height: 'calc(100vh - 4em)',
-              background: 'white'
-            }}
-          >
-            <div className="p-10">
-              <img src={SekitarLogo} alt="sekitar-logo" />
-            </div>
-            <Menu
-              mode="inline"
+          <Wrapper>
+            <Sider
+              width={226}
               style={{
-                background: 'transparent',
-                borderRight: 0
+                height: 'calc(100vh - 4em)',
+                background: 'white'
               }}
             >
-              {/* <Menu.Item key="dashboard" icon={<HomeOutlined />}>
+              <div className="p-10">
+                <img src={SekitarLogo} alt="sekitar-logo" />
+              </div>
+              <Menu
+                mode="inline"
+                style={{
+                  background: 'transparent',
+                  borderRight: 0
+                }}
+              >
+                {/* <Menu.Item key="dashboard" icon={<HomeOutlined />}>
                 <Link to="/dashboard">Dashboard</Link>
               </Menu.Item> */}
-              {role === 'admin' && (
-                <>
-                  <Menu.Item key="merchants" icon={<HomeOutlined />}>
-                    <Link to="/merchants">Merchants</Link>
-                  </Menu.Item>
-                  <Menu.Item key="categories" icon={<PieChartOutlined />}>
-                    <Link to="/categories">Product Categories</Link>
-                  </Menu.Item>
-                </>
-              )}
+                {role === 'admin' && (
+                  <>
+                    <Menu.Item key="merchants" icon={<HomeOutlined />}>
+                      <Link to="/merchants">Merchants</Link>
+                    </Menu.Item>
+                    <Menu.Item key="categories" icon={<PieChartOutlined />}>
+                      <Link to="/categories">Product Categories</Link>
+                    </Menu.Item>
+                  </>
+                )}
 
-              {role === 'courier' && (
-                <>
-                  <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
-                    <Link to="/orders">Daftar Pesanan</Link>
-                  </Menu.Item>
-                  <Menu.Item key="couriers" icon={<UserOutlined />}>
-                    <Link to="/couriers">Daftar Kurir</Link>
-                  </Menu.Item>
-                </>
-              )}
+                {role === 'courier' && (
+                  <>
+                    <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
+                      <Link to="/orders">Daftar Pesanan</Link>
+                    </Menu.Item>
+                    <Menu.Item key="couriers" icon={<UserOutlined />}>
+                      <Link to="/couriers">Daftar Kurir</Link>
+                    </Menu.Item>
+                  </>
+                )}
 
-              {/* <Menu.Item key="master-data" icon={<UserOutlined />}>
+                {/* <Menu.Item key="master-data" icon={<UserOutlined />}>
                 <Link to="/master-data">Master Data</Link>
               </Menu.Item> */}
-            </Menu>
-          </Sider>
+              </Menu>
+            </Sider>
+          </Wrapper>
         </Container>
       )}
     </div>

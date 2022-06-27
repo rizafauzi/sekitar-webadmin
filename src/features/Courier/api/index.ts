@@ -3,6 +3,7 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 
 import { apiRequest } from '@configs/axios'
+import sekitarEnv from '@utils/ENV'
 // import clearEmptyObject from '@utils/object-utils'
 import { ICourierPayload, IMerchant } from '../Courier.type'
 
@@ -40,21 +41,30 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
   apiRequest({
     path: `/api/dashboard/stores_update/${id}`,
     method: 'POST',
-    bodyRequest
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.accessToken
+    }
   })
 
 export const postAddCourier = (bodyRequest: ICourierPayload) =>
   apiRequest({
     path: '/api/v1/courier',
     method: 'POST',
-    bodyRequest
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.accessToken
+    }
   })
 
 export const patchEditCourier = (id: number, bodyRequest: ICourierPayload) =>
   apiRequest({
     path: `/api/v1/courier/${id}`,
     method: 'POST',
-    bodyRequest
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.accessToken
+    }
   })
 
 export const deleteCourier = (id: number) =>
@@ -67,7 +77,10 @@ export const patchCourierState = (id: number, bodyRequest: { is_active: number }
   apiRequest({
     path: `/api/v1/courier/state/${id}`,
     method: 'DELETE',
-    bodyRequest
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.accessToken
+    }
   })
 
 // https://api.setoko.co

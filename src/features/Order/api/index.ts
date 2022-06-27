@@ -3,8 +3,8 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 
 import { apiRequest } from '@configs/axios'
+import sekitarEnv from '@utils/ENV'
 // import clearEmptyObject from '@utils/object-utils'
-import { IMerchant } from '../Order.type'
 
 export interface IListParams {
   page: number
@@ -36,17 +36,16 @@ export const getTotalOrder = () =>
     method: 'GET'
   })
 
-export const getOrderDetail = (cartId: string) =>
+export const getDeliveryDetail = (cartId: string) =>
   apiRequest({
     path: `/api/v1/courier/order/${cartId}`,
     method: 'GET'
   })
 
-export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
+export const getOrderDetail = (cartId: string) =>
   apiRequest({
-    path: `/api/dashboard/stores_update/${id}`,
-    method: 'POST',
-    bodyRequest
+    path: `/api/v1/courier/order/cta/${cartId}`,
+    method: 'GET'
   })
 
 export const patchDeleteOrder = (cartId: string) =>
@@ -54,7 +53,7 @@ export const patchDeleteOrder = (cartId: string) =>
     path: `/api/v1/courier/order/cancel/${cartId}`,
     method: 'PATCH',
     headers: {
-      access_token: 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
+      access_token: sekitarEnv.accessToken
     }
   })
 
@@ -64,6 +63,6 @@ export const patchDispatchCourier = (cartId: string, bodyRequest: { id: number }
     method: 'PATCH',
     bodyRequest,
     headers: {
-      access_token: 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
+      access_token: sekitarEnv.accessToken
     }
   })

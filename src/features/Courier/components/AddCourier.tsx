@@ -79,7 +79,7 @@ const AddCourier: React.FC = () => {
         <Input value={payload.name} onChange={event => handleChange(event, 'name')} />
         <div className="mt-4" />
         <span>Area</span>
-        <Input value={payload.name} onChange={event => handleChange(event, 'area')} />
+        <Input value={payload.area} onChange={event => handleChange(event, 'area')} />
       </Modal>
     </>
   )

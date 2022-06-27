@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   z-index: 100;
+  position: relative;
   /* height: 4.5em;
   width: 100%;
   display: flex;
@@ -11,9 +12,8 @@ export const Container = styled.div`
   align-items: center;
   border-bottom: solid 1px #f2f2f2;
   justify-content: space-between; */
-  width: 100%;
+  width: 16em;
   height: 100vh;
-  background: linear-gradient(135deg, #03c8dd 0%, #00ecae 100%);
   /* transform: rotate(-180deg); */
 
   aside {
@@ -53,6 +53,14 @@ export const Container = styled.div`
       }
     }
   }
+`
+
+export const Wrapper = styled.div`
+  top: 0;
+  left: 0;
+  height: 100vh;
+  position: fixed;
+  background: linear-gradient(135deg, #03c8dd 0%, #00ecae 100%);
 `
 
 export const MenuWrapper = styled.div`
