@@ -52,7 +52,10 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
 export const patchDeleteOrder = (cartId: string) =>
   apiRequest({
     path: `/api/v1/courier/order/cancel/${cartId}`,
-    method: 'PATCH'
+    method: 'PATCH',
+    headers: {
+      Authorization: 'bearer e5dec26680524f7bde132a7381aa7d6da3da13e8'
+    }
   })
 
 // https://api.setoko.co

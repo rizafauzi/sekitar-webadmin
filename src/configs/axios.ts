@@ -41,7 +41,7 @@ const BASE_URL = 'https://api.setoko.co'
 export const apiRequest = (arguments_: ApiRequestProperties): AxiosPromise => {
   const { method, bodyRequest, params, path, url, timeout, headers } = arguments_
   const baseUrl = url || (BASE_URL as string)
-  // const token = Cookies.get('token') as string
+  // const token = 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json'

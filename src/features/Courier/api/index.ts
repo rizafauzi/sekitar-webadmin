@@ -4,7 +4,7 @@
 
 import { apiRequest } from '@configs/axios'
 // import clearEmptyObject from '@utils/object-utils'
-import { IMerchant } from '../Merchant.type'
+import { IMerchant } from '../Courier.type'
 
 export interface IListParams {
   page: number
@@ -19,9 +19,9 @@ export const getStoreById = (id: string) =>
     method: 'GET'
   })
 
-export const getOrderList = ({ limit, page, status }: IListParams) =>
+export const getCourierList = ({ limit, page, status }: IListParams) =>
   apiRequest({
-    path: '/api/v1/courier/order',
+    path: '/api/v1/courier',
     method: 'GET',
     params: {
       p: page,

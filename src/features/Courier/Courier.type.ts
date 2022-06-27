@@ -49,13 +49,10 @@ export interface IMerchant {
   user_id: number
 }
 
-export interface IOrder {
-  date: string
-  hour: string
+export interface ICourier {
+  id: number
   area: string
-  cart_id: string
-  order_state: string
-  action: string[]
-  courier_id: string
-  courier_name: string
+  name: string
+  is_active: number
+  phone_number: string
 }

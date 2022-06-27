@@ -7,6 +7,7 @@ import OrderPage from '@features/Order'
 import Dashboard from '@features/Dashboard'
 import MerchantPage from '@features/Merchant'
 import CategoryPage from '@features/Categories'
+import CourierPage from '@features/Courier/screens/List'
 import OrderDetailPage from '@features/Order/screens/Detail'
 import CategoryProductDetail from '@features/Categories/screens/Detail'
 import MasterDataPage from '@features/MasterData'
@@ -69,7 +70,7 @@ const AppRouter: React.FC = () => {
               <OrderDetailPage />
             </Route>
             <Route path="/couriers">
-              <MasterDataPage />
+              <CourierPage />
             </Route>
           </Switch>
         </Layout>
