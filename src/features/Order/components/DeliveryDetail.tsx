@@ -42,9 +42,9 @@ const DeliveryDetail: React.FC = () => {
     <div>
       <Card title="Detail Pengiriman">
         <TextField label="ID PESANAN">{cart_id}</TextField>
-        <TextField label="NAMA KURIR">{processed_hour}</TextField>
+        <TextField label="NAMA KURIR">{courier_name}</TextField>
         <TextField label="NAMA KURIR">{courier_area}</TextField>
-        <TextField label="DITUGASKAN">{courier_name}</TextField>
+        <TextField label="DITUGASKAN">{processed_hour}</TextField>
         <TextField label="PESANAN DIAMBIL">{shipped_hour}</TextField>
         <TextField label="PESANAN SAMPAI">{completed_hour}</TextField>
         <hr className="mb-6 mt-4" />
