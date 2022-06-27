@@ -9,6 +9,7 @@ import TextField from '@components/atoms/TextField'
 import { useFetchOrderDetail } from '@features/Order/hooks'
 import Button from '@components/atoms/Button'
 import Flex from '@components/atoms/Flex'
+import { Space } from 'antd'
 
 const OrderDetail: React.FC = () => {
   const { pathname } = useLocation()
@@ -88,9 +89,14 @@ const OrderDetail: React.FC = () => {
           </Flex>
         </TextField>
         <hr className="mb-6 mt-4" />
-        <Button variant="secondary" onClick={handleBack}>
-          Kembali
-        </Button>
+        <Space>
+          <Button variant="secondary" onClick={handleBack}>
+            Tugaskan Kurir
+          </Button>
+          <Button variant="secondary" onClick={handleBack}>
+            Ubah Kurir
+          </Button>
+        </Space>
       </Card>
     </div>
   )
