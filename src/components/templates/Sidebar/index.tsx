@@ -3,6 +3,8 @@ import Cookies from 'js-cookie'
 import { Menu, Layout } from 'antd'
 import { Link } from 'react-router-dom'
 import { UserOutlined, HomeOutlined, PieChartOutlined } from '@ant-design/icons'
+
+import SekitarLogo from '../../../assets/images/logo-white.png'
 import { Container } from './Sidebar.style'
 
 // import SidebarList from './enum'
@@ -30,6 +32,9 @@ const Sidebar = () => {
               background: 'white'
             }}
           >
+            <div className="p-10">
+              <img src={SekitarLogo} alt="sekitar-logo" />
+            </div>
             <Menu
               mode="inline"
               style={{
