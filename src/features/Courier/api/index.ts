@@ -63,6 +63,13 @@ export const deleteCourier = (id: number) =>
     method: 'DELETE'
   })
 
+export const patchCourierState = (id: number, bodyRequest: { is_active: number }) =>
+  apiRequest({
+    path: `/api/v1/courier/state/${id}`,
+    method: 'DELETE',
+    bodyRequest
+  })
+
 // https://api.setoko.co
 
 // p=0&c=20&start_date=2022-04-10&end_date=2022-06-20&status=canceled
