@@ -36,9 +36,9 @@ export const getTotalOrder = () =>
     method: 'GET'
   })
 
-export const getOrderDetail = (id: string) =>
+export const getOrderDetail = (cartId: string) =>
   apiRequest({
-    path: `/api/v1/courier/order/${id}`,
+    path: `/api/v1/courier/order/${cartId}`,
     method: 'GET'
   })
 
@@ -49,7 +49,11 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
     bodyRequest
   })
 
-export default getStoreById
+export const patchDeleteOrder = (cartId: string) =>
+  apiRequest({
+    path: `/api/v1/courier/order/cancel/${cartId}`,
+    method: 'PATCH'
+  })
 
 // https://api.setoko.co
 

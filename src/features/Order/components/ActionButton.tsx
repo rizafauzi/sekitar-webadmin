@@ -1,32 +1,29 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import React, { useState } from 'react'
-import { Dropdown, Menu, Modal, Space } from 'antd'
+import { Dropdown, Menu } from 'antd'
 
 import Button from '@components/atoms/Button'
 import { useHistory } from 'react-router-dom'
-import Flex from '@components/atoms/Flex'
+import DeleteOrderModal from './DeleteOrderModal'
+import EditCourierModal from './EditCourierModal'
 
 const ActionButton: React.FC<{ cartId: string }> = ({ cartId }) => {
   const history = useHistory()
   const [showCancelModal, setShowCancelModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
 
-  console.info('path:', cartId)
   const toggleCancelModal = () => {
     setShowCancelModal(!showCancelModal)
+  }
+
+  const toggleEditModal = () => {
+    setShowEditModal(!showEditModal)
   }
 
   const handleSelected = () => {
     console.info('HIYAA')
     history.push(`/orders/${cartId}`)
   }
-
-  const handleEditCourier = () => {
-    console.info('HIYA')
-  }
-
-  // const handleCancelOrder = () => {
-  //   console.info('HIYA')
-  // }
 
   const menu = (
     <Menu
@@ -42,7 +39,7 @@ const ActionButton: React.FC<{ cartId: string }> = ({ cartId }) => {
         {
           key: '2',
           label: (
-            <button type="button" className="w-full text-left" onClick={handleEditCourier}>
+            <button type="button" className="w-full text-left" onClick={toggleEditModal}>
               Ubah Kurir
             </button>
           )
@@ -65,26 +62,8 @@ const ActionButton: React.FC<{ cartId: string }> = ({ cartId }) => {
         <Button>Options</Button>
       </Dropdown>
 
-      <Modal
-        centered
-        maskClosable
-        closable={false}
-        visible={showCancelModal}
-        onCancel={toggleCancelModal}
-        footer={
-          <Flex justifyContent="center" alignItems="center">
-            <Space>
-              <Button>Options</Button>
-              <Button>Options</Button>
-            </Space>
-          </Flex>
-        }
-      >
-        <Flex justifyContent="center" alignItems="center" flexDirection="column">
-          <h2 className="font-bold">Apakah kamu yakin akan membatalkan pesanan?</h2>
-          <h3>Pesanan yang telah dibatalkan tidak dapat diaktifkan kembali</h3>
-        </Flex>
-      </Modal>
+      <EditCourierModal cartId={cartId} showModal={showEditModal} toggle={toggleEditModal} />
+      <DeleteOrderModal cartId={cartId} showModal={showCancelModal} toggle={toggleCancelModal} />
     </>
   )
 }

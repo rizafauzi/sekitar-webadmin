@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const TableWrapper = styled.div`
   width: 100%;
   z-index: 100;
+  min-height: 60vh;
   border-radius: 10em;
 
   .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table {

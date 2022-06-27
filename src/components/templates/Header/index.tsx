@@ -8,7 +8,7 @@ import { Menu, Dropdown, Space } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 
-import SekitarLogo from '../../../assets/images/sekitar.png'
+// import SekitarLogo from '../../../assets/images/sekitar.png'
 import SekitarAvatar from '../../../assets/images/sekitar-logo.png'
 
 import { Container, Avatar } from './Header.style'
@@ -24,7 +24,11 @@ const Header: React.FC = () => {
 
   return (
     <Container>
-      <img src={SekitarLogo} alt="sekitar-logo" className="h-10" />
+      {/* <img src={SekitarLogo} alt="sekitar-logo" className="h-10" /> */}
+
+      <div className="pb-2 pt-6">
+        <h2 className="font-bold">Daftar Pesanan</h2>
+      </div>
       <Dropdown
         overlay={
           <Menu

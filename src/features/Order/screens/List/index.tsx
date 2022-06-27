@@ -43,10 +43,6 @@ const OrderPage: React.FC = () => {
 
   return (
     <div>
-      <div className="py-2">
-        <h2 className="font-bold">Daftar Pesanan</h2>
-      </div>
-
       <TableWrapper>
         <OrderCard label="Semua Pesanan" total={totalData?.all} value="all" />
         <OrderCard label="Pesanan Baru" total={totalData?.created} value="created" />
