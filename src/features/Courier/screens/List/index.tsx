@@ -33,7 +33,7 @@ const CourierPage: React.FC = () => {
         source={{
           isError,
           isLoading,
-          data: data as ICourier[] | undefined
+          data: data as ICourier[]
         }}
         extendButton={[<AddCourier />]}
         columns={columnMerchant}
