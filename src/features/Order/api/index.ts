@@ -58,6 +58,12 @@ export const patchDeleteOrder = (cartId: string) =>
     }
   })
 
-// https://api.setoko.co
-
-// p=0&c=20&start_date=2022-04-10&end_date=2022-06-20&status=canceled
+export const patchDispatchCourier = (cartId: string, bodyRequest: { id: number }) =>
+  apiRequest({
+    path: `https://api.setoko.co/api/v1/courier/dispatch/${cartId}`,
+    method: 'PATCH',
+    bodyRequest,
+    headers: {
+      access_token: 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
+    }
+  })

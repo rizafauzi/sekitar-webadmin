@@ -2,14 +2,15 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 
 import React, { useState } from 'react'
-import { Modal, Space } from 'antd'
+import { Modal, Select, Space } from 'antd'
 import { toast } from 'react-toastify'
 
 import { LoadingOutlined } from '@ant-design/icons'
 
 import Button from '@components/atoms/Button'
 import Flex from '@components/atoms/Flex'
-import { patchDeleteOrder } from '../api'
+import { useFetchCourierList } from '@features/Courier/hooks'
+import { patchDispatchCourier } from '../api'
 
 interface IEditCourierModal {
   cartId: string
@@ -18,23 +19,36 @@ interface IEditCourierModal {
 }
 
 const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, toggle }) => {
+  const { Option } = Select
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedCourier, setSelectedCourier] = useState<number | null>(null)
+
+  const { data: courierData } = useFetchCourierList({
+    page: 1,
+    limit: 100
+  })
 
   const handleDeleteOrder = async () => {
-    setIsLoading(true)
-    try {
-      const response = await patchDeleteOrder(cartId)
-      setIsLoading(false)
-      toggle()
-      if (response) {
-        toast.success('Delete Order Sukses')
+    if (selectedCourier) {
+      setIsLoading(true)
+      try {
+        const response = await patchDispatchCourier(cartId, { id: selectedCourier })
+        setIsLoading(false)
+        toggle()
+        if (response) {
+          toast.success('Delete Order Sukses')
+        }
+      } catch {
+        console.error('Something wrong, try again later')
+        toggle()
+        setIsLoading(false)
+        toast.error('Oops, terjadi kesalahan sistem. Coba lagi nanti.')
       }
-    } catch {
-      console.error('Something wrong, try again later')
-      toggle()
-      setIsLoading(false)
-      toast.error('Oops, terjadi kesalahan sistem. Coba lagi nanti.')
     }
+  }
+
+  const handleChange = (value: number) => {
+    setSelectedCourier(value)
   }
 
   return (
@@ -42,8 +56,9 @@ const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, togg
       centered
       maskClosable
       closable={false}
-      visible={showModal}
       onCancel={toggle}
+      title="Ubah Kurir"
+      visible={showModal}
       footer={
         <Flex justifyContent="center" alignItems="center">
           <Space>
@@ -51,16 +66,18 @@ const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, togg
               Batal
             </Button>
             <Button onClick={handleDeleteOrder} className="w-32">
-              {isLoading ? <LoadingOutlined /> : 'Ya'}
+              {isLoading ? <LoadingOutlined /> : 'Simpan'}
             </Button>
           </Space>
         </Flex>
       }
     >
-      <Flex justifyContent="center" alignItems="center" flexDirection="column">
-        <h2 className="font-bold">Apakah kamu yakin akan membatalkan pesanan?</h2>
-        <h3>Pesanan yang telah dibatalkan tidak dapat diaktifkan kembali</h3>
-      </Flex>
+      <span className="text-[#BDBDBD]">Pilih kurir yang baru untuk melakukan tugas</span>
+      <Select defaultValue={null} style={{ width: '100%' }} onChange={handleChange}>
+        {courierData?.map(dt => (
+          <Option value={dt.id}>{dt.name}</Option>
+        ))}
+      </Select>
     </Modal>
   )
 }
