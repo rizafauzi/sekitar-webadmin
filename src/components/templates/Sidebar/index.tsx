@@ -2,7 +2,12 @@
 import Cookies from 'js-cookie'
 import { Menu, Layout } from 'antd'
 import { Link } from 'react-router-dom'
-import { UserOutlined, HomeOutlined, PieChartOutlined } from '@ant-design/icons'
+import {
+  UserOutlined,
+  HomeOutlined,
+  PieChartOutlined,
+  UnorderedListOutlined
+} from '@ant-design/icons'
 
 import SekitarLogo from '../../../assets/images/logo-white.png'
 import { Container } from './Sidebar.style'
@@ -58,7 +63,7 @@ const Sidebar = () => {
 
               {role === 'courier' && (
                 <>
-                  <Menu.Item key="orders" icon={<UserOutlined />}>
+                  <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
                     <Link to="/orders">Daftar Pesanan</Link>
                   </Menu.Item>
                   <Menu.Item key="couriers" icon={<UserOutlined />}>
