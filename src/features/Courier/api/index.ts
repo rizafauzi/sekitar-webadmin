@@ -60,7 +60,7 @@ export const postAddCourier = (bodyRequest: ICourierPayload) =>
 export const patchEditCourier = (id: number, bodyRequest: ICourierPayload) =>
   apiRequest({
     path: `/api/v1/courier/${id}`,
-    method: 'POST',
+    method: 'PATCH',
     bodyRequest,
     headers: {
       access_token: sekitarEnv.accessToken
@@ -76,7 +76,7 @@ export const deleteCourier = (id: number) =>
 export const patchCourierState = (id: number, bodyRequest: { is_active: number }) =>
   apiRequest({
     path: `/api/v1/courier/state/${id}`,
-    method: 'DELETE',
+    method: 'PATCH',
     bodyRequest,
     headers: {
       access_token: sekitarEnv.accessToken
