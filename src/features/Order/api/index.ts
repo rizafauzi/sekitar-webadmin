@@ -59,7 +59,7 @@ export const patchDeleteOrder = (cartId: string) =>
 
 export const patchDispatchCourier = (cartId: string, bodyRequest: { id: number }) =>
   apiRequest({
-    path: `https://api.setoko.co/api/v1/courier/dispatch/${cartId}`,
+    path: `/api/v1/courier/dispatch/${cartId}`,
     method: 'PATCH',
     bodyRequest,
     headers: {

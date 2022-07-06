@@ -12,13 +12,13 @@ import Flex from '@components/atoms/Flex'
 import { useFetchCourierList } from '@features/Courier/hooks'
 import { patchDispatchCourier } from '../api'
 
-interface IDispatchCourierModal {
+interface IEditCourierModal {
   cartId: string
   showModal: boolean
   toggle: () => void
 }
 
-const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showModal, toggle }) => {
+const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, toggle }) => {
   const { Option } = Select
   const [isLoading, setIsLoading] = useState(false)
   const [selectedCourier, setSelectedCourier] = useState<number | null>(null)
@@ -57,7 +57,7 @@ const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showMod
       maskClosable
       closable={false}
       onCancel={toggle}
-      title="Tugaskan Kurir"
+      title="Ubah Kurir"
       visible={showModal}
       footer={
         <Flex justifyContent="center" alignItems="center">
@@ -82,4 +82,4 @@ const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showMod
   )
 }
 
-export default DispatchCourierModal
+export default EditCourierModal
