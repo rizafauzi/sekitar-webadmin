@@ -2,7 +2,7 @@ import CategoriesButton from '@features/Categories/components/Button'
 
 const columnMerchant = [
   {
-    width: '3em',
+    width: '5em',
     title: 'No',
     dataIndex: 'index',
     key: 'index'
@@ -20,12 +20,18 @@ const columnMerchant = [
     )
   },
   {
-    title: 'Category Name',
+    title: 'Subcategory Name',
     dataIndex: 'name',
     colSpan: 2,
     align: 'left',
     className: 'max-w-20',
     key: 'name'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    align: 'left',
+    key: 'description'
   },
   {
     width: '18em',
@@ -39,7 +45,7 @@ const columnMerchant = [
     title: 'Action',
     dataIndex: 'id',
     align: 'center',
-    render: (props: number) => <CategoriesButton id={props} />
+    render: (id: number) => <CategoriesButton id={id} />
   }
 ]
 
