@@ -48,6 +48,12 @@ export const getOrderDetail = (cartId: string) =>
     method: 'GET'
   })
 
+export const getExportCSV = (params: string) =>
+  apiRequest({
+    path: `/api/v1/courier/order/csv?${params}`,
+    method: 'GET'
+  })
+
 export const patchDeleteOrder = (cartId: string) =>
   apiRequest({
     path: `/api/v1/courier/order/cancel/${cartId}`,

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import qs from 'query-string'
 
 import ListLayout from '@components/organisms/ListLayout'
@@ -10,8 +11,8 @@ import ListLayout from '@components/organisms/ListLayout'
 import { useLocation } from 'react-router-dom'
 import { IOrder } from '@features/Order/Order.type'
 import OrderCard from '@features/Order/components/OrderCard'
-import Button from '@components/atoms/Button'
-import styled from 'styled-components'
+
+import ExportCsv from '@features/Order/components/ExportCSVModal'
 import { useFetchOrderList, useFetchTotalOrder } from '../../hooks'
 import { columnMerchant } from './enum'
 
@@ -59,7 +60,7 @@ const OrderPage: React.FC = () => {
           isLoading,
           data: data as IOrder[] | undefined
         }}
-        extendButton={[<Button>Export to CSV</Button>]}
+        extendButton={[<ExportCsv />]}
         columns={columnMerchant}
       />
     </div>

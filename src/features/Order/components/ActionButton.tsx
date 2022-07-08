@@ -44,7 +44,7 @@ const ActionButton: React.FC<{ cartId: string; state: string }> = ({ cartId, sta
     },
     {
       key: '2',
-      states: ['Dibatalkan', 'Pesanan Baru'],
+      states: ['Pesanan Baru'],
       component: (
         <button type="button" className="w-full text-left" onClick={toggleDispatchModal}>
           Tugaskan Kurir

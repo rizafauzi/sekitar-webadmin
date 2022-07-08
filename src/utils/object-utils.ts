@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { isEmpty } from 'lodash'
 
-export const clearEmptyObject = (object: { [x: string]: string | string[] | undefined }) => {
-  const cleanedObject: { [x: string]: string | string[] | undefined } = {}
+export const clearEmptyObject = (object: {
+  [x: string]: number | string | string[] | undefined | any
+}) => {
+  const cleanedObject: { [x: string]: string | string[] | undefined | any } = {}
   Object.keys(object).forEach((key: string) => {
     if (
-      isEmpty(object[key]) ||
+      (isEmpty(object[key]) && typeof object[key] !== 'number') ||
       object[key] === '[]' ||
-      !object[key] ||
       object[key] === 'undefined'
     ) {
       return
