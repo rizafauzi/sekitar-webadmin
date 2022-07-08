@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
+import Button from '@components/atoms/Button'
 import { EditOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 
@@ -11,13 +11,13 @@ const CategoriesButton: React.FC<CategoriesButtonProperties> = props => {
   const { id } = props
   const history = useHistory()
 
-  const onEditCategoryProduct = (idCategory: number) => {
-    history.push(`/categories/${idCategory}`)
+  const onEditCategoryProduct = () => {
+    if (id >= 0) history.push(`/categories/${id}`)
   }
 
   return (
     <div className="flex flex-row items-center justify-center">
-      <Button type="primary" onClick={() => onEditCategoryProduct(id)}>
+      <Button onClick={() => onEditCategoryProduct()}>
         <EditOutlined />
       </Button>
     </div>

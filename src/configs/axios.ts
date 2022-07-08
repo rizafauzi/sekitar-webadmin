@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import axios, { Method, AxiosRequestConfig, AxiosPromise } from 'axios'
+import sekitarEnv from '@utils/ENV'
 // import Cookies from 'js-cookie'
 
 type ApiRequestProperties = {
@@ -44,7 +45,8 @@ export const apiRequest = (arguments_: ApiRequestProperties): AxiosPromise => {
   // const token = 'e5dec26680524f7bde132a7381aa7d6da3da13e8'
   const config: AxiosRequestConfig = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      access_token: sekitarEnv.accessToken
       // Authorization: `bearer ${token}`
     },
     url: `${baseUrl}${path}`,

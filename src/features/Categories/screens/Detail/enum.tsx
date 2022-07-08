@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import CategoriesButton from '@features/Categories/components/Button'
+import { ICategoryProduct } from '@features/Categories/Categories.type'
 
 const columnMerchant = [
   {
@@ -8,24 +11,17 @@ const columnMerchant = [
     key: 'index'
   },
   {
-    title: '',
-    dataIndex: 'images',
-    key: 'images',
-    className: 'w-24',
-    colSpan: 0,
-    render: (props: string, index: number) => (
-      <div className="w-max flex flex-row justify-center">
-        <img className="w-20 h-20" src={props} alt={String(index)} />
-      </div>
-    )
-  },
-  {
     title: 'Subcategory Name',
     dataIndex: 'name',
-    colSpan: 2,
     align: 'left',
     className: 'max-w-20',
-    key: 'name'
+    key: 'name',
+    render: (value: string, data: ICategoryProduct) => (
+      <div className="w-max flex flex-row justify-center items-center gap-4">
+        <img className="w-16 h-16" src={data.images} alt={value} />
+        <span>{value}</span>
+      </div>
+    )
   },
   {
     title: 'Description',
@@ -45,7 +41,7 @@ const columnMerchant = [
     title: 'Action',
     dataIndex: 'id',
     align: 'center',
-    render: (props: number) => <CategoriesButton id={props} />
+    render: (idCategory: number) => <CategoriesButton id={idCategory} />
   }
 ]
 
