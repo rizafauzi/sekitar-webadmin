@@ -35,7 +35,7 @@ const ActionButton: React.FC<{ cartId: string; state: string }> = ({ cartId, sta
   const optionList = [
     {
       key: '1',
-      states: ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Selesai'],
+      states: ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Dikirim', 'Selesai'],
       component: (
         <button type="button" className="w-full text-left" onClick={handleSelected}>
           Detail Pengiriman

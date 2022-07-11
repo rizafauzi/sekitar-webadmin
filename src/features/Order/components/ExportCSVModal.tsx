@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable prefer-const */
+/* eslint-disable no-continue */
+/* eslint-disable unicorn/no-for-loop */
 /* eslint-disable unicorn/prefer-spread */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable sonarjs/no-unused-collection */
@@ -12,8 +17,10 @@
 // import qs from 'query-string'
 import qs from 'query-string'
 import { toast } from 'react-toastify'
+import isEmpty from 'lodash/isEmpty'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { DatePicker, DatePickerProps, Modal, Select, Space } from 'antd'
+import { CSVLink, CSVDownload } from 'react-csv'
 // import { toast } from 'react-toastify'
 
 import { LoadingOutlined } from '@ant-design/icons'
@@ -66,11 +73,19 @@ const ExportCsv: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [params, setParams] = useState<IParams>(defaultParams)
+  const [downloadData, setDownloadData] = useState(null)
+  const [error, setError] = useState('')
 
   const toggle = () => {
     setIsLoading(false)
     setShowModal(!showModal)
   }
+
+  useEffect(() => {
+    if (showModal && downloadData) {
+      setDownloadData(null)
+    }
+  }, [showModal])
 
   useEffect(() => {
     setParams(defaultParams)
@@ -83,41 +98,70 @@ const ExportCsv: React.FC = () => {
     })
   }
 
-  const handleExportCSV = async () => {
-    try {
-      console.info('params;', clearEmptyObject(params))
-      const payload = qs.stringify(clearEmptyObject(params))
-      const response: any = await getExportCSV(payload)
-      if (response) {
-        console.info('response:', response?.data)
-        // const sanitizedBody = response?.data
-        //   .replace('date,hour,cart_id,order_state,courier_id,courier_name,courier_area', '')
-        //   .split(',')
-
-        // const finalBody = []
-        // let array: any[] = []
-        // sanitizedBody.forEach((dt: any, index: number) => {
-        //   if (index % 7 === 0) {
-        //     array = []
-        //   }
-        // })
-        // const header = [
-        //   'date',
-        //   'hour',
-        //   'cart_id',
-        //   'order_state',
-        //   'courier_id',
-        //   'courier_name',
-        //   'courier_area'
-        // ]
-      }
-    } catch {
-      console.error('Something wrong')
-      toast.error('Something wrong')
+  const validate = () => {
+    const { c, end_date, p, start_date, status } = params
+    if (!p) {
+      setError('Page is required')
+      return false
     }
-    setIsLoading(false)
-    setParams(defaultParams)
-    toggle()
+    if (!c) {
+      setError('Limit is required')
+      return false
+    }
+    if (!start_date) {
+      setError('Start Date is required')
+      return false
+    }
+    if (!end_date) {
+      setError('End Date is required')
+      return false
+    }
+    if (!status) {
+      setError('Status is required')
+      return false
+    }
+    return true
+  }
+
+  const handleExportCSV = async () => {
+    if (validate()) {
+      try {
+        const payload = qs.stringify(clearEmptyObject(params))
+        const response: any = await getExportCSV(payload)
+        if (response) {
+          const header = [
+            'date',
+            'hour',
+            'cart_id',
+            'order_state',
+            'courier_id',
+            'courier_name',
+            'courier_area'
+          ]
+          const sanitizedBody = response?.data
+            .replace('date,hour,cart_id,order_state,courier_id,courier_name,courier_area', '')
+            .replaceAll('\n', '')
+            .split(',')
+          let finalPayload = [header]
+          let temp = []
+          for (let i = 1; i < sanitizedBody.length; i++) {
+            temp.push(sanitizedBody[i - 1])
+            if (i % 6 === 0) {
+              finalPayload.push(temp)
+              temp = []
+            }
+          }
+
+          setDownloadData(finalPayload as any)
+        }
+      } catch {
+        console.error('Something wrong')
+        toast.error('Something wrong')
+      }
+      setIsLoading(false)
+      setParams(defaultParams)
+      toggle()
+    }
   }
 
   const onStartDateChange: DatePickerProps['onChange'] = (_, dateString) => {
@@ -144,60 +188,70 @@ const ExportCsv: React.FC = () => {
   return (
     <div>
       <Button onClick={toggle}>Export to CSV</Button>
-      <Modal
-        centered
-        maskClosable
-        closable={false}
-        onCancel={toggle}
-        title="Export CSV"
-        visible={showModal}
-        footer={
-          <Flex justifyContent="center" alignItems="center">
-            <Space>
-              <Button onClick={toggle} className="w-32" variant="secondary">
-                Batal
-              </Button>
-              <Button onClick={handleExportCSV} className="w-32">
-                {isLoading ? <LoadingOutlined /> : 'Export'}
-              </Button>
-            </Space>
-          </Flex>
-        }
-      >
-        <h4 className="font-bold">Filter by:</h4>
-        <Space direction="vertical" className="w-full">
-          <div>
-            <h3>Page</h3>
-            <Input placeholder="Input Page" onChange={value => handleChange('p', value)} />
-          </div>
-          <div>
-            <h3>Limit</h3>
-            <Input placeholder="Input Limit" onChange={value => handleChange('c', value)} />
-          </div>
-          <div>
-            <h3>Start Date</h3>
-            <DatePicker className="w-full" onChange={onStartDateChange} />
-          </div>
-          <div>
-            <h3>End Date</h3>
-            <DatePicker className="w-full" onChange={onEndDateChange} />
-          </div>
-          <div>
-            <h3>Status</h3>
-            <Select
-              showSearch
-              className="w-full"
-              placeholder="Select Status"
-              optionFilterProp="children"
-              onChange={onStatusChange}
-            >
-              {statusOption.map(dt => (
-                <Option value={dt.key}>{dt.label}</Option>
-              ))}
-            </Select>
-          </div>
-        </Space>
-      </Modal>
+      {downloadData && (
+        <CSVDownload
+          target="_blank"
+          data={downloadData}
+          filename={`export_merchant_${params.start_date}_${params.end_date}`}
+        />
+      )}
+      {showModal && (
+        <Modal
+          centered
+          maskClosable
+          closable={false}
+          onCancel={toggle}
+          title="Export CSV"
+          visible={showModal}
+          footer={
+            <Flex justifyContent="center" alignItems="center">
+              <Space>
+                <Button onClick={toggle} className="w-32" variant="secondary">
+                  Batal
+                </Button>
+                <Button className="w-32" onClick={handleExportCSV}>
+                  {isLoading ? <LoadingOutlined /> : 'Export'}
+                </Button>
+              </Space>
+            </Flex>
+          }
+        >
+          <h4 className="font-bold">Filter by:</h4>
+          <Space direction="vertical" className="w-full">
+            <div>
+              <h3>Page</h3>
+              <Input placeholder="Input Page" onChange={value => handleChange('p', value)} />
+            </div>
+            <div>
+              <h3>Limit</h3>
+              <Input placeholder="Input Limit" onChange={value => handleChange('c', value)} />
+            </div>
+            <div>
+              <h3>Start Date</h3>
+              <DatePicker className="w-full" onChange={onStartDateChange} />
+            </div>
+            <div>
+              <h3>End Date</h3>
+              <DatePicker className="w-full" onChange={onEndDateChange} />
+            </div>
+            <div>
+              <h3>Status</h3>
+              <Select
+                showSearch
+                className="w-full"
+                placeholder="Select Status"
+                optionFilterProp="children"
+                onChange={onStatusChange}
+              >
+                {statusOption.map(dt => (
+                  <Option value={dt.key}>{dt.label}</Option>
+                ))}
+              </Select>
+            </div>
+            {error && <h3 className="text-red-600 mt-6">{error}</h3>}
+          </Space>
+        </Modal>
+      )}
     </div>
   )
 }
