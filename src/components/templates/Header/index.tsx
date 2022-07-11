@@ -15,6 +15,7 @@ import { Container, Avatar } from './Header.style'
 
 const Header: React.FC = () => {
   const history = useHistory()
+  const email = Cookies.get('email')
 
   const handleLogout = () => {
     Cookies.remove('token')
@@ -46,7 +47,7 @@ const Header: React.FC = () => {
             <Avatar>
               <img src={SekitarAvatar} alt="sekitar-logo" />
             </Avatar>
-            zaki@gmail.com
+            {email || '-'}
             <DownOutlined />
           </Space>
         </div>

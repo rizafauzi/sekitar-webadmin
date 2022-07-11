@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
     if (username === hardcodedUsername && password === hardcodedPassword) {
       Cookies.set('token', 'U0VLSVRBUi5JRA==')
       Cookies.set('role', 'admin')
+      Cookies.set('email', 'zaki@gmail.com')
       history.push('/merchants')
       window.location.reload()
     }
@@ -34,6 +35,7 @@ const Dashboard: React.FC = () => {
     if (username === hardcodedCourierUsername && password === hardcodedPassword) {
       Cookies.set('token', 'U0VLSVRBUi5JRA==')
       Cookies.set('role', 'courier')
+      Cookies.set('email', 'courier@gmail.com')
       history.push('/orders?page=1')
       window.location.reload()
     }
