@@ -38,7 +38,7 @@ const AddCourier: React.FC = () => {
       setIsLoading(false)
       toggle()
       if (response) {
-        toast.success('Delete Order Sukses')
+        toast.success('Tambah Kurir Sukses')
       }
     } catch {
       console.error('Something wrong, try again later')

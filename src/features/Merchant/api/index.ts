@@ -33,6 +33,9 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
   apiRequest({
     path: `/api/dashboard/stores_update/${id}`,
     method: 'POST',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    },
     bodyRequest
   })
 

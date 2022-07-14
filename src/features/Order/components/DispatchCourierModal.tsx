@@ -10,6 +10,8 @@ import { LoadingOutlined } from '@ant-design/icons'
 import Button from '@components/atoms/Button'
 import Flex from '@components/atoms/Flex'
 import { useFetchCourierList } from '@features/Courier/hooks'
+import { useHistory, useLocation } from 'react-router-dom'
+import moment from 'moment'
 import { patchDispatchCourier } from '../api'
 
 interface IDispatchCourierModal {
@@ -19,6 +21,8 @@ interface IDispatchCourierModal {
 }
 
 const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showModal, toggle }) => {
+  const history = useHistory()
+  const { pathname, search } = useLocation()
   const { Option } = Select
   const [isLoading, setIsLoading] = useState(false)
   const [selectedCourier, setSelectedCourier] = useState<number | null>(null)
@@ -28,7 +32,7 @@ const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showMod
     limit: 100
   })
 
-  const handleDeleteOrder = async () => {
+  const handleDispatchCourier = async () => {
     if (selectedCourier) {
       setIsLoading(true)
       try {
@@ -36,7 +40,11 @@ const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showMod
         setIsLoading(false)
         toggle()
         if (response) {
-          toast.success('Delete Order Sukses')
+          toast.success('Tugaskan Kurir Sukses')
+          history.replace({
+            pathname,
+            search: `${search}&t=${moment().format('HHmmssSSS')}`
+          })
         }
       } catch {
         console.error('Something wrong, try again later')
@@ -65,7 +73,7 @@ const DispatchCourierModal: React.FC<IDispatchCourierModal> = ({ cartId, showMod
             <Button onClick={toggle} className="w-32" variant="secondary">
               Batal
             </Button>
-            <Button onClick={handleDeleteOrder} className="w-32">
+            <Button onClick={handleDispatchCourier} className="w-32">
               {isLoading ? <LoadingOutlined /> : 'Simpan'}
             </Button>
           </Space>

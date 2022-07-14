@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable unicorn/consistent-function-scoping */
 
+import moment from 'moment'
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { Modal, Select, Space } from 'antd'
-import { toast } from 'react-toastify'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import { LoadingOutlined } from '@ant-design/icons'
 
@@ -20,6 +22,8 @@ interface IEditCourierModal {
 
 const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, toggle }) => {
   const { Option } = Select
+  const history = useHistory()
+  const { pathname, search } = useLocation()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedCourier, setSelectedCourier] = useState<number | null>(null)
 
@@ -36,7 +40,11 @@ const EditCourierModal: React.FC<IEditCourierModal> = ({ cartId, showModal, togg
         setIsLoading(false)
         toggle()
         if (response) {
-          toast.success('Delete Order Sukses')
+          toast.success('Edit Kurir Sukses')
+          history.replace({
+            pathname,
+            search: `${search}&t=${moment().format('HHmmssSSS')}`
+          })
         }
       } catch {
         console.error('Something wrong, try again later')

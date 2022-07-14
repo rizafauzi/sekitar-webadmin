@@ -27,7 +27,7 @@ const DeleteOrderModal: React.FC<IDeleteOrderModal> = ({ cartId, showModal, togg
       setIsLoading(false)
       toggle()
       if (response) {
-        toast.success('Delete Order Sukses')
+        toast.success('Hapus Order Sukses')
       }
     } catch {
       console.error('Something wrong, try again later')

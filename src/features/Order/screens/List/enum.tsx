@@ -49,9 +49,7 @@ export const columnMerchant = [
     key: 'path',
     title: 'Action',
     dataIndex: 'path',
-    render: (_: null, { cart_id, order_state }: IOrder) => (
-      <ActionButton cartId={cart_id} state={order_state} />
-    )
+    render: (_: null, data: IOrder) => <ActionButton item={data} />
   }
 ]
 

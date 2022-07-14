@@ -40,7 +40,7 @@ const AppRouter: React.FC = () => {
         <Layout>
           <Switch>
             <Route exact path="/">
-              <Dashboard />
+              <MerchantPage />
             </Route>
             <Route exact path="/Dashboard">
               <Dashboard />

@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable unicorn/consistent-function-scoping */
-import React, { useState } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import { Dropdown, Menu } from 'antd'
 
 import Button from '@components/atoms/Button'
@@ -8,13 +12,15 @@ import { useHistory } from 'react-router-dom'
 import DeleteOrderModal from './DeleteOrderModal'
 import EditCourierModal from './EditCourierModal'
 import DispatchCourierModal from './DispatchCourierModal'
+import { IOrder } from '../Order.type'
 
-const ActionButton: React.FC<{ cartId: string; state: string }> = ({ cartId, state }) => {
+const ActionButton: React.FC<{ item: IOrder }> = ({ item }) => {
+  const { cart_id, order_state, courier_id } = item
   const history = useHistory()
   const [showCancelModal, setShowCancelModal] = useState(false)
   const [showDispatchModal, setShowDispatchModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-
+  const [buttonOption, setButtonOption] = useState<any[]>([])
   const toggleCancelModal = () => {
     setShowCancelModal(!showCancelModal)
   }
@@ -29,58 +35,62 @@ const ActionButton: React.FC<{ cartId: string; state: string }> = ({ cartId, sta
 
   const handleSelected = () => {
     console.info('HIYAA')
-    history.push(`/orders/${cartId}`)
+    history.push(`/orders/${cart_id}`)
   }
 
-  const optionList = [
-    {
-      key: '1',
-      states: ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Dikirim', 'Selesai'],
-      component: (
-        <button type="button" className="w-full text-left" onClick={handleSelected}>
-          Detail Pengiriman
-        </button>
-      )
-    },
-    {
-      key: '2',
-      states: ['Pesanan Baru'],
-      component: (
-        <button type="button" className="w-full text-left" onClick={toggleDispatchModal}>
-          Tugaskan Kurir
-        </button>
-      )
-    },
-    {
-      key: '2',
-      states: ['Diproses'],
-      component: (
-        <button type="button" className="w-full text-left" onClick={toggleEditModal}>
-          Ubah Kurir
-        </button>
-      )
-    },
-    {
-      key: '3',
-      states: ['Pesanan Baru', 'Diproses'],
-      component: (
-        <button type="button" className="w-full text-left" onClick={toggleCancelModal}>
-          Batalkan Pesanan
-        </button>
-      )
-    }
-  ]
+  console.info('courier_id:', courier_id === '0')
 
-  const menu = (
-    <Menu
-      items={optionList
-        .filter(dt => dt.states.includes(state))
+  useEffect(() => {
+    const options = [
+      {
+        key: '1',
+        states: ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Dikirim', 'Selesai'],
+        component: (
+          <button type="button" className="w-full text-left" onClick={handleSelected}>
+            Detail Pengiriman
+          </button>
+        )
+      },
+      {
+        key: '2',
+        states: courier_id === '0' ? ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Dikirim'] : [],
+        component: (
+          <button type="button" className="w-full text-left" onClick={toggleDispatchModal}>
+            Tugaskan Kurir
+          </button>
+        )
+      },
+      {
+        key: '2',
+        states: courier_id === '0' ? [] : ['Pesanan Baru', 'Diproses', 'Dibatalkan', 'Dikirim'],
+        component: (
+          <button type="button" className="w-full text-left" onClick={toggleEditModal}>
+            Ubah Kurir
+          </button>
+        )
+      },
+      {
+        key: '3',
+        states: ['Pesanan Baru', 'Diproses'],
+        component: (
+          <button type="button" className="w-full text-left" onClick={toggleCancelModal}>
+            Batalkan Pesanan
+          </button>
+        )
+      }
+    ]
+
+    setButtonOption(
+      options
+        .filter(dt => dt.states.includes(order_state))
         .map(data => ({
           key: data.key,
           label: data.component
-        }))}
-    />
-  )
+        }))
+    )
+  }, [courier_id])
+
+  const menu = <Menu items={buttonOption} />
 
   return (
     <>
@@ -88,13 +98,13 @@ const ActionButton: React.FC<{ cartId: string; state: string }> = ({ cartId, sta
         <Button>Options</Button>
       </Dropdown>
 
-      <DispatchCourierModal cartId={cartId} showModal={showEditModal} toggle={toggleEditModal} />
-      <EditCourierModal
-        cartId={cartId}
+      <DispatchCourierModal
+        cartId={cart_id}
         showModal={showDispatchModal}
         toggle={toggleDispatchModal}
       />
-      <DeleteOrderModal cartId={cartId} showModal={showCancelModal} toggle={toggleCancelModal} />
+      <EditCourierModal cartId={cart_id} showModal={showEditModal} toggle={toggleEditModal} />
+      <DeleteOrderModal cartId={cart_id} showModal={showCancelModal} toggle={toggleCancelModal} />
     </>
   )
 }

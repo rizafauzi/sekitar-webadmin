@@ -26,7 +26,7 @@ const DeleteCourier: React.FC<{ courierId: number }> = ({ courierId }) => {
       setIsLoading(false)
       toggle()
       if (response) {
-        toast.success('Delete Order Sukses')
+        toast.success('Hapus Kurir Sukses')
       }
     } catch {
       console.error('Something wrong, try again later')

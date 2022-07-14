@@ -44,7 +44,7 @@ const EditCourier: React.FC<{ data: ICourier }> = ({ data }) => {
       setIsLoading(false)
       toggle()
       if (response) {
-        toast.success('Delete Order Sukses')
+        toast.success('Edit Kurir Sukses')
       }
     } catch {
       console.error('Something wrong, try again later')
