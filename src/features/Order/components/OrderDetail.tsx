@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import Card from '@components/atoms/Card'
@@ -10,16 +10,23 @@ import { useFetchOrderDetail } from '@features/Order/hooks'
 import Button from '@components/atoms/Button'
 import Flex from '@components/atoms/Flex'
 import { Space } from 'antd'
+import DispatchCourierModal from './DispatchCourierModal'
+import EditCourierModal from './EditCourierModal'
 
 const OrderDetail: React.FC = () => {
   const { pathname } = useLocation()
-  const history = useHistory()
   const cartId = pathname.replace('/orders/', '')
+  const [showDispatchModal, setShowDispatchModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const { data, isError, isLoading } = useFetchOrderDetail(cartId)
 
-  const handleBack = () => {
-    history.goBack()
+  const toggleEditModal = () => {
+    setShowEditModal(!showEditModal)
+  }
+
+  const toggleDispatchModal = () => {
+    setShowDispatchModal(!showDispatchModal)
   }
 
   if (isLoading || !data) {
@@ -57,6 +64,12 @@ const OrderDetail: React.FC = () => {
 
   return (
     <div className="mb-10">
+      <DispatchCourierModal
+        cartId={cartId}
+        showModal={showDispatchModal}
+        toggle={toggleDispatchModal}
+      />
+      <EditCourierModal cartId={cartId} showModal={showEditModal} toggle={toggleEditModal} />
       <Card title="Detail Pesanan">
         <TextField label="ID PESANAN">{cartId}</TextField>
         <TextField label="TANGGAL">{`${date} ${hour}`}</TextField>
@@ -90,10 +103,10 @@ const OrderDetail: React.FC = () => {
         </TextField>
         <hr className="mb-6 mt-4" />
         <Space>
-          <Button variant="secondary" onClick={handleBack}>
+          <Button variant="secondary" onClick={toggleDispatchModal}>
             Tugaskan Kurir
           </Button>
-          <Button variant="secondary" onClick={handleBack}>
+          <Button variant="secondary" onClick={toggleEditModal}>
             Ubah Kurir
           </Button>
         </Space>
