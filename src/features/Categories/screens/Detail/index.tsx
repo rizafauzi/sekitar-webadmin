@@ -26,7 +26,10 @@ const CategoryProductDetail: React.FC = () => {
   }, [modalEdit])
   return (
     <div>
+      {/* Modal Edit Category */}
       <ModalEditCategory
+        title="Edit Category"
+        type="category"
         showModal={modalEdit}
         categoryId={categoryId}
         detailData={detailData}

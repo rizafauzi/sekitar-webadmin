@@ -31,14 +31,29 @@ const useFetchListCategoryProduct = (id?: string) => {
 }
 
 const useFetchListCategoryProductLv2 = (id: string) => {
-  const { data, isError, isLoading } = useQuery(['list-category-lv2', id], async () => {
+  const [modalEditSub, setModalEditSub] = useState(false)
+  const [detailSubCategory, setDetailSubCategory] = useState(<ICategoryProduct>{})
+  const { data, isError, isLoading, refetch } = useQuery(['list-category-lv2', id], async () => {
     const response: ApiResponse<ICategoryProduct[]> = await getCategoryProductDetail(id)
-    return response.data.Data.map((item, index) => ({ ...item, index: index + 1 }))
+    return response.data.Data?.map((item, index) => ({ ...item, index: index + 1 }))
   })
+
+  const onToggleModalEditLv2 = (idSubCategory?: number) => {
+    if (idSubCategory && idSubCategory >= 0) {
+      const detailSub = data?.find(item => item.id === idSubCategory)
+      setDetailSubCategory(<ICategoryProduct>detailSub)
+    }
+    setModalEditSub(value => !value)
+  }
+
   return {
     isLoading,
     isError,
-    listCategoryLv2: data || []
+    modalEditSub,
+    detailSubCategory,
+    listCategoryLv2: data || [],
+    refetchSub: refetch,
+    onToggleModalEditLv2
   }
 }
 
