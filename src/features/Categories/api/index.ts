@@ -22,3 +22,10 @@ export const updateCategoryProduct = (idCategory: string, bodyRequest: any) =>
     method: 'POST',
     bodyRequest
   })
+
+export const updateSubCategoryProduct = (idCategory: string, bodyRequest: any) =>
+  apiRequest({
+    path: `/api/v2/product_categories_lvl_2/${idCategory}`,
+    method: 'POST',
+    bodyRequest
+  })

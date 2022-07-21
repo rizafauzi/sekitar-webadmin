@@ -6,10 +6,12 @@ import { Modal, Input } from 'antd'
 import type { RcFile } from 'antd/es/upload/interface'
 import UploadImage from '@components/atoms/UploadImage'
 import { toast } from 'react-toastify'
-import { updateCategoryProduct } from '../api'
+import { updateCategoryProduct, updateSubCategoryProduct } from '../api'
 import { ICategoryProduct } from '../Categories.type'
 
 interface IModalEditCategory {
+  title: string
+  type: string
   categoryId: string
   detailData?: ICategoryProduct
   showModal: boolean
@@ -17,7 +19,7 @@ interface IModalEditCategory {
 }
 
 const ModalEditCategory = (props: IModalEditCategory) => {
-  const { categoryId, showModal, detailData, onCancel } = props
+  const { title, type, categoryId, showModal, detailData, onCancel } = props
 
   const [data, setData] = useState({
     name: '',
@@ -49,14 +51,25 @@ const ModalEditCategory = (props: IModalEditCategory) => {
     formData.append('is_test', String(data.is_test))
     formData.append('priority', String(data.priority))
     formData.append('image', data.images as string | Blob)
-    updateCategoryProduct(categoryId, formData)
-      .then(() => {
-        onCancel()
-        toast.success('Edit Category Success')
-      })
-      .catch(() => {
-        toast.error('Edit Category Failed')
-      })
+    if (type === 'category') {
+      updateCategoryProduct(categoryId, formData)
+        .then(() => {
+          onCancel()
+          toast.success('Edit Category Success')
+        })
+        .catch(() => {
+          toast.error('Edit Category Failed')
+        })
+    } else if (type === 'sub-category') {
+      updateSubCategoryProduct(categoryId, formData)
+        .then(() => {
+          onCancel()
+          toast.success('Edit Sub Category Success')
+        })
+        .catch(() => {
+          toast.error('Edit Sub Category Failed')
+        })
+    }
   }
 
   useEffect(() => {
@@ -77,7 +90,7 @@ const ModalEditCategory = (props: IModalEditCategory) => {
     <Modal
       okText="Submit"
       onOk={onHandleSubmit}
-      title="Edit Category"
+      title={title}
       visible={showModal}
       onCancel={onCancel}
     >

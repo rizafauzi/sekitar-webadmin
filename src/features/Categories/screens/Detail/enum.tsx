@@ -41,7 +41,7 @@ const columnMerchant = [
     title: 'Action',
     dataIndex: 'id',
     align: 'center',
-    render: (idCategory: number) => <CategoriesButton id={idCategory} />
+    render: (idCategory: number) => <CategoriesButton actionType="sub-category" id={idCategory} />
   }
 ]
 
