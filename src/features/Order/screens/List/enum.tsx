@@ -36,6 +36,20 @@ export const columnMerchant = [
     render: (_: null, { order_state }: IOrder) => <span>{order_state}</span>
   },
   {
+    width: '15em',
+    key: 'buyer_name',
+    title: 'Nama Buyer',
+    dataIndex: 'buyer_name',
+    render: (_: null, { buyer_name }: IOrder) => <span>{buyer_name}</span>
+  },
+  {
+    width: '15em',
+    key: 'store_name',
+    title: 'Nama Store',
+    dataIndex: 'store_name',
+    render: (_: null, { store_name }: IOrder) => <span>{store_name}</span>
+  },
+  {
     width: '10em',
     title: 'Kurir',
     key: 'courier_name',

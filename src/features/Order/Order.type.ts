@@ -7,6 +7,8 @@ export interface IOrder {
   cart_id: string
   order_state: string
   action: string[]
+  store_name: string
+  buyer_name: string
   courier_id: string
   courier_name: string
 }

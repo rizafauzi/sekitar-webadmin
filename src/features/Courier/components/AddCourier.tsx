@@ -17,7 +17,8 @@ const AddCourier: React.FC = () => {
   const [showModal, setShowModal] = useState(false)
   const [payload, setPayload] = useState({
     name: '',
-    area: ''
+    area: '',
+    phone_number: ''
   })
 
   const toggle = () => {
@@ -80,6 +81,12 @@ const AddCourier: React.FC = () => {
         <div className="mt-4" />
         <span>Area</span>
         <Input value={payload.area} onChange={event => handleChange(event, 'area')} />
+        <div className="mt-4" />
+        <span>Phone Number</span>
+        <Input
+          value={payload.phone_number}
+          onChange={event => handleChange(event, 'phone_number')}
+        />
       </Modal>
     </>
   )

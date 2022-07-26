@@ -18,12 +18,13 @@ const EditCourier: React.FC<{ data: ICourier }> = ({ data }) => {
   const [showModal, setShowModal] = useState(false)
   const [payload, setPayload] = useState({
     name: '',
-    area: ''
+    area: '',
+    phone_number: ''
   })
 
   useEffect(() => {
-    const { area, name } = data
-    setPayload({ name, area })
+    const { area, name, phone_number } = data
+    setPayload({ name, area, phone_number })
   }, [data])
 
   const toggle = () => {
@@ -88,6 +89,12 @@ const EditCourier: React.FC<{ data: ICourier }> = ({ data }) => {
         <div className="mt-4" />
         <span>Area</span>
         <Input value={payload.area} onChange={event => handleChange(event, 'area')} />
+        <div className="mt-4" />
+        <span>Phone Number</span>
+        <Input
+          value={payload.phone_number}
+          onChange={event => handleChange(event, 'phone_number')}
+        />
       </Modal>
     </>
   )
