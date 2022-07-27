@@ -136,17 +136,22 @@ const ExportCsv: React.FC = () => {
             'order_state',
             'courier_id',
             'courier_name',
-            'courier_area'
+            'courier_area',
+            'store_name',
+            'buyer_name'
           ]
           const sanitizedBody = response?.data
-            .replace('date,hour,cart_id,order_state,courier_id,courier_name,courier_area', '')
+            .replace(
+              'date,hour,cart_id,order_state,courier_id,courier_name,courier_area,store_name,buyer_name',
+              ''
+            )
             .replaceAll('\n', '')
             .split(',')
           let finalPayload = [header]
           let temp = []
           for (let i = 1; i < sanitizedBody.length; i++) {
             temp.push(sanitizedBody[i - 1])
-            if (i % 6 === 0) {
+            if (i % 8 === 0) {
               finalPayload.push(temp)
               temp = []
             }
