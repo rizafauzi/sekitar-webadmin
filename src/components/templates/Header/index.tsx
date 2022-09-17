@@ -27,9 +27,7 @@ const Header: React.FC = () => {
     <Container>
       {/* <img src={SekitarLogo} alt="sekitar-logo" className="h-10" /> */}
 
-      <div className="pb-2 pt-6">
-        <h2 className="font-bold">Daftar Pesanan</h2>
-      </div>
+      <div className="pb-2 pt-6" />
       <Dropdown
         overlay={
           <Menu
