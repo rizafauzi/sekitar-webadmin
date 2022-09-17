@@ -16,7 +16,7 @@ interface IListLayout {
   total?: number
   loading: boolean
   columns: IColumn[]
-  className: string
+  className?: string
 }
 
 interface IColumn {

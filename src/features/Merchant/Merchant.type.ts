@@ -48,3 +48,31 @@ export interface IMerchant {
   subdistrict: string
   user_id: number
 }
+
+export interface IProduct {
+  id: number
+  store_id: number
+  name: string
+  price: number
+  stock: number
+  description: ''
+  image: string[]
+  image_ss: string[]
+  image_s: string[]
+  image_m: string[]
+  image_l: string[]
+  image_xl: string[]
+  is_test: number
+  path: string
+  toggle_stock: number
+  toggle_active: number
+  discount_price: number
+  product_weight: number
+  updated_at: string
+  label_stock: string
+  category_lvl_1_id: number
+  category_lvl_2_id: number
+  category_lvl_1: string
+  category_lvl_2: string
+  limit_per_transaction: number
+}

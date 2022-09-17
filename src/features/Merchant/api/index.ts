@@ -29,6 +29,17 @@ export const getStoreList = ({ limit, page, keyword }: IListParams) =>
     })
   })
 
+export const getProductList = ({ limit, page, keyword }: IListParams) =>
+  apiRequest({
+    path: '/api/v2/products_category_newest/17622/all/all',
+    method: 'GET',
+    params: clearEmptyObject({
+      p: String(page),
+      c: String(limit),
+      k: keyword
+    })
+  })
+
 export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
   apiRequest({
     path: `/api/dashboard/stores_update/${id}`,

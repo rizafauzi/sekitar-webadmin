@@ -1,16 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import qs from 'query-string'
 import { Button, Card } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 
-import useFetchMerchantById from '@features/Merchant/hooks'
+import useFetchMerchantById, { useFetchProductList } from '@features/Merchant/hooks'
 import TextField from '@components/atoms/TextField'
 import EditMerchant from '@features/Merchant/components/EditMerchant'
+import { columnProductByMerchant } from '@features/Merchant/enum'
+// import { IProduct } from '@features/Merchant/Merchant.type'
+import Table from '@components/atoms/Table'
 
 const MerchantDetail: React.FC = () => {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
+  const pagination = qs.parse(search)
   const storePath = pathname.replace('/merchants/', '')
   const { data, isError, isLoading } = useFetchMerchantById(storePath)
+  const [params, setParameters] = useState({
+    page: 1,
+    limit: 50
+  })
+  const [totalData, setTotalData] = useState(0)
+
+  const {
+    data: productList,
+    isError: isProductError,
+    isLoading: isProductLoading
+  } = useFetchProductList(params)
+
+  useEffect(() => {
+    setParameters({
+      page: Number(pagination?.page) || 1,
+      limit: Number(pagination?.limit) || 50
+    })
+  }, [pagination])
+
+  useEffect(() => {
+    if (productList) {
+      const newPage = params.limit * params.page + params.limit
+      setTotalData(previous => (previous > newPage ? previous : newPage))
+    }
+  }, [productList])
 
   if (isLoading) {
     return (
@@ -74,6 +104,15 @@ const MerchantDetail: React.FC = () => {
         {operation_hour?.map(dt => (
           <TextField label={dt.key}>{dt.value}</TextField>
         ))}
+      </Card>
+      <div className="mt-6" />
+      <Card title="Product List">
+        <Table
+          total={totalData}
+          loading={isLoading}
+          columns={columnProductByMerchant}
+          data={isProductError || isProductLoading || !productList ? [] : productList}
+        />
       </Card>
     </div>
   )

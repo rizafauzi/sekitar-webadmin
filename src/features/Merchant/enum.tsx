@@ -1,6 +1,12 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
+
 import Anchor from '@components/atoms/Anchor'
 import ActionButton from '@features/Merchant/components/ActionButton'
-import { IMerchant } from '../../Merchant.type'
+import { IMerchant, IProduct } from './Merchant.type'
+import EmptyImage from '@assets/images/error.png'
+import DeleteProduct from './components/DeleteProduct'
+import EditProduct from './components/EditProduct'
 
 export const columnMerchant = [
   {
@@ -40,6 +46,71 @@ export const columnMerchant = [
     dataIndex: 'path',
     align: 'center',
     render: (data: string) => <ActionButton path={data} />
+  }
+]
+
+export const columnProductByMerchant = [
+  {
+    width: '8em',
+    title: 'Stock',
+    dataIndex: 'image',
+    key: 'image',
+    render: (_: null, { image_s, name }: IProduct) => (
+      <img
+        alt={name}
+        className="h-[50px] w-[50px] object-cover rounded-md"
+        src={image_s?.length > 0 ? image_s[0] : EmptyImage}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null
+          currentTarget.src = EmptyImage
+        }}
+      />
+    )
+  },
+  {
+    width: '20em',
+    title: 'Product',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    width: '10em',
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price'
+  },
+  {
+    width: '10em',
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock'
+  },
+  {
+    width: '10em',
+    title: 'Product Weight (gram)',
+    dataIndex: 'product_weight',
+    key: 'product_weight'
+  },
+  {
+    width: '25em',
+    title: 'Path',
+    dataIndex: 'path',
+    key: 'path',
+    render: (_: null, { path }: IProduct) => <a href={path}>{path}</a>
+  },
+  {
+    width: '18em',
+    key: 'path',
+    title: '*',
+    dataIndex: 'path',
+    align: 'center',
+    render: (_: null, data: IProduct) => (
+      <div className="flex flex-row items-center justify-center">
+        <EditProduct data={data} />
+        <div className="w-[10px]" />
+        <DeleteProduct data={data} />
+      </div>
+    )
   }
 ]
 

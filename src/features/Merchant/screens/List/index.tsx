@@ -6,7 +6,7 @@ import ListLayout from '@components/organisms/ListLayout'
 import { useFetchMerchantList } from '@features/Merchant/hooks'
 import { IMerchant } from '@features/Merchant/Merchant.type'
 import { useLocation } from 'react-router-dom'
-import { columnMerchant } from './enum'
+import { columnMerchant } from '../../enum'
 
 const MerchantPage: React.FC = () => {
   const { search } = useLocation()
