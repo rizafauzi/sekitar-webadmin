@@ -10,6 +10,7 @@ import EditMerchant from '@features/Merchant/components/EditMerchant'
 import { columnProductByMerchant } from '@features/Merchant/enum'
 // import { IProduct } from '@features/Merchant/Merchant.type'
 import Table from '@components/atoms/Table'
+import AddProduct from '@features/Merchant/components/AddProduct'
 
 const MerchantDetail: React.FC = () => {
   const { pathname, search } = useLocation()
@@ -106,7 +107,7 @@ const MerchantDetail: React.FC = () => {
         ))}
       </Card>
       <div className="mt-6" />
-      <Card title="Product List">
+      <Card title="Product List" extra={<AddProduct />}>
         <Table
           total={totalData}
           loading={isLoading}

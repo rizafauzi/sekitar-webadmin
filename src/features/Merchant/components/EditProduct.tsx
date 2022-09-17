@@ -91,7 +91,7 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
         <Modal
           okText="Edit"
           onOk={handleSubmit}
-          title="Edit Merchant"
+          title="Edit Product"
           visible={showModal}
           onCancel={toggle}
         >

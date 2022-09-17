@@ -4,18 +4,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import React, { useState, ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import { Modal, Input, Button } from 'antd'
 
 import { toast } from 'react-toastify'
 import { IProduct } from '../Merchant.type'
-// import { postEditMerchant } from '../api'
 
-interface IAddProduct {
-  data: IProduct
-}
-
-const AddProduct: React.FC<IAddProduct> = ({ data }) => {
+const AddProduct: React.FC = () => {
   const { TextArea } = Input
   const [showModal, setShowModal] = useState(false)
   const [payload, setPayload] = useState<IProduct>({
@@ -62,10 +57,6 @@ const AddProduct: React.FC<IAddProduct> = ({ data }) => {
     }
   }
 
-  useEffect(() => {
-    setPayload(data)
-  }, [data])
-
   const handleChange = (
     key: string,
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -85,13 +76,13 @@ const AddProduct: React.FC<IAddProduct> = ({ data }) => {
 
   return (
     <>
-      <Button onClick={toggle}>Edit</Button>
+      <Button onClick={toggle}>Add Product</Button>
 
       {showModal && (
         <Modal
           okText="Submit"
           onOk={handleSubmit}
-          title="Edit Merchant"
+          title="Add Product"
           visible={showModal}
           onCancel={toggle}
         >
