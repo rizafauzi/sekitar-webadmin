@@ -4,7 +4,7 @@
 
 import { apiRequest } from '@configs/axios'
 import clearEmptyObject from '@utils/object-utils'
-import { IMerchant } from '../Merchant.type'
+import { IMerchant, IProduct } from '../Merchant.type'
 
 export interface IListParams {
   page: number
@@ -48,6 +48,26 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
     },
     bodyRequest
+  })
+
+export const postAddProduct = (bodyRequest: IProduct) =>
+  apiRequest({
+    path: '/api/v1/products',
+    method: 'POST',
+    bodyRequest
+  })
+
+export const postEditProduct = (id: number, bodyRequest: IProduct) =>
+  apiRequest({
+    path: `/api/v1/products/${id}`,
+    method: 'POST',
+    bodyRequest
+  })
+
+export const deleteProduct = (id: number) =>
+  apiRequest({
+    path: `/api/v1/products/${id}`,
+    method: 'DELETE'
   })
 
 export default getStoreById

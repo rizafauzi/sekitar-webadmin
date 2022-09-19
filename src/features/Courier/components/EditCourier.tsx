@@ -23,8 +23,10 @@ const EditCourier: React.FC<{ data: ICourier }> = ({ data }) => {
   })
 
   useEffect(() => {
-    const { area, name, phone_number } = data
-    setPayload({ name, area, phone_number })
+    if (showModal) {
+      const { area, name, phone_number } = data
+      setPayload({ name, area, phone_number })
+    }
   }, [data])
 
   const toggle = () => {

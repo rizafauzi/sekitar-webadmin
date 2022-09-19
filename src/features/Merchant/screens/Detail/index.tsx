@@ -34,7 +34,7 @@ const MerchantDetail: React.FC = () => {
       page: Number(pagination?.page) || 1,
       limit: Number(pagination?.limit) || 50
     })
-  }, [pagination])
+  }, [search])
 
   useEffect(() => {
     if (productList) {

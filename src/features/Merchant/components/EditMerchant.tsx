@@ -75,8 +75,10 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
   }
 
   useEffect(() => {
-    setPayload(data)
-  }, [data])
+    if (showModal) {
+      setPayload(data)
+    }
+  }, [data, showModal])
 
   const handleChange = (
     key: string,

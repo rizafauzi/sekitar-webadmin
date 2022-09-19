@@ -99,10 +99,11 @@ export const columnProductByMerchant = [
     render: (_: null, { path }: IProduct) => <a href={path}>{path}</a>
   },
   {
-    width: '18em',
+    width: '15em',
     key: 'path',
-    title: '*',
+    title: 'Action',
     dataIndex: 'path',
+    fixed: 'right',
     align: 'center',
     render: (_: null, data: IProduct) => (
       <div className="flex flex-row items-center justify-center">

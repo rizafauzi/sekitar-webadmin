@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable unicorn/consistent-function-scoping */
@@ -9,7 +10,7 @@ import { Modal, Input, Button } from 'antd'
 
 import { toast } from 'react-toastify'
 import { IProduct } from '../Merchant.type'
-// import { postEditMerchant } from '../api'
+import { postEditProduct } from '../api'
 
 interface IEditProduct {
   data: IProduct
@@ -18,6 +19,7 @@ interface IEditProduct {
 const EditProduct: React.FC<IEditProduct> = ({ data }) => {
   const { TextArea } = Input
   const [showModal, setShowModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [payload, setPayload] = useState<IProduct>({
     id: 0,
     store_id: 0,
@@ -50,21 +52,31 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
     setShowModal(!showModal)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsLoading(true)
     try {
-      // const response = await postEditMerchant(payload.id, payload)
-      // if (response) {
-      //   toast.success('SUCCESS')
-      // }
+      const response = await postEditProduct(payload.id, payload)
+
+      console.info('response:', response)
+      if (response?.data?.status !== 0) {
+        toast.error(response?.data?.message as string)
+        toggle()
+        return
+      }
+      toast.success('SUCCESS')
+      toggle()
     } catch (error) {
       toast.error('Something wrong, Please try again later')
       console.error('[ERROR] Edit Merchant:', error)
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    setPayload(data)
-  }, [data])
+    if (showModal) {
+      setPayload(data)
+    }
+  }, [data, showModal])
 
   const handleChange = (
     key: string,
@@ -89,11 +101,11 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
 
       {showModal && (
         <Modal
-          okText="Edit"
+          onCancel={toggle}
           onOk={handleSubmit}
           title="Edit Product"
           visible={showModal}
-          onCancel={toggle}
+          okText={isLoading ? 'Loading...' : 'Edit'}
         >
           <h4>Name</h4>
           <Input
