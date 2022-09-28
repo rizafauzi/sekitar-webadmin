@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
@@ -54,6 +55,9 @@ export const postAddProduct = (bodyRequest: IProduct) =>
   apiRequest({
     path: '/api/v1/products',
     method: 'POST',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    },
     bodyRequest
   })
 
@@ -61,13 +65,25 @@ export const postEditProduct = (id: number, bodyRequest: IProduct) =>
   apiRequest({
     path: `/api/v1/products/${id}`,
     method: 'POST',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    },
     bodyRequest
   })
 
 export const deleteProduct = (id: number) =>
   apiRequest({
     path: `/api/v1/products/${id}`,
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+
+export const getDownloadProduct = (id: number) =>
+  apiRequest({
+    path: `/api/v1/products/list_csv/${id}`,
+    method: 'GET'
   })
 
 export default getStoreById

@@ -9,6 +9,7 @@ import { Modal, Button } from 'antd'
 
 import { toast } from 'react-toastify'
 import { IProduct } from '../Merchant.type'
+import { deleteProduct } from '../api'
 // import { postEditMerchant } from '../api'
 
 interface IDeleteProduct {
@@ -23,13 +24,13 @@ const DeleteProduct: React.FC<IDeleteProduct> = ({ data }) => {
     setShowModal(!showModal)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      console.info('delete id:', id)
-      // const response = await postEditMerchant(payload.id, payload)
-      // if (response) {
-      //   toast.success('SUCCESS')
-      // }
+      const response = await deleteProduct(id)
+      if (response) {
+        toast.success('SUCCESS')
+        toggle()
+      }
     } catch (error) {
       toast.error('Something wrong, Please try again later')
       console.error('[ERROR] Edit Merchant:', error)

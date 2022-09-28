@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-destructuring */
 import React, { useEffect, useState } from 'react'
 import qs from 'query-string'
 import { Button, Card } from 'antd'
@@ -11,6 +12,7 @@ import { columnProductByMerchant } from '@features/Merchant/enum'
 // import { IProduct } from '@features/Merchant/Merchant.type'
 import Table from '@components/atoms/Table'
 import AddProduct from '@features/Merchant/components/AddProduct'
+import DownloadProduct from '@features/Merchant/components/DownloadPoduct'
 
 const MerchantDetail: React.FC = () => {
   const { pathname, search } = useLocation()
@@ -22,6 +24,8 @@ const MerchantDetail: React.FC = () => {
     limit: 50
   })
   const [totalData, setTotalData] = useState(0)
+
+  console.info('data:', data)
 
   const {
     data: productList,
@@ -107,7 +111,15 @@ const MerchantDetail: React.FC = () => {
         ))}
       </Card>
       <div className="mt-6" />
-      <Card title="Product List" extra={<AddProduct />}>
+      <Card
+        title="Product List"
+        extra={
+          <div className="flex-row">
+            <DownloadProduct merchantId={data?.id} merchantName={data?.name} />
+            <AddProduct />
+          </div>
+        }
+      >
         <Table
           total={totalData}
           loading={isLoading}

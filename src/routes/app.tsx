@@ -17,7 +17,13 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false
+      }
+    }
+  })
 
   if (_isEmpty(token)) {
     return (

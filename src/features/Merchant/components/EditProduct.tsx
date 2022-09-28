@@ -78,13 +78,18 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
     }
   }, [data, showModal])
 
+  const isNumber = (n: string) => {
+    const numberString = /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/
+    return numberString.test(n.toString())
+  }
+
   const handleChange = (
     key: string,
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setPayload({
       ...payload,
-      [key]: event.target.value
+      [key]: isNumber(event.target.value) ? Number(event.target.value) : event.target.value
     })
   }
 
@@ -119,28 +124,29 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
             value={payload.price}
             style={{ marginBottom: 15 }}
             placeholder="Input Price here..."
-            onChange={event => handleChange('phone_number', event)}
+            onChange={event => handleChange('price', event)}
           />
           <h4>Stock</h4>
           <Input
             value={payload.stock}
             style={{ marginBottom: 15 }}
             placeholder="Input Stock here..."
-            onChange={event => handleChange('phone_number', event)}
+            onChange={event => handleChange('stock', event)}
           />
           <h4>Label Stock</h4>
           <Input
+            disabled
             value={payload.label_stock}
             style={{ marginBottom: 15 }}
             placeholder="Input Stock here..."
-            onChange={event => handleChange('phone_number', event)}
+            onChange={event => handleChange('label_stock', event)}
           />
-          <h4>Limir per Transaction</h4>
+          <h4>Limit per Transaction</h4>
           <Input
             value={payload.limit_per_transaction}
             style={{ marginBottom: 15 }}
             placeholder="Input Stock here..."
-            onChange={event => handleChange('phone_number', event)}
+            onChange={event => handleChange('limit_per_transaction', event)}
           />
           <h4>Description</h4>
           <TextArea
