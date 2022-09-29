@@ -116,7 +116,7 @@ const MerchantDetail: React.FC = () => {
         extra={
           <div className="flex-row">
             <DownloadProduct merchantId={data?.id} merchantName={data?.name} />
-            <AddProduct />
+            <AddProduct merchantId={data?.id} />
           </div>
         }
       >

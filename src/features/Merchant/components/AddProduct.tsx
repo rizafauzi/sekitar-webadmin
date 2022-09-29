@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import { IProduct } from '../Merchant.type'
 import { postAddProduct } from '../api'
 
-const AddProduct: React.FC = () => {
+const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
   const { TextArea } = Input
   const [showModal, setShowModal] = useState(false)
   const [payload, setPayload] = useState<IProduct>({
@@ -48,7 +48,10 @@ const AddProduct: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await postAddProduct(payload)
+      const response = await postAddProduct({
+        ...payload,
+        store_id: merchantId
+      })
       if (response) {
         toast.success('SUCCESS')
         setShowModal(false)
