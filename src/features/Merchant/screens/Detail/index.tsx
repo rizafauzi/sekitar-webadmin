@@ -25,13 +25,11 @@ const MerchantDetail: React.FC = () => {
   })
   const [totalData, setTotalData] = useState(0)
 
-  console.info('data:', data)
-
   const {
     data: productList,
     isError: isProductError,
     isLoading: isProductLoading
-  } = useFetchProductList(params)
+  } = useFetchProductList(params, data?.id as number)
 
   useEffect(() => {
     setParameters({

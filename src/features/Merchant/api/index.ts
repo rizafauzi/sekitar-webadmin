@@ -30,9 +30,9 @@ export const getStoreList = ({ limit, page, keyword }: IListParams) =>
     })
   })
 
-export const getProductList = ({ limit, page, keyword }: IListParams) =>
+export const getProductList = ({ limit, page, keyword }: IListParams, storeId: number) =>
   apiRequest({
-    path: '/api/v2/products_category_newest/17622/all/all',
+    path: `/api/v2/products_category_newest/${storeId}/all/all`,
     method: 'GET',
     params: clearEmptyObject({
       p: String(page),

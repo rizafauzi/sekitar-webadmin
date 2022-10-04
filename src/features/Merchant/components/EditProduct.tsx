@@ -133,14 +133,13 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
             placeholder="Input Stock here..."
             onChange={event => handleChange('stock', event)}
           />
-          <h4>Label Stock</h4>
+          {/* <h4>Product Weight</h4>
           <Input
-            disabled
-            value={payload.label_stock}
+            value={payload.product_weight}
             style={{ marginBottom: 15 }}
-            placeholder="Input Stock here..."
-            onChange={event => handleChange('label_stock', event)}
-          />
+            placeholder="Input Product Weight here..."
+            onChange={event => handleChange('product_weight', event)}
+          /> */}
           <h4>Limit per Transaction</h4>
           <Input
             value={payload.limit_per_transaction}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -5,6 +6,8 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'antd'
 import { CSVDownload } from 'react-csv'
+import startCase from 'lodash/startCase'
+
 import { getDownloadProduct } from '../api'
 
 const DownloadProduct: React.FC<{ merchantId: number; merchantName: string }> = ({
@@ -14,13 +17,24 @@ const DownloadProduct: React.FC<{ merchantId: number; merchantName: string }> = 
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([])
   const [isDownloading, setIsDownloading] = useState(false)
+  const [header, setHeader] = useState<{ label: string; key: string }[]>([])
 
   const handleDownload = async () => {
     setIsLoading(true)
     try {
       const response = await getDownloadProduct(merchantId)
       if (response) {
-        setData(response?.data?.Data)
+        const dataResponse = response?.data?.Data || []
+        if (dataResponse?.length > 0) {
+          const headers = Object.keys(dataResponse[0]).map(dt => ({
+            label: startCase(dt),
+            key: dt
+          }))
+
+          console.info('headers:', headers)
+          setHeader(headers)
+          setData(dataResponse)
+        }
         setIsDownloading(true)
       }
     } catch (error) {
@@ -37,25 +51,13 @@ const DownloadProduct: React.FC<{ merchantId: number; merchantName: string }> = 
     }
   }, [isDownloading, data])
 
-  const headers = [
-    { label: 'Description', key: 'Description' },
-    { label: 'Discount Price', key: 'DiscountPrice' },
-    { label: 'Image', key: 'Image' },
-    { label: 'Limit / Transaction', key: 'LimitPerTransaction' },
-    { label: 'Name', key: 'Name' },
-    { label: 'Price', key: 'Price' },
-    { label: 'ID', key: 'ProductID' },
-    { label: 'Product Weight', key: 'ProductWeight' },
-    { label: 'Stock', key: 'Stock' }
-  ]
-
   return (
     <>
       {isDownloading && (
         <CSVDownload
           data={data}
           target="_blank"
-          headers={headers}
+          headers={header}
           filename={`export_product_${merchantName}`}
         />
       )}

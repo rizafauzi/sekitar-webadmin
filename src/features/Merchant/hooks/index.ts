@@ -31,9 +31,10 @@ export const useFetchMerchantList = (params: IListParams) => {
   }
 }
 
-export const useFetchProductList = (params: IListParams) => {
-  const { data, isError, isLoading } = useQuery(['product-list', params], async () => {
-    const response: ApiResponse<object[]> = await getProductList(params)
+export const useFetchProductList = (params: IListParams, storeId: number) => {
+  const { data, isError, isLoading } = useQuery(['product-list', params, storeId], async () => {
+    console.info('storeId:', storeId)
+    const response: ApiResponse<object[]> = await getProductList(params, storeId)
     return response.data.Data
   })
 
