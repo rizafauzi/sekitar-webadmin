@@ -9,6 +9,7 @@ import {
   UnorderedListOutlined
 } from '@ant-design/icons'
 
+import MyIcon from '@assets/Icons'
 import SekitarLogo from '../../../assets/images/logo-white.png'
 import { Container, Wrapper } from './Sidebar.style'
 
@@ -58,6 +59,14 @@ const Sidebar = () => {
                     </Menu.Item>
                     <Menu.Item key="categories" icon={<PieChartOutlined />}>
                       <Link to="/categories">Product Categories</Link>
+                    </Menu.Item>
+                    <Menu.Item
+                      key="promo"
+                      icon={<MyIcon name="megaphone" width={16} height={16} />}
+                    >
+                      <Link to="/promo" className="ml-2">
+                        Promo
+                      </Link>
                     </Menu.Item>
                   </>
                 )}

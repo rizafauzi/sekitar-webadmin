@@ -14,6 +14,7 @@ import MasterDataPage from '@features/MasterData'
 import Layout from '@components/templates/Layout'
 import MerchantDetail from '@features/Merchant/screens/Detail'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import PromoPage from '@features/Promo/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -62,6 +63,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/categories/:categoryId">
               <CategoryProductDetail />
+            </Route>
+            <Route exact path="/promo">
+              <PromoPage />
             </Route>
             <Route exact path="/master-data">
               <MasterDataPage />
