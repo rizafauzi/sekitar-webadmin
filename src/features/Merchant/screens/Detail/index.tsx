@@ -13,6 +13,7 @@ import { columnProductByMerchant } from '@features/Merchant/enum'
 import Table from '@components/atoms/Table'
 import AddProduct from '@features/Merchant/components/AddProduct'
 import DownloadProduct from '@features/Merchant/components/DownloadPoduct'
+import UploadProduct from '@features/Merchant/components/UploadProduct'
 
 const MerchantDetail: React.FC = () => {
   const { pathname, search } = useLocation()
@@ -113,6 +114,7 @@ const MerchantDetail: React.FC = () => {
         title="Product List"
         extra={
           <div className="flex-row">
+            <UploadProduct merchantId={data?.id} />
             <DownloadProduct merchantId={data?.id} merchantName={data?.name} />
             <AddProduct merchantId={data?.id} />
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -84,6 +85,13 @@ export const getDownloadProduct = (id: number) =>
   apiRequest({
     path: `/api/v1/products/list_csv/${id}`,
     method: 'GET'
+  })
+
+export const postUploadProduct = (fd: any) =>
+  apiRequest({
+    path: '/api/v1/products_import',
+    bodyRequest: fd,
+    method: 'POST'
   })
 
 export default getStoreById
