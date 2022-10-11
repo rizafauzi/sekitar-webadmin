@@ -56,7 +56,8 @@ const Table: React.FC<IListLayout> = ({ columns, data, loading, total, ...rest }
     dataSource: data,
     onChange: handleChange,
     pagination: paginationConfig,
-    scroll: { x: '100%', y: 350 }
+    scroll: { x: '100%', y: 350 },
+    rowKey: 'id'
   }
 
   return (

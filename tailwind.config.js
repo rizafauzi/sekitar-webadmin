@@ -14,6 +14,8 @@ module.exports = {
         green30: '#2eba86',
         green20: '#b8e8d5',
         green10: '#e6f7f0',
+        green1: '#06baad',
+        green1OPC10: '#06BAAD1A',
 
         darkGreen: '#0a573a',
 
