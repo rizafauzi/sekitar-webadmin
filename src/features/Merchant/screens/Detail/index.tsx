@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable unicorn/consistent-destructuring */
 import React, { useEffect, useState } from 'react'
 import qs from 'query-string'
-import { Button, Card } from 'antd'
+import { Card } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 
@@ -14,12 +15,13 @@ import Table from '@components/atoms/Table'
 import AddProduct from '@features/Merchant/components/AddProduct'
 import DownloadProduct from '@features/Merchant/components/DownloadPoduct'
 import UploadProduct from '@features/Merchant/components/UploadProduct'
+import EditOperationalHour from '@features/Merchant/components/EditOperationalHour'
 
 const MerchantDetail: React.FC = () => {
   const { pathname, search } = useLocation()
   const pagination = qs.parse(search)
   const storePath = pathname.replace('/merchants/', '')
-  const { data, isError, isLoading } = useFetchMerchantById(storePath)
+  const { data, isError, isLoading, refetch } = useFetchMerchantById(storePath)
   const [params, setParameters] = useState({
     page: 1,
     limit: 50
@@ -100,13 +102,11 @@ const MerchantDetail: React.FC = () => {
       <Card
         title="Operational Hour"
         extra={
-          <Button style={{ padding: '0px 25px' }} type="primary">
-            Edit
-          </Button>
+          <EditOperationalHour data={operation_hour} merchantId={data?.id} refetch={refetch} />
         }
       >
         {operation_hour?.map(dt => (
-          <TextField label={dt.key}>{dt.value}</TextField>
+          <TextField label={dt.key}>{`${dt.open_time} - ${dt.close_time}`}</TextField>
         ))}
       </Card>
       <div className="mt-6" />

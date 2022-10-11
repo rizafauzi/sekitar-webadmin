@@ -94,4 +94,20 @@ export const postUploadProduct = (fd: any) =>
     method: 'POST'
   })
 
+interface IOperationalHourPayload {
+  day: number
+  open_time: string
+  close_time: string
+}
+
+export const putUpdateOperationalHour = (id: number, bodyRequest: IOperationalHourPayload[]) =>
+  apiRequest({
+    path: `/api/dashboard/stores/operation_hour/${id}`,
+    bodyRequest: { operational_hours: bodyRequest },
+    method: 'PUT',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+
 export default getStoreById

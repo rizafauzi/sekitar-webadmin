@@ -8,6 +8,8 @@ export interface IOperationalHour {
   day: number
   key: string
   value: string
+  open_time: string
+  close_time: string
 }
 export interface IMerchant {
   access_token: string

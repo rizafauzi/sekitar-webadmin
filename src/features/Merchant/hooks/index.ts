@@ -6,7 +6,7 @@ import { getProductList, getStoreById, getStoreList, IListParams } from '../api'
 import { IMerchant } from '../Merchant.type'
 
 export const useFetchMerchantById = (id: string) => {
-  const { data, isError, isLoading } = useQuery(['merchant-detail', id], async () => {
+  const { data, isError, isLoading, refetch } = useQuery(['merchant-detail', id], async () => {
     const response: ApiResponse<IMerchant> = await getStoreById(id)
     return response.data.Data
   })
@@ -14,6 +14,7 @@ export const useFetchMerchantById = (id: string) => {
   return {
     data,
     isError,
+    refetch,
     isLoading
   }
 }
@@ -32,16 +33,20 @@ export const useFetchMerchantList = (params: IListParams) => {
 }
 
 export const useFetchProductList = (params: IListParams, storeId: number) => {
-  const { data, isError, isLoading } = useQuery(['product-list', params, storeId], async () => {
-    console.info('storeId:', storeId)
-    const response: ApiResponse<object[]> = await getProductList(params, storeId)
-    return response.data.Data
-  })
+  const { data, isError, isLoading, refetch } = useQuery(
+    ['product-list', params, storeId],
+    async () => {
+      console.info('storeId:', storeId)
+      const response: ApiResponse<object[]> = await getProductList(params, storeId)
+      return response.data.Data
+    }
+  )
 
   return {
     isLoading,
     isError,
-    data
+    data,
+    refetch
   }
 }
 
