@@ -11,10 +11,10 @@ import CourierPage from '@features/Courier/screens/List'
 import OrderDetailPage from '@features/Order/screens/Detail'
 import CategoryProductDetail from '@features/Categories/screens/Detail'
 import MasterDataPage from '@features/MasterData'
+import PromoPage from '@features/Promo'
 import Layout from '@components/templates/Layout'
 import MerchantDetail from '@features/Merchant/screens/Detail'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import PromoPage from '@features/Promo/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
