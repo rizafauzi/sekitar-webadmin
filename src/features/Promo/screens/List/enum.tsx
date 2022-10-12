@@ -1,4 +1,5 @@
 import DropdownPromo from '@features/Promo/components/DropdownPromo'
+import { IPromoList } from '@features/Promo/Promo.type'
 
 const ListPromoColumn = [
   {
@@ -31,7 +32,7 @@ const ListPromoColumn = [
     dataIndex: 'id',
     key: 'action',
     align: 'center',
-    render: () => <DropdownPromo />
+    render: (_: null, data: IPromoList) => <DropdownPromo item={data} />
   }
 ]
 
