@@ -1,24 +1,24 @@
-/* eslint-disable arrow-body-style */
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { PlusOutlined } from '@ant-design/icons'
 import Button from '@components/atoms/Button'
 import ListLayout from '@components/organisms/ListLayout'
-import { PlusOutlined } from '@ant-design/icons'
 import { useFetchPromoList } from '@features/Promo/hooks'
 import ListPromoColumn from './enum'
 
 const PromoPage: React.FC = () => {
+  const history = useHistory()
   const { data, isLoading } = useFetchPromoList({
     page: 0,
     limit: 20
   })
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const onAddPromo = () => console.info('ADD PROMO')
+  const onAddPromo = () => history.push('/promo/create')
 
   return (
     <div>
       <ListLayout
-        title="Product Categories"
+        title="Manage Promo Page"
         source={{
           data,
           isError: false,

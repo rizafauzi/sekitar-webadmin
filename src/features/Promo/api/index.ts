@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -10,7 +8,13 @@ export interface IPromoListParams {
   limit: number
 }
 
-// eslint-disable-next-line import/prefer-default-export
+export interface IPromoProductsParams {
+  page: number
+  limit: number
+  keyword?: string
+  storeIds: string[]
+}
+
 export const getPromoList = ({ page, limit }: IPromoListParams) =>
   apiRequest({
     path: '/api/v1/promo',
@@ -21,9 +25,8 @@ export const getPromoList = ({ page, limit }: IPromoListParams) =>
     }
   })
 
-// eslint-disable-next-line arrow-body-style
-export const patchPromoState = (id: number, bodyRequest: { is_active: number }): Promise<any> => {
-  return apiRequest({
+export const patchPromoState = (id: number, bodyRequest: { is_active: number }): Promise<any> =>
+  apiRequest({
     path: `/api/v1/promo/is_active/${id}`,
     method: 'PATCH',
     bodyRequest,
@@ -31,4 +34,15 @@ export const patchPromoState = (id: number, bodyRequest: { is_active: number }):
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
     }
   })
-}
+
+export const getPromoProducts = ({ page, limit, keyword, storeIds }: IPromoProductsParams) =>
+  apiRequest({
+    path: '/api/v1/promo/products',
+    method: 'GET',
+    params: {
+      p: page,
+      c: limit,
+      k: keyword,
+      storesIds: storeIds.toString()
+    }
+  })

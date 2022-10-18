@@ -12,6 +12,7 @@ import OrderDetailPage from '@features/Order/screens/Detail'
 import CategoryProductDetail from '@features/Categories/screens/Detail'
 import MasterDataPage from '@features/MasterData'
 import PromoPage from '@features/Promo'
+import CreatePromoPage from '@features/Promo/screens/Create'
 import Layout from '@components/templates/Layout'
 import MerchantDetail from '@features/Merchant/screens/Detail'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -66,6 +67,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/promo">
               <PromoPage />
+            </Route>
+            <Route exact path="/promo/create">
+              <CreatePromoPage />
             </Route>
             <Route exact path="/master-data">
               <MasterDataPage />

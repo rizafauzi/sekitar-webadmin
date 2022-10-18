@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 
 import { ApiResponse } from '@configs/axios'
@@ -21,14 +22,21 @@ export const useFetchMerchantById = (id: string) => {
 
 export const useFetchMerchantList = (params: IListParams) => {
   const { data, isError, isLoading } = useQuery(['merchant-list', params], async () => {
-    const response: ApiResponse<object[]> = await getStoreList(params)
+    const response: ApiResponse<IMerchant[]> = await getStoreList(params)
     return response.data.Data
   })
+
+  const optionsMerchant =
+    data?.map(item => ({
+      label: item.name,
+      value: item.id
+    })) || []
 
   return {
     isLoading,
     isError,
-    data
+    data,
+    optionsMerchant
   }
 }
 
