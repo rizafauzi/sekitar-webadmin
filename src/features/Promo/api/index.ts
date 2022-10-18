@@ -46,3 +46,14 @@ export const getPromoProducts = ({ page, limit, keyword, storeIds }: IPromoProdu
       storesIds: storeIds.toString()
     }
   })
+
+export const postPromoProduct = (bodyRequest: FormData) => {
+  apiRequest({
+    path: '/api/v1/promo',
+    method: 'POST',
+    bodyRequest,
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+}

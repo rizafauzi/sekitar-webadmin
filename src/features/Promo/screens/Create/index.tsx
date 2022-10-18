@@ -11,6 +11,7 @@ import { IValidations, Validations } from '@utils/validation'
 import { stripTags } from '@utils/strip-tags'
 import useDebounce from '@hooks/useDebounce'
 
+import { postPromoProduct } from '@features/Promo/api'
 import Button from '@components/atoms/Button'
 import Input from '@components/atoms/Input'
 import MultiSelect from '@components/atoms/MultiSelect'
@@ -101,7 +102,16 @@ const CreatePromoPage: React.FC = () => {
 
   const handleBack = () => history.push('/promo')
 
-  const handleSubmit = () => console.info('SUBMIT')
+  const handleSubmit = () => {
+    const formData = new FormData()
+    formData.append('merchant', String(form.merchant))
+    formData.append('title', form.title)
+    formData.append('description', form.description)
+    formData.append('product_list', String(form.productList))
+    formData.append('banner_entry_point', form.bannerEntryPoint as string | Blob)
+    formData.append('header_banner', form.headerBanner as string | Blob)
+    postPromoProduct(formData)
+  }
 
   useEffect(() => {
     const validations = Validations(form, rules)
