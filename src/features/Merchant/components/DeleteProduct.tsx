@@ -14,9 +14,10 @@ import { deleteProduct } from '../api'
 
 interface IDeleteProduct {
   data: IProduct
+  refetch?: () => void
 }
 
-const DeleteProduct: React.FC<IDeleteProduct> = ({ data }) => {
+const DeleteProduct: React.FC<IDeleteProduct> = ({ data, refetch }) => {
   const { name, id } = data
   const [showModal, setShowModal] = useState(false)
 
@@ -28,6 +29,9 @@ const DeleteProduct: React.FC<IDeleteProduct> = ({ data }) => {
     try {
       const response = await deleteProduct(id)
       if (response) {
+        if (refetch) {
+          refetch()
+        }
         toast.success('SUCCESS')
         toggle()
       }

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -6,20 +9,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import React, { useState, ChangeEvent, useEffect } from 'react'
-import { Modal, Input, Button } from 'antd'
+import { Modal, Input, Button, Select } from 'antd'
 
 import { toast } from 'react-toastify'
-import { IProduct } from '../Merchant.type'
-import { postEditProduct } from '../api'
+import { ICategoryProduct, IProduct } from '../Merchant.type'
+import { getCategoryLevel1, getCategoryLevel2, postEditProduct } from '../api'
 
 interface IEditProduct {
   data: IProduct
+  refetch?: () => void
 }
 
-const EditProduct: React.FC<IEditProduct> = ({ data }) => {
+const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
   const { TextArea } = Input
+  const { Option } = Select
   const [showModal, setShowModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [categoryLevel1, setCategoryLevel1] = useState<ICategoryProduct[]>([])
+  const [categoryLevel2, setCategoryLevel2] = useState<ICategoryProduct[]>([])
   const [payload, setPayload] = useState<IProduct>({
     id: 0,
     store_id: 0,
@@ -56,12 +63,13 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
     setIsLoading(true)
     try {
       const response = await postEditProduct(payload.id, payload)
-
-      console.info('response:', response)
       if (response?.data?.status !== 0) {
         toast.error(response?.data?.message as string)
         toggle()
         return
+      }
+      if (refetch) {
+        refetch()
       }
       toast.success('SUCCESS')
       toggle()
@@ -72,11 +80,41 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
     setIsLoading(false)
   }
 
+  const fetchCategoryLevel1 = async () => {
+    try {
+      const response = await getCategoryLevel1()
+      if (response) {
+        setCategoryLevel1(response?.data?.Data)
+      }
+    } catch (error) {
+      console.error('[ERROR] Get Product Category Level 1:', error)
+    }
+  }
+
+  const fetchCategoryLevel2 = async () => {
+    try {
+      if (payload.category_lvl_1_id) {
+        const response = await getCategoryLevel2(payload.category_lvl_1_id)
+        if (response) {
+          setCategoryLevel2(response?.data?.Data)
+        }
+      }
+    } catch (error) {
+      console.error('[ERROR] Get Product Category Level 2:', error)
+    }
+  }
+
   useEffect(() => {
     if (showModal) {
+      delete data?.refetch
       setPayload(data)
+      fetchCategoryLevel1()
     }
   }, [data, showModal])
+
+  useEffect(() => {
+    fetchCategoryLevel2()
+  }, [payload?.category_lvl_1_id, showModal])
 
   const isNumber = (n: string) => {
     const numberString = /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/
@@ -93,12 +131,20 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
     })
   }
 
-  // const handleSwitchChange = (key: string, value: boolean) => {
-  //   setPayload({
-  //     ...payload,
-  //     [key]: value ? 1 : 0
-  //   })
-  // }
+  const handleCategoryLevel1 = (value: number) => {
+    setPayload({
+      ...payload,
+      category_lvl_1_id: value,
+      category_lvl_2_id: null
+    })
+  }
+
+  const handleCategoryLevel2 = (value: number) => {
+    setPayload({
+      ...payload,
+      category_lvl_2_id: value
+    })
+  }
 
   return (
     <>
@@ -126,6 +172,20 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
             placeholder="Input Price here..."
             onChange={event => handleChange('price', event)}
           />
+          <h4>Discount Price</h4>
+          <Input
+            value={payload.discount_price}
+            style={{ marginBottom: 15 }}
+            placeholder="Input Discount Price here..."
+            onChange={event => handleChange('discount_price', event)}
+          />
+          <h4>Product Weight (gram)</h4>
+          <Input
+            value={payload.product_weight}
+            style={{ marginBottom: 15 }}
+            placeholder="Input Product Weight here..."
+            onChange={event => handleChange('product_weight', event)}
+          />
           <h4>Stock</h4>
           <Input
             value={payload.stock}
@@ -133,13 +193,6 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
             placeholder="Input Stock here..."
             onChange={event => handleChange('stock', event)}
           />
-          {/* <h4>Product Weight</h4>
-          <Input
-            value={payload.product_weight}
-            style={{ marginBottom: 15 }}
-            placeholder="Input Product Weight here..."
-            onChange={event => handleChange('product_weight', event)}
-          /> */}
           <h4>Limit per Transaction</h4>
           <Input
             value={payload.limit_per_transaction}
@@ -154,6 +207,31 @@ const EditProduct: React.FC<IEditProduct> = ({ data }) => {
             placeholder="Input Description here..."
             onChange={event => handleChange('description', event)}
           />
+          <h4>Product Category Level 1</h4>
+          <Select
+            className="w-full"
+            optionFilterProp="children"
+            style={{ marginBottom: 15 }}
+            onChange={handleCategoryLevel1}
+            value={payload.category_lvl_1_id}
+            placeholder="Select Product Category Level 1"
+          >
+            {categoryLevel1?.map(dt => (
+              <Option value={dt.id}>{dt.name}</Option>
+            ))}
+          </Select>
+          <h4>Product Category Level 2</h4>
+          <Select
+            className="w-full"
+            optionFilterProp="children"
+            onChange={handleCategoryLevel2}
+            value={payload.category_lvl_2_id}
+            placeholder="Select Product Category Level 2"
+          >
+            {categoryLevel2?.map(dt => (
+              <Option value={dt.id}>{dt.name}</Option>
+            ))}
+          </Select>
         </Modal>
       )}
     </>

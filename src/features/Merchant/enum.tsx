@@ -107,9 +107,9 @@ export const columnProductByMerchant = [
     align: 'center',
     render: (_: null, data: IProduct) => (
       <div className="flex flex-row items-center justify-center">
-        <EditProduct data={data} />
+        <EditProduct data={data} refetch={data?.refetch} />
         <div className="w-[10px]" />
-        <DeleteProduct data={data} />
+        <DeleteProduct data={data} refetch={data?.refetch} />
       </div>
     )
   }

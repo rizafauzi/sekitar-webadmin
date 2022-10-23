@@ -72,9 +72,19 @@ export interface IProduct {
   product_weight: number
   updated_at: string
   label_stock: string
-  category_lvl_1_id: number
-  category_lvl_2_id: number
+  category_lvl_1_id: number | null
+  category_lvl_2_id: number | null
   category_lvl_1: string
   category_lvl_2: string
   limit_per_transaction: number
+  refetch?: () => void
+}
+
+export interface ICategoryProduct {
+  description: string
+  id: number
+  images: string
+  is_test: number
+  name: string
+  priority: number
 }

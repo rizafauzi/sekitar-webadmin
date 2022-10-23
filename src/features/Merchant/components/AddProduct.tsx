@@ -1,50 +1,88 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import React, { useState, ChangeEvent } from 'react'
-import { Modal, Input, Button } from 'antd'
+import React, { useState, ChangeEvent, useEffect } from 'react'
+import { Modal, Input, Button, Select } from 'antd'
 
 import { toast } from 'react-toastify'
-import { IProduct } from '../Merchant.type'
-import { postAddProduct } from '../api'
+import { ICategoryProduct, IProduct } from '../Merchant.type'
+import { getCategoryLevel1, getCategoryLevel2, postAddProduct } from '../api'
 
-const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
+const defaultProduct: IProduct = {
+  id: 0,
+  store_id: 0,
+  name: '',
+  price: 0,
+  stock: 0,
+  description: '',
+  image: [],
+  image_ss: [],
+  image_s: [],
+  image_m: [],
+  image_l: [],
+  image_xl: [],
+  is_test: 0,
+  path: '',
+  toggle_stock: 0,
+  toggle_active: 0,
+  discount_price: 0,
+  product_weight: 0,
+  updated_at: '',
+  label_stock: '',
+  category_lvl_1_id: null,
+  category_lvl_2_id: null,
+  category_lvl_1: '',
+  category_lvl_2: '',
+  limit_per_transaction: 0
+}
+
+const AddProduct: React.FC<{ merchantId: number; refetch: () => void }> = ({
+  merchantId,
+  refetch
+}) => {
   const { TextArea } = Input
+  const { Option } = Select
   const [showModal, setShowModal] = useState(false)
-  const [payload, setPayload] = useState<IProduct>({
-    id: 0,
-    store_id: 0,
-    name: '',
-    price: 0,
-    stock: 0,
-    description: '',
-    image: [],
-    image_ss: [],
-    image_s: [],
-    image_m: [],
-    image_l: [],
-    image_xl: [],
-    is_test: 0,
-    path: '',
-    toggle_stock: 0,
-    toggle_active: 0,
-    discount_price: 0,
-    product_weight: 0,
-    updated_at: '',
-    label_stock: '',
-    category_lvl_1_id: 0,
-    category_lvl_2_id: 0,
-    category_lvl_1: '',
-    category_lvl_2: '',
-    limit_per_transaction: 0
-  })
+  const [categoryLevel1, setCategoryLevel1] = useState<ICategoryProduct[]>([])
+  const [categoryLevel2, setCategoryLevel2] = useState<ICategoryProduct[]>([])
+  const [payload, setPayload] = useState<IProduct>(defaultProduct)
 
   const toggle = () => {
     setShowModal(!showModal)
   }
+  const fetchCategoryLevel1 = async () => {
+    try {
+      const response = await getCategoryLevel1()
+      if (response) {
+        setCategoryLevel1(response?.data?.Data)
+      }
+    } catch (error) {
+      console.error('[ERROR] Get Product Category Level 1:', error)
+    }
+  }
+
+  const fetchCategoryLevel2 = async () => {
+    try {
+      if (payload.category_lvl_1_id) {
+        const response = await getCategoryLevel2(payload?.category_lvl_1_id)
+        if (response) {
+          setCategoryLevel2(response?.data?.Data)
+        }
+      }
+    } catch (error) {
+      console.error('[ERROR] Get Product Category Level 2:', error)
+    }
+  }
+  useEffect(() => {
+    fetchCategoryLevel2()
+    fetchCategoryLevel1()
+  }, [payload?.category_lvl_1_id, showModal])
 
   const handleSubmit = async () => {
     try {
@@ -54,6 +92,8 @@ const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
       })
       if (response) {
         toast.success('SUCCESS')
+        setPayload(defaultProduct)
+        refetch()
         setShowModal(false)
       }
     } catch (error) {
@@ -77,13 +117,20 @@ const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
     })
   }
 
-  // const handleSwitchChange = (key: string, value: boolean) => {
-  //   setPayload({
-  //     ...payload,
-  //     [key]: value ? 1 : 0
-  //   })
-  // }
+  const handleCategoryLevel1 = (value: number) => {
+    setPayload({
+      ...payload,
+      category_lvl_1_id: value,
+      category_lvl_2_id: null
+    })
+  }
 
+  const handleCategoryLevel2 = (value: number) => {
+    setPayload({
+      ...payload,
+      category_lvl_2_id: value
+    })
+  }
   return (
     <>
       <Button onClick={toggle}>Add Product</Button>
@@ -110,20 +157,26 @@ const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
             placeholder="Input Price here..."
             onChange={event => handleChange('price', event)}
           />
+          <h4>Discount Price</h4>
+          <Input
+            value={payload.discount_price}
+            style={{ marginBottom: 15 }}
+            placeholder="Input Discount Price here..."
+            onChange={event => handleChange('discount_price', event)}
+          />
+          <h4>Product Weight (gram)</h4>
+          <Input
+            value={payload.product_weight}
+            style={{ marginBottom: 15 }}
+            placeholder="Input Product Weight here..."
+            onChange={event => handleChange('product_weight', event)}
+          />
           <h4>Stock</h4>
           <Input
             value={payload.stock}
             style={{ marginBottom: 15 }}
             placeholder="Input Stock here..."
             onChange={event => handleChange('stock', event)}
-          />
-          <h4>Label Stock</h4>
-          <Input
-            disabled
-            value={payload.label_stock}
-            style={{ marginBottom: 15 }}
-            placeholder="Input Stock here..."
-            onChange={event => handleChange('label_stock', event)}
           />
           <h4>Limit per Transaction</h4>
           <Input
@@ -139,6 +192,31 @@ const AddProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
             placeholder="Input Description here..."
             onChange={event => handleChange('description', event)}
           />
+          <h4>Product Category Level 1</h4>
+          <Select
+            className="w-full"
+            optionFilterProp="children"
+            style={{ marginBottom: 15 }}
+            onChange={handleCategoryLevel1}
+            value={payload.category_lvl_1_id}
+            placeholder="Select Product Category Level 1"
+          >
+            {categoryLevel1?.map(dt => (
+              <Option value={dt.id}>{dt.name}</Option>
+            ))}
+          </Select>
+          <h4>Product Category Level 2</h4>
+          <Select
+            className="w-full"
+            optionFilterProp="children"
+            onChange={handleCategoryLevel2}
+            value={payload.category_lvl_2_id}
+            placeholder="Select Product Category Level 2"
+          >
+            {categoryLevel2?.map(dt => (
+              <Option value={dt.id}>{dt.name}</Option>
+            ))}
+          </Select>
         </Modal>
       )}
     </>

@@ -1,4 +1,5 @@
-/* eslint-disable react/button-has-type */
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
 /* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable unicorn/prevent-abbreviations */
 import React from 'react'

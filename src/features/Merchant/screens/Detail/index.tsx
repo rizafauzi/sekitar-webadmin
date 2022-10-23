@@ -2,9 +2,9 @@
 /* eslint-disable unicorn/consistent-destructuring */
 import React, { useEffect, useState } from 'react'
 import qs from 'query-string'
-import { Card } from 'antd'
+import { Button, Card } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import useFetchMerchantById, { useFetchProductList } from '@features/Merchant/hooks'
 import TextField from '@components/atoms/TextField'
@@ -20,6 +20,7 @@ import EditOperationalHour from '@features/Merchant/components/EditOperationalHo
 const MerchantDetail: React.FC = () => {
   const { pathname, search } = useLocation()
   const pagination = qs.parse(search)
+  const history = useHistory()
   const storePath = pathname.replace('/merchants/', '')
   const { data, isError, isLoading, refetch } = useFetchMerchantById(storePath)
   const [params, setParameters] = useState({
@@ -31,8 +32,13 @@ const MerchantDetail: React.FC = () => {
   const {
     data: productList,
     isError: isProductError,
-    isLoading: isProductLoading
+    isLoading: isProductLoading,
+    refetch: productRefetch
   } = useFetchProductList(params, data?.id as number)
+
+  const handleBack = () => {
+    history.replace('/merchants?page=1')
+  }
 
   useEffect(() => {
     setParameters({
@@ -75,7 +81,10 @@ const MerchantDetail: React.FC = () => {
 
   return (
     <div>
-      <div className="flex flex-row w-full mb-6  items-center justify-center">
+      <Button onClick={handleBack} style={{ borderRadius: 5, paddingRight: 20, paddingLeft: 20 }}>
+        Back
+      </Button>
+      <div className="flex flex-row w-full my-6 items-center justify-center">
         <img
           width={75}
           height={75}
@@ -116,7 +125,7 @@ const MerchantDetail: React.FC = () => {
           <div className="flex-row">
             <UploadProduct merchantId={data?.id} />
             <DownloadProduct merchantId={data?.id} merchantName={data?.name} />
-            <AddProduct merchantId={data?.id} />
+            <AddProduct merchantId={data?.id} refetch={productRefetch} />
           </div>
         }
       >
@@ -124,7 +133,11 @@ const MerchantDetail: React.FC = () => {
           total={totalData}
           loading={isLoading}
           columns={columnProductByMerchant}
-          data={isProductError || isProductLoading || !productList ? [] : productList}
+          data={
+            isProductError || isProductLoading || !productList
+              ? []
+              : productList.map(dt => ({ ...dt, refetch: productRefetch }))
+          }
         />
       </Card>
     </div>

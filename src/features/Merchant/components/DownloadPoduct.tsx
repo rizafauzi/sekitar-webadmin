@@ -30,8 +30,6 @@ const DownloadProduct: React.FC<{ merchantId: number; merchantName: string }> = 
             label: startCase(dt),
             key: dt
           }))
-
-          console.info('headers:', headers)
           setHeader(headers)
           setData(dataResponse)
         }

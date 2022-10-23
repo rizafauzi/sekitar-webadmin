@@ -44,7 +44,6 @@ export const useFetchProductList = (params: IListParams, storeId: number) => {
   const { data, isError, isLoading, refetch } = useQuery(
     ['product-list', params, storeId],
     async () => {
-      console.info('storeId:', storeId)
       const response: ApiResponse<object[]> = await getProductList(params, storeId)
       return response.data.Data
     }

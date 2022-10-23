@@ -34,11 +34,8 @@ const ActionButton: React.FC<{ item: IOrder }> = ({ item }) => {
   }
 
   const handleSelected = () => {
-    console.info('HIYAA')
     history.push(`/orders/${cart_id}`)
   }
-
-  console.info('courier_id:', courier_id === '0')
 
   useEffect(() => {
     const options = [

@@ -87,6 +87,18 @@ export const getDownloadProduct = (id: number) =>
     method: 'GET'
   })
 
+export const getCategoryLevel1 = () =>
+  apiRequest({
+    path: '/api/v2/product_categories_lvl_1',
+    method: 'GET'
+  })
+
+export const getCategoryLevel2 = (id: number) =>
+  apiRequest({
+    path: `/api/v2/product_categories_lvl_2/${id}`,
+    method: 'GET'
+  })
+
 export const postUploadProduct = (fd: any) =>
   apiRequest({
     path: '/api/v1/products_import',
