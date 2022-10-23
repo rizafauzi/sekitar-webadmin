@@ -70,6 +70,8 @@ module.exports = {
         grey20: '#ededed',
         grey15: '#dbdbdb',
         grey10: '#cbcbcb',
+        grey1: '#e0e0e0',
+        grey2: '#f2f2f2',
 
         dark80: '#131313',
         dark60: '#191a19',

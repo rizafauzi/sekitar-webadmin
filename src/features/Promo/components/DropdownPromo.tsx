@@ -5,7 +5,7 @@
 import React from 'react'
 import { Dropdown, Menu } from 'antd'
 import { toast } from 'react-toastify'
-import MyIcon from '@assets/Icons'
+import Icons from '@assets/Icons'
 import { IPromoList } from '../Promo.type'
 import { patchPromoState } from '../api'
 import { useFetchPromoList } from '../hooks'
@@ -55,7 +55,7 @@ const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
       <Dropdown overlay={<Menu items={options} />} placement="bottomLeft" arrow>
         <div className="flex flex-row justify-center gap-2 py-2.5 border border-green1 text-sm font-bold rounded-lg bg-green1OPC10">
           <div className="text-green1 mt-0.5">Options</div>
-          <MyIcon name="chevron-down" />
+          <Icons name="chevron-down" />
         </div>
       </Dropdown>
     </div>
