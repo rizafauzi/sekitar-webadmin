@@ -58,7 +58,7 @@ export interface IProduct {
   price: number
   stock: number
   description: ''
-  image: string[]
+  image: string[] | Blob
   image_ss: string[]
   image_s: string[]
   image_m: string[]

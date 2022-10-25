@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -8,12 +10,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import React, { useState, ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react'
 import { Modal, Input, Button, Select } from 'antd'
 
 import { toast } from 'react-toastify'
 import { ICategoryProduct, IProduct } from '../Merchant.type'
-import { getCategoryLevel1, getCategoryLevel2, postEditProduct } from '../api'
+import { getCategoryLevel1, getCategoryLevel2, patchEditProduct } from '../api'
 
 interface IEditProduct {
   data: IProduct
@@ -21,12 +23,14 @@ interface IEditProduct {
 }
 
 const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
+  const inputImageReference = useRef<HTMLInputElement | null>(null)
   const { TextArea } = Input
   const { Option } = Select
   const [showModal, setShowModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [categoryLevel1, setCategoryLevel1] = useState<ICategoryProduct[]>([])
   const [categoryLevel2, setCategoryLevel2] = useState<ICategoryProduct[]>([])
+  const [previewImage, setPreviewImage] = useState<string | File>('')
   const [payload, setPayload] = useState<IProduct>({
     id: 0,
     store_id: 0,
@@ -55,6 +59,10 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
     limit_per_transaction: 0
   })
 
+  const onUploadImage = () => {
+    inputImageReference.current?.click()
+  }
+
   const toggle = () => {
     setShowModal(!showModal)
   }
@@ -62,7 +70,11 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
   const handleSubmit = async () => {
     setIsLoading(true)
     try {
-      const response = await postEditProduct(payload.id, payload)
+      // const fd = new FormData()
+      // const formatted: any = payload
+      // Object.keys(formatted).forEach(dt => fd.append(dt, formatted[dt]))
+      // const response = await patchEditProduct(payload.id, fd)
+      const response = await patchEditProduct(payload.id, payload)
       if (response?.data?.status !== 0) {
         toast.error(response?.data?.message as string)
         toggle()
@@ -78,6 +90,16 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
       console.error('[ERROR] Edit Merchant:', error)
     }
     setIsLoading(false)
+  }
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event
+    const { files } = target
+    const file = files && files[0]
+    if (file) {
+      setPayload({ ...payload, image: file })
+      setPreviewImage(URL.createObjectURL(file))
+    }
   }
 
   const fetchCategoryLevel1 = async () => {
@@ -108,6 +130,7 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
     if (showModal) {
       delete data?.refetch
       setPayload(data)
+      setPreviewImage(data?.image_s[0])
       fetchCategoryLevel1()
     }
   }, [data, showModal])
@@ -158,6 +181,25 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
           visible={showModal}
           okText={isLoading ? 'Loading...' : 'Edit'}
         >
+          <form>
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              className="hidden"
+              ref={inputImageReference}
+              onChange={handleUploadImage}
+            />
+          </form>
+          <h4>Product Image</h4>
+          <img
+            alt={payload.name}
+            src={previewImage as any}
+            className="rounded-lg w-[100px] h-[100px] mb-[15px] object-cover"
+          />
+          <Button onClick={onUploadImage} className="mb-[15px]">
+            Edit Image
+          </Button>
           <h4>Name</h4>
           <Input
             value={payload.name}

@@ -62,7 +62,7 @@ export const postAddProduct = (bodyRequest: IProduct) =>
     bodyRequest
   })
 
-export const postEditProduct = (id: number, bodyRequest: IProduct) =>
+export const patchEditProduct = (id: number, bodyRequest: IProduct | FormData) =>
   apiRequest({
     path: `/api/v1/products/${id}`,
     method: 'POST',

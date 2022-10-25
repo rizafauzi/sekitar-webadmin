@@ -7,10 +7,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import React, { useState, ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react'
 import { Modal, Input, Button, Select } from 'antd'
-
 import { toast } from 'react-toastify'
+
+import EmptyImage from '@assets/images/error.png'
 import { ICategoryProduct, IProduct } from '../Merchant.type'
 import { getCategoryLevel1, getCategoryLevel2, postAddProduct } from '../api'
 
@@ -46,12 +47,18 @@ const AddProduct: React.FC<{ merchantId: number; refetch: () => void }> = ({
   merchantId,
   refetch
 }) => {
+  const inputImageReference = useRef<HTMLInputElement | null>(null)
   const { TextArea } = Input
   const { Option } = Select
   const [showModal, setShowModal] = useState(false)
   const [categoryLevel1, setCategoryLevel1] = useState<ICategoryProduct[]>([])
   const [categoryLevel2, setCategoryLevel2] = useState<ICategoryProduct[]>([])
   const [payload, setPayload] = useState<IProduct>(defaultProduct)
+  const [previewImage, setPreviewImage] = useState<string | File>('')
+
+  const onUploadImage = () => {
+    inputImageReference.current?.click()
+  }
 
   const toggle = () => {
     setShowModal(!showModal)
@@ -102,6 +109,16 @@ const AddProduct: React.FC<{ merchantId: number; refetch: () => void }> = ({
     }
   }
 
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event
+    const { files } = target
+    const file = files && files[0]
+    if (file) {
+      setPayload({ ...payload, image: file })
+      setPreviewImage(URL.createObjectURL(file))
+    }
+  }
+
   const isNumber = (n: string) => {
     const numberString = /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/
     return numberString.test(n.toString())
@@ -143,6 +160,25 @@ const AddProduct: React.FC<{ merchantId: number; refetch: () => void }> = ({
           visible={showModal}
           onCancel={toggle}
         >
+          <form>
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              className="hidden"
+              ref={inputImageReference}
+              onChange={handleUploadImage}
+            />
+          </form>
+          <h4>Product Image</h4>
+          <img
+            alt={payload.name}
+            src={(previewImage || EmptyImage) as string}
+            className="rounded-lg w-[100px] h-[100px] mb-[15px] object-cover"
+          />
+          <Button onClick={onUploadImage} className="mb-[15px]">
+            Upload Image
+          </Button>
           <h4>Name</h4>
           <Input
             value={payload.name}

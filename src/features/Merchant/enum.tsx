@@ -59,7 +59,7 @@ export const columnProductByMerchant = [
       <img
         alt={name}
         className="h-[50px] w-[50px] object-cover rounded-md"
-        src={image_s?.length > 0 ? image_s[0] : EmptyImage}
+        src={image_s?.length > 0 ? image_s[0] : (EmptyImage as any)}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null
           currentTarget.src = EmptyImage
