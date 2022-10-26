@@ -3,6 +3,7 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { Card } from 'antd'
 
 import { useFetchMerchantList } from '@features/Merchant/hooks'
@@ -31,7 +32,9 @@ const CreatePromoPage: React.FC = () => {
     description: '',
     productList: [],
     bannerEntryPoint: {} as File,
-    headerBanner: {} as File
+    headerBanner: {} as File,
+    wordingCta: '',
+    customUrlCta: ''
   })
   const [validate, setValidate] = useState<IValidations>({})
   const rules = {
@@ -43,9 +46,6 @@ const CreatePromoPage: React.FC = () => {
     },
     description: {
       requiredIf: stripTags(form.description) === ''
-    },
-    productList: {
-      minLength: 1
     },
     bannerEntryPoint: {
       requiredIf: !form.bannerEntryPoint?.name
@@ -110,7 +110,16 @@ const CreatePromoPage: React.FC = () => {
     formData.append('product_list', String(form.productList))
     formData.append('banner_entry_point', form.bannerEntryPoint as string | Blob)
     formData.append('header_banner', form.headerBanner as string | Blob)
+    formData.append('wording_cta', form.wordingCta)
+    formData.append('custom_url_cta', form.customUrlCta)
     postPromoProduct(formData)
+      .then(() => {
+        toast.success('Success Add Promo')
+        history.push('/promo')
+      })
+      .catch(() => {
+        toast.error('Failed Add Promo')
+      })
   }
 
   useEffect(() => {
@@ -120,7 +129,7 @@ const CreatePromoPage: React.FC = () => {
 
   return (
     <div>
-      <Card title="Merchant Data">
+      <Card title="Tambah Product Promo">
         <TextField label="MERCHANT">
           <MultiSelect
             loading={isLoading}
@@ -135,10 +144,7 @@ const CreatePromoPage: React.FC = () => {
           <Input value={form.title} onChange={event => onChangeInput(event, 'title')} />
         </TextField>
         <TextField label="DESCRIPTION">
-          <TextEditor
-            value={form.description}
-            onChange={value => onChangeDescription(value, 'description')}
-          />
+          <TextEditor onChange={value => onChangeDescription(value, 'description')} />
         </TextField>
         <TextField label="PRODUCT LIST">
           <MultiSelect
@@ -164,6 +170,15 @@ const CreatePromoPage: React.FC = () => {
             value={form.headerBanner}
             onInput={file => onInputFile(file, 'headerBanner')}
             onRemove={() => onInputFile({} as File, 'headerBanner')}
+          />
+        </TextField>
+        <TextField label="WORDING CTA">
+          <Input value={form.wordingCta} onChange={event => onChangeInput(event, 'wordingCta')} />
+        </TextField>
+        <TextField label="CUSTOM URL CTA">
+          <Input
+            value={form.customUrlCta}
+            onChange={event => onChangeInput(event, 'customUrlCta')}
           />
         </TextField>
       </Card>

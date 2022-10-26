@@ -9,20 +9,20 @@ import { Wrapper } from './TextEditor.style'
 import MenuBar from './MenuBar'
 
 interface TextEditorProps {
-  value: string
+  initialValue?: string
   onChange: (val: string) => void
 }
 
 const TextEditor = (props: TextEditorProps) => {
-  const { value, onChange } = props
+  const { initialValue, onChange } = props
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: value
+    content: initialValue
   })
 
   useEffect(() => {
-    editor?.commands.setContent(value)
-  }, [value])
+    editor?.commands.setContent(initialValue || '')
+  }, [initialValue])
 
   useEffect(() => {
     onChange(editor?.getHTML() || '')
@@ -37,7 +37,7 @@ const TextEditor = (props: TextEditorProps) => {
 }
 
 TextEditor.defaultProps = {
-  value: ''
+  initialValue: ''
 }
 
 export default TextEditor

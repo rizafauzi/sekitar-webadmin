@@ -174,7 +174,7 @@ const EditPromoPage: React.FC = () => {
         </TextField>
         <TextField label="DESCRIPTION">
           <TextEditor
-            value={form.description}
+            initialValue={data?.description}
             onChange={value => onChangeDescription(value, 'description')}
           />
         </TextField>
