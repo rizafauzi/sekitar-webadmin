@@ -1,10 +1,14 @@
-/* eslint-disable arrow-body-style */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React from 'react'
 import { Dropdown, Menu } from 'antd'
 import { toast } from 'react-toastify'
+import { useHistory } from 'react-router-dom'
+
 import Icons from '@assets/Icons'
 import { IPromoList } from '../Promo.type'
 import { patchPromoState } from '../api'
@@ -12,13 +16,13 @@ import { useFetchPromoList } from '../hooks'
 
 const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
   const { id, is_active } = item
+  const history = useHistory()
   const { refetch } = useFetchPromoList({
     page: 0,
     limit: 20
   })
   const onSetStatus = async () => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const response = await patchPromoState(Number(id), {
         is_active: is_active === 1 ? 0 : 1
       })
@@ -36,8 +40,10 @@ const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
     }
   }
 
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const onEdit = () => console.info('EDITTT')
+  const onEdit = () => {
+    history.push(`/promo/edit/${id}`)
+  }
+
   const options = [
     {
       key: 'edit',
@@ -45,7 +51,6 @@ const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
     },
     {
       key: 'set-status',
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       label: <a onClick={onSetStatus}>{is_active ? 'Nonaktifkan' : 'Aktifkan'}</a>
     }
   ]

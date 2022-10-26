@@ -21,6 +21,10 @@ const TextEditor = (props: TextEditorProps) => {
   })
 
   useEffect(() => {
+    editor?.commands.setContent(value)
+  }, [value])
+
+  useEffect(() => {
     onChange(editor?.getHTML() || '')
   }, [editor?.getHTML()])
 
