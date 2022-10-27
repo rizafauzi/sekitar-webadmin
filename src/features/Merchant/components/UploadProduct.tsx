@@ -6,6 +6,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import { Button } from 'antd'
 
+import { toast } from 'react-toastify'
 import { postUploadProduct } from '../api'
 
 const UploadProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
@@ -29,13 +30,16 @@ const UploadProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
       fd.append('file', file as string | Blob)
 
       const response = await postUploadProduct(fd)
-      if (response) {
-        console.info(response)
+      setIsLoading(false)
+      if (response?.data?.status !== 0) {
+        toast.error(response?.data?.message)
+        return
       }
+      toast.error('Upload Product List Succeed!')
     } catch (error) {
+      setIsLoading(false)
       console.error('[ERROR] Upload Product:', error)
     }
-    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const UploadProduct: React.FC<{ merchantId: number }> = ({ merchantId }) => {
       </form>
 
       <Button disabled={isLoading} className="mr-2" onClick={onClick}>
-        Upload Product
+        {isLoading ? 'Uploading...' : 'Upload Product'}
       </Button>
     </>
   )
