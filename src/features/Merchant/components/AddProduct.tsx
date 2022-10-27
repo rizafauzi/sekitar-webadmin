@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -93,10 +94,10 @@ const AddProduct: React.FC<{ merchantId: number; refetch: () => void }> = ({
 
   const handleSubmit = async () => {
     try {
-      const response = await postAddProduct({
-        ...payload,
-        store_id: merchantId
-      })
+      const fd = new FormData()
+      const formatted: any = payload
+      Object.keys(formatted).forEach(dt => fd.append(dt, formatted[dt]))
+      const response = await postAddProduct(merchantId, fd)
       if (response) {
         toast.success('SUCCESS')
         setPayload(defaultProduct)

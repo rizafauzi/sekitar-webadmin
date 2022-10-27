@@ -30,7 +30,7 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [categoryLevel1, setCategoryLevel1] = useState<ICategoryProduct[]>([])
   const [categoryLevel2, setCategoryLevel2] = useState<ICategoryProduct[]>([])
-  const [previewImage, setPreviewImage] = useState<string | File>('')
+  const [previewImage, setPreviewImage] = useState<string | File | null>('')
   const [payload, setPayload] = useState<IProduct>({
     id: 0,
     store_id: 0,
@@ -70,11 +70,10 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
   const handleSubmit = async () => {
     setIsLoading(true)
     try {
-      // const fd = new FormData()
-      // const formatted: any = payload
-      // Object.keys(formatted).forEach(dt => fd.append(dt, formatted[dt]))
-      // const response = await patchEditProduct(payload.id, fd)
-      const response = await patchEditProduct(payload.id, payload)
+      const fd = new FormData()
+      const formatted: any = payload
+      Object.keys(formatted).forEach(dt => fd.append(dt, formatted[dt]))
+      const response = await patchEditProduct(payload.store_id, payload.id, fd)
       if (response?.data?.status !== 0) {
         toast.error(response?.data?.message as string)
         toggle()
@@ -130,7 +129,7 @@ const EditProduct: React.FC<IEditProduct> = ({ data, refetch }) => {
     if (showModal) {
       delete data?.refetch
       setPayload(data)
-      setPreviewImage(data?.image_s[0])
+      setPreviewImage(data?.image_s ? data?.image_s[0] : null)
       fetchCategoryLevel1()
     }
   }, [data, showModal])

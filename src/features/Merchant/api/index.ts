@@ -52,9 +52,9 @@ export const postEditMerchant = (id: number, bodyRequest: IMerchant) =>
     bodyRequest
   })
 
-export const postAddProduct = (bodyRequest: IProduct) =>
+export const postAddProduct = (merchantId: number, bodyRequest: IProduct | FormData) =>
   apiRequest({
-    path: '/api/v1/products',
+    path: `/api/v2/${merchantId}/products`,
     method: 'POST',
     headers: {
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
@@ -62,10 +62,14 @@ export const postAddProduct = (bodyRequest: IProduct) =>
     bodyRequest
   })
 
-export const patchEditProduct = (id: number, bodyRequest: IProduct | FormData) =>
+export const patchEditProduct = (
+  merchantId: number,
+  id: number,
+  bodyRequest: IProduct | FormData
+) =>
   apiRequest({
-    path: `/api/v1/products/${id}`,
-    method: 'POST',
+    path: `/api/v2/${merchantId}/products/${id}`,
+    method: 'PATCH',
     headers: {
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
     },
