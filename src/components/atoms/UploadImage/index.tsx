@@ -51,7 +51,11 @@ const UploadImage = (props: PropertiesUploadImage) => {
       {...propsUpload}
     >
       {imageUrl || value ? (
-        <img src={imageUrl || value} alt="avatar" style={{ width: '100%' }} />
+        <img
+          src={imageUrl || value}
+          alt="avatar"
+          style={{ width: '100%', maxHeight: '100%', objectFit: 'cover' }}
+        />
       ) : (
         uploadButton
       )}

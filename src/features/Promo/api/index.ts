@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { apiRequest } from '@configs/axios'
+import sekitarEnv from '@utils/ENV'
 
 export interface IPromoListParams {
   page: number
@@ -25,13 +26,22 @@ export const getPromoList = ({ page, limit }: IPromoListParams) =>
     }
   })
 
+export const getPromoDetail = (id: string) =>
+  apiRequest({
+    path: `/api/v1/promo/${id}`,
+    method: 'GET',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
+
 export const patchPromoState = (id: number, bodyRequest: { is_active: number }): Promise<any> =>
   apiRequest({
     path: `/api/v1/promo/is_active/${id}`,
     method: 'PATCH',
     bodyRequest,
     headers: {
-      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+      access_token: sekitarEnv.merchantToken
     }
   })
 
@@ -47,13 +57,22 @@ export const getPromoProducts = ({ page, limit, keyword, storeIds }: IPromoProdu
     }
   })
 
-export const postPromoProduct = (bodyRequest: FormData) => {
+export const postPromoProduct = (bodyRequest: FormData) =>
   apiRequest({
     path: '/api/v1/promo',
     method: 'POST',
     bodyRequest,
     headers: {
-      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+      access_token: sekitarEnv.merchantToken
     }
   })
-}
+
+export const putPromoProduct = (id: string, bodyRequest: FormData) =>
+  apiRequest({
+    path: `/api/v1/promo/${id}`,
+    method: 'PUT',
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })

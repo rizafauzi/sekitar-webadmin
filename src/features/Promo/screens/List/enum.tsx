@@ -1,3 +1,6 @@
+/* eslint-disable react/no-danger */
+/* eslint-disable react/self-closing-comp */
+
 import DropdownPromo from '@features/Promo/components/DropdownPromo'
 import { IPromoList } from '@features/Promo/Promo.type'
 
@@ -24,7 +27,10 @@ const ListPromoColumn = [
     width: '26rem',
     title: 'DESCRIPTION',
     dataIndex: 'description',
-    key: 'description'
+    key: 'description',
+    render: (_: null, data: IPromoList) => (
+      <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+    )
   },
   {
     width: '8rem',

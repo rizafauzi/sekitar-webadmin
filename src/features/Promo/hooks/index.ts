@@ -1,16 +1,38 @@
 /* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable unicorn/prevent-abbreviations */
+
 import { ApiResponse } from '@configs/axios'
 import { useQuery } from 'react-query'
 import { IProduct } from '@features/Merchant/Merchant.type'
-import { getPromoList, getPromoProducts, IPromoListParams, IPromoProductsParams } from '../api'
-import { IPromoList } from '../Promo.type'
+import {
+  getPromoDetail,
+  getPromoList,
+  getPromoProducts,
+  IPromoListParams,
+  IPromoProductsParams
+} from '../api'
+import { IPromoDetail, IPromoList } from '../Promo.type'
 
 export const useFetchPromoList = (params: IPromoListParams) => {
   const { data, isError, isLoading, refetch } = useQuery(['promo-list', params], async () => {
     const response: ApiResponse<IPromoList[]> = await getPromoList(params)
     return response.data.Data.map((item, index) => ({ ...item, index: index + 1 }))
+  })
+
+  return {
+    isLoading,
+    isError,
+    data,
+    refetch
+  }
+}
+
+export const useFetchPromoDetail = (id: string) => {
+  const { data, isError, isLoading, refetch } = useQuery(['promo-detail', id], async () => {
+    const response: ApiResponse<IPromoDetail> = await getPromoDetail(id)
+    return response.data.Data
   })
 
   return {

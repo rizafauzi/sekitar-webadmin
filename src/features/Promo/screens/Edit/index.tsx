@@ -1,38 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable unicorn/consistent-function-scoping */
+
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { useHistory, useParams } from 'react-router-dom'
 import { Card } from 'antd'
+import { toast } from 'react-toastify'
+import type { RcFile } from 'antd/es/upload/interface'
 
 import { useFetchMerchantList } from '@features/Merchant/hooks'
-import { useFetchPromoProducts } from '@features/Promo/hooks'
+import { useFetchPromoDetail, useFetchPromoProducts } from '@features/Promo/hooks'
 import { IValidations, Validations } from '@utils/validation'
 import { stripTags } from '@utils/strip-tags'
 import useDebounce from '@hooks/useDebounce'
 
-import { postPromoProduct } from '@features/Promo/api'
+import { putPromoProduct } from '@features/Promo/api'
 import Button from '@components/atoms/Button'
 import Input from '@components/atoms/Input'
 import MultiSelect from '@components/atoms/MultiSelect'
 import TextField from '@components/atoms/TextField'
 import TextEditor from '@components/atoms/TextEditor'
-import UploadFile from '../../components/UploadFile'
+import UploadImage from '@components/atoms/UploadImage'
 
-const CreatePromoPage: React.FC = () => {
+const EditPromoPage: React.FC = () => {
+  const { id }: { id: string } = useParams()
   const history = useHistory()
+  const { data } = useFetchPromoDetail(id)
   const [keyword, setKeyword] = useState({
     merchant: '',
     productList: ''
   })
   const [form, setForm] = useState({
-    merchant: [],
+    merchant: [] as string[],
     title: '',
     description: '',
-    productList: [],
-    bannerEntryPoint: {} as File,
-    headerBanner: {} as File,
+    productList: [] as string[],
+    bannerEntryPoint: {} as any,
+    headerBanner: {} as any,
     wordingCta: '',
     customUrlCta: ''
   })
@@ -47,12 +53,8 @@ const CreatePromoPage: React.FC = () => {
     description: {
       requiredIf: stripTags(form.description) === ''
     },
-    bannerEntryPoint: {
-      requiredIf: !form.bannerEntryPoint?.name
-    },
-    headerBanner: {
-      requiredIf: !form.headerBanner?.name
-    }
+    bannerEntryPoint: {},
+    headerBanner: {}
   }
   const searchMerchant = useDebounce(keyword.merchant, 1000)
   const searchProducts = useDebounce(keyword.productList, 1000)
@@ -89,7 +91,7 @@ const CreatePromoPage: React.FC = () => {
     }))
   }
 
-  const onInputFile = (file: File, key: string) => {
+  const onInputImage = (file: string | Blob | RcFile, key: string) => {
     setForm(previousState => ({
       ...previousState,
       [key]: file
@@ -100,25 +102,35 @@ const CreatePromoPage: React.FC = () => {
     setForm(previousState => ({ ...previousState, [key]: value }))
   }
 
-  const handleBack = () => history.push('/promo')
-
   const handleSubmit = () => {
     const formData = new FormData()
     formData.append('merchant', String(form.merchant))
     formData.append('title', form.title)
     formData.append('description', form.description)
     formData.append('product_list', String(form.productList))
-    formData.append('banner_entry_point', form.bannerEntryPoint as string | Blob)
-    formData.append('header_banner', form.headerBanner as string | Blob)
     formData.append('wording_cta', form.wordingCta)
     formData.append('custom_url_cta', form.customUrlCta)
-    postPromoProduct(formData)
+    // Banner Entry Point
+    if (typeof form.bannerEntryPoint === 'string') {
+      formData.append('banner_entry_point_name', form.bannerEntryPoint)
+    } else {
+      formData.append('banner_entry_point_name', data?.banner_entry_point as string)
+      formData.append('banner_entry_point', form.bannerEntryPoint as string | Blob)
+    }
+    // Header Banner
+    if (typeof form.headerBanner === 'string') {
+      formData.append('header_banner_name', form.headerBanner)
+    } else {
+      formData.append('header_banner_name', data?.header_banner as string)
+      formData.append('header_banner', form.headerBanner as string | Blob)
+    }
+    putPromoProduct(id, formData)
       .then(() => {
-        toast.success('Success Add Promo')
+        toast.success('Success Edit Promo')
         history.push('/promo')
       })
       .catch(() => {
-        toast.error('Failed Add Promo')
+        toast.error('Failed Edit Promo')
       })
   }
 
@@ -127,9 +139,26 @@ const CreatePromoPage: React.FC = () => {
     setValidate(validations)
   }, [form])
 
+  useEffect(() => {
+    if (data) {
+      const productList = data.products?.map(product => String(product.id))
+      setForm(previousState => ({
+        ...previousState,
+        merchant: [String(data.merchant.id)],
+        title: data.title,
+        description: data.description,
+        productList: productList || [],
+        bannerEntryPoint: data.banner_entry_point,
+        headerBanner: data.header_banner,
+        wordingCta: data.wording_cta,
+        customUrlCta: data.custom_url_cta
+      }))
+    }
+  }, [data])
+
   return (
     <div>
-      <Card title="Tambah Product Promo">
+      <Card title="Edit Product Promo">
         <TextField label="MERCHANT">
           <MultiSelect
             loading={isLoading}
@@ -144,7 +173,10 @@ const CreatePromoPage: React.FC = () => {
           <Input value={form.title} onChange={event => onChangeInput(event, 'title')} />
         </TextField>
         <TextField label="DESCRIPTION">
-          <TextEditor onChange={value => onChangeDescription(value, 'description')} />
+          <TextEditor
+            initialValue={data?.description}
+            onChange={value => onChangeDescription(value, 'description')}
+          />
         </TextField>
         <TextField label="PRODUCT LIST">
           <MultiSelect
@@ -157,19 +189,15 @@ const CreatePromoPage: React.FC = () => {
           />
         </TextField>
         <TextField label="BANNER ENTRY POINT">
-          <UploadFile
-            id="banner-entry-point"
+          <UploadImage
             value={form.bannerEntryPoint}
-            onInput={file => onInputFile(file, 'bannerEntryPoint')}
-            onRemove={() => onInputFile({} as File, 'bannerEntryPoint')}
+            onInput={file => onInputImage(file, 'bannerEntryPoint')}
           />
         </TextField>
         <TextField label="HEADER BANNER">
-          <UploadFile
-            id="header-banner"
+          <UploadImage
             value={form.headerBanner}
-            onInput={file => onInputFile(file, 'headerBanner')}
-            onRemove={() => onInputFile({} as File, 'headerBanner')}
+            onInput={file => onInputImage(file, 'headerBanner')}
           />
         </TextField>
         <TextField label="WORDING CTA">
@@ -185,7 +213,7 @@ const CreatePromoPage: React.FC = () => {
       <Card>
         <TextField label="">
           <div className="flex flex-row flex-start gap-4">
-            <Button variant="secondary" onClick={handleBack}>
+            <Button variant="secondary" onClick={() => history.push('/promo')}>
               Kembali
             </Button>
             <Button
@@ -202,4 +230,4 @@ const CreatePromoPage: React.FC = () => {
   )
 }
 
-export default CreatePromoPage
+export default EditPromoPage

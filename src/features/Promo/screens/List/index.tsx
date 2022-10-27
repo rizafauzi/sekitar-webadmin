@@ -10,7 +10,7 @@ const PromoPage: React.FC = () => {
   const history = useHistory()
   const { data, isLoading } = useFetchPromoList({
     page: 0,
-    limit: 20
+    limit: 100
   })
 
   const onAddPromo = () => history.push('/promo/create')
