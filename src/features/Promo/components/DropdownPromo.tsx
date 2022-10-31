@@ -52,6 +52,18 @@ const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
     {
       key: 'set-status',
       label: <a onClick={onSetStatus}>{is_active ? 'Nonaktifkan' : 'Aktifkan'}</a>
+    },
+    {
+      key: 'see-promo',
+      label: (
+        <a
+          href={`http://165.22.250.143:2020/promo/${window.btoa(id)}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          See Promo
+        </a>
+      )
     }
   ]
 
