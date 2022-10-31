@@ -114,14 +114,14 @@ const EditPromoPage: React.FC = () => {
     if (typeof form.bannerEntryPoint === 'string') {
       formData.append('banner_entry_point_name', form.bannerEntryPoint)
     } else {
-      formData.append('banner_entry_point_name', data?.banner_entry_point as string)
+      formData.append('banner_entry_point_name', '')
       formData.append('banner_entry_point', form.bannerEntryPoint as string | Blob)
     }
     // Header Banner
     if (typeof form.headerBanner === 'string') {
       formData.append('header_banner_name', form.headerBanner)
     } else {
-      formData.append('header_banner_name', data?.header_banner as string)
+      formData.append('header_banner_name', '')
       formData.append('header_banner', form.headerBanner as string | Blob)
     }
     putPromoProduct(id, formData)
