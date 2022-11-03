@@ -163,6 +163,7 @@ const CreatePromoPage: React.FC = () => {
             onInput={file => onInputFile(file, 'bannerEntryPoint')}
             onRemove={() => onInputFile({} as File, 'bannerEntryPoint')}
           />
+          <span className="text-grey70">Recommended size 411 px x 167 px</span>
         </TextField>
         <TextField label="HEADER BANNER">
           <UploadFile
@@ -171,6 +172,7 @@ const CreatePromoPage: React.FC = () => {
             onInput={file => onInputFile(file, 'headerBanner')}
             onRemove={() => onInputFile({} as File, 'headerBanner')}
           />
+          <span className="text-grey70">Recommended size 411 px x 274 px</span>
         </TextField>
         <TextField label="WORDING CTA">
           <Input value={form.wordingCta} onChange={event => onChangeInput(event, 'wordingCta')} />

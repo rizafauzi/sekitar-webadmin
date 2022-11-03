@@ -5,6 +5,7 @@ export interface IPromoList {
   description: string
   merchant: string
   is_active: number
+  path: string
   created_at: string
   updated_at: string
 }
