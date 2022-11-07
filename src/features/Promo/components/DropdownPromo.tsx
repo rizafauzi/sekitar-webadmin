@@ -15,7 +15,7 @@ import { patchPromoState } from '../api'
 import { useFetchPromoList } from '../hooks'
 
 const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
-  const { id, is_active } = item
+  const { id, is_active, path } = item
   const history = useHistory()
   const { refetch } = useFetchPromoList({
     page: 0,
@@ -57,7 +57,7 @@ const DropdownPromo: React.FC<{ item: IPromoList }> = ({ item }) => {
       key: 'see-promo',
       label: (
         <a
-          href={`http://165.22.250.143:2020/promo/${window.btoa(id)}`}
+          href={`http://165.22.250.143:2020/${path}/promo/${window.btoa(id)}`}
           target="_blank"
           rel="noreferrer"
         >

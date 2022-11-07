@@ -193,12 +193,14 @@ const EditPromoPage: React.FC = () => {
             value={form.bannerEntryPoint}
             onInput={file => onInputImage(file, 'bannerEntryPoint')}
           />
+          <span className="text-grey70">Recommended size 411 px x 167 px</span>
         </TextField>
         <TextField label="HEADER BANNER">
           <UploadImage
             value={form.headerBanner}
             onInput={file => onInputImage(file, 'headerBanner')}
           />
+          <span className="text-grey70">Recommended size 411 px x 274 px</span>
         </TextField>
         <TextField label="WORDING CTA">
           <Input value={form.wordingCta} onChange={event => onChangeInput(event, 'wordingCta')} />
