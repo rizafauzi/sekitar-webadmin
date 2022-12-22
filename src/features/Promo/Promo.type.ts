@@ -32,6 +32,8 @@ export interface IPromoDetail {
   is_active: number
   wording_cta: string
   custom_url_cta: string
+  active_date: string
+  expired_date: string
   created_at: string
   updated_at: string
 }
