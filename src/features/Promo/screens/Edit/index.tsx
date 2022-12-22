@@ -6,7 +6,7 @@
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Card } from 'antd'
+import { Card, DatePicker } from 'antd'
 import { toast } from 'react-toastify'
 import type { RcFile } from 'antd/es/upload/interface'
 
@@ -23,6 +23,7 @@ import MultiSelect from '@components/atoms/MultiSelect'
 import TextField from '@components/atoms/TextField'
 import TextEditor from '@components/atoms/TextEditor'
 import UploadImage from '@components/atoms/UploadImage'
+import moment, { Moment } from 'moment'
 
 const EditPromoPage: React.FC = () => {
   const { id }: { id: string } = useParams()
@@ -40,7 +41,9 @@ const EditPromoPage: React.FC = () => {
     bannerEntryPoint: {} as any,
     headerBanner: {} as any,
     wordingCta: '',
-    customUrlCta: ''
+    customUrlCta: '',
+    activePromo: '',
+    expiredPromo: ''
   })
   const [validate, setValidate] = useState<IValidations>({})
   const rules = {
@@ -102,6 +105,19 @@ const EditPromoPage: React.FC = () => {
     setForm(previousState => ({ ...previousState, [key]: value }))
   }
 
+  const onChangeDate = (key: 'activePromo' | 'expiredPromo', date: string) => {
+    setForm(previousState => ({ ...previousState, [key]: new Date(date) }))
+  }
+
+  const getStringDate = (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss')
+
+  const disabledDate = (current: Moment, key: 'min' | 'max') => {
+    if (key === 'min') {
+      return current && current < moment(form.activePromo).endOf('day')
+    }
+    return current && current > moment(form.expiredPromo).endOf('day')
+  }
+
   const handleSubmit = () => {
     const formData = new FormData()
     formData.append('merchant', String(form.merchant))
@@ -124,6 +140,11 @@ const EditPromoPage: React.FC = () => {
       formData.append('header_banner_name', '')
       formData.append('header_banner', form.headerBanner as string | Blob)
     }
+
+    // Date Promo
+    formData.append('active_date', getStringDate(form.activePromo))
+    formData.append('expired_date', getStringDate(form.expiredPromo))
+
     putPromoProduct(id, formData)
       .then(() => {
         toast.success('Success Edit Promo')
@@ -151,7 +172,9 @@ const EditPromoPage: React.FC = () => {
         bannerEntryPoint: data.banner_entry_point,
         headerBanner: data.header_banner,
         wordingCta: data.wording_cta,
-        customUrlCta: data.custom_url_cta
+        customUrlCta: data.custom_url_cta,
+        activePromo: data.active_date,
+        expiredPromo: data.expired_date
       }))
     }
   }, [data])
@@ -209,6 +232,22 @@ const EditPromoPage: React.FC = () => {
           <Input
             value={form.customUrlCta}
             onChange={event => onChangeInput(event, 'customUrlCta')}
+          />
+        </TextField>
+        <TextField label="Start Promo">
+          <DatePicker
+            value={form.activePromo ? moment(form.activePromo) : undefined}
+            style={{ width: '100%' }}
+            disabledDate={date => disabledDate(date, 'max')}
+            onChange={(_, date) => onChangeDate('activePromo', date)}
+          />
+        </TextField>
+        <TextField label="Expired Promo">
+          <DatePicker
+            value={form.expiredPromo ? moment(form.expiredPromo) : undefined}
+            style={{ width: '100%' }}
+            disabledDate={date => disabledDate(date, 'min')}
+            onChange={(_, date) => onChangeDate('expiredPromo', date)}
           />
         </TextField>
       </Card>

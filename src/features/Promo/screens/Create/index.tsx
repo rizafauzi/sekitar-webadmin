@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/consistent-function-scoping */
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Card } from 'antd'
+import { Card, DatePicker } from 'antd'
+import moment, { Moment } from 'moment'
 
 import { useFetchMerchantList } from '@features/Merchant/hooks'
 import { useFetchPromoProducts } from '@features/Promo/hooks'
@@ -34,7 +36,9 @@ const CreatePromoPage: React.FC = () => {
     bannerEntryPoint: {} as File,
     headerBanner: {} as File,
     wordingCta: '',
-    customUrlCta: ''
+    customUrlCta: '',
+    activePromo: '',
+    expiredPromo: ''
   })
   const [validate, setValidate] = useState<IValidations>({})
   const rules = {
@@ -46,12 +50,6 @@ const CreatePromoPage: React.FC = () => {
     },
     description: {
       requiredIf: stripTags(form.description) === ''
-    },
-    bannerEntryPoint: {
-      requiredIf: !form.bannerEntryPoint?.name
-    },
-    headerBanner: {
-      requiredIf: !form.headerBanner?.name
     }
   }
   const searchMerchant = useDebounce(keyword.merchant, 1000)
@@ -100,7 +98,20 @@ const CreatePromoPage: React.FC = () => {
     setForm(previousState => ({ ...previousState, [key]: value }))
   }
 
+  const onChangeDate = (key: 'activePromo' | 'expiredPromo', date: string) => {
+    setForm(previousState => ({ ...previousState, [key]: new Date(date) }))
+  }
+
+  const getStringDate = (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss')
+
   const handleBack = () => history.push('/promo')
+
+  const disabledDate = (current: Moment, key: 'min' | 'max') => {
+    if (key === 'min') {
+      return current && current < moment(form.activePromo).endOf('day')
+    }
+    return current && current > moment(form.expiredPromo).endOf('day')
+  }
 
   const handleSubmit = () => {
     const formData = new FormData()
@@ -112,6 +123,10 @@ const CreatePromoPage: React.FC = () => {
     formData.append('header_banner', form.headerBanner as string | Blob)
     formData.append('wording_cta', form.wordingCta)
     formData.append('custom_url_cta', form.customUrlCta)
+    // Date Promo
+    formData.append('active_date', getStringDate(form.activePromo))
+    formData.append('expired_date', getStringDate(form.expiredPromo))
+
     postPromoProduct(formData)
       .then(() => {
         toast.success('Success Add Promo')
@@ -181,6 +196,22 @@ const CreatePromoPage: React.FC = () => {
           <Input
             value={form.customUrlCta}
             onChange={event => onChangeInput(event, 'customUrlCta')}
+          />
+        </TextField>
+        <TextField label="Start Promo">
+          <DatePicker
+            value={form.activePromo ? moment(form.activePromo) : undefined}
+            style={{ width: '100%' }}
+            disabledDate={date => disabledDate(date, 'max')}
+            onChange={(_, date) => onChangeDate('activePromo', date)}
+          />
+        </TextField>
+        <TextField label="Expired Promo">
+          <DatePicker
+            value={form.expiredPromo ? moment(form.expiredPromo) : undefined}
+            style={{ width: '100%' }}
+            disabledDate={date => disabledDate(date, 'min')}
+            onChange={(_, date) => onChangeDate('expiredPromo', date)}
           />
         </TextField>
       </Card>
