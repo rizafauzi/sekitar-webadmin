@@ -17,13 +17,12 @@ import Input from '@components/atoms/Input'
 import TextField from '@components/molecules/TextField'
 import UploadFile from '@features/Promo/components/UploadFile'
 import { createLearning } from '@features/Learning/api'
-import { ICreateLearningPayload } from '@features/Learning/Learning.type'
 
 const CreateLearningPage: React.FC = () => {
   const history = useHistory()
-  const [form, setForm] = useState<ICreateLearningPayload>({
+  const [form, setForm] = useState({
     title: '',
-    category_id: undefined,
+    category_id: null as null | number,
     link: '',
     image: {} as File,
     active_date: '',
@@ -65,16 +64,21 @@ const CreateLearningPage: React.FC = () => {
     return current && current > moment(form.deactive_date).endOf('day')
   }
 
+  const getStringDate = (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss')
+
   const handleSubmit = () => {
     const formData = new FormData()
     formData.append('title', form.title)
     formData.append('category_id', String(form.category_id))
     formData.append('link', String(form.link))
-    formData.append('image', String(form.image))
-    formData.append('active_date', form.active_date)
-    formData.append('deactive_date', form.deactive_date)
+    formData.append('image', form.image as string | Blob)
+    formData.append('active_date', getStringDate(form.active_date))
+    formData.append('deactive_date', getStringDate(form.deactive_date))
     createLearning(formData)
-      .then(() => toast.error('Learning berhasil dibuat!'))
+      .then(() => {
+        toast.success('Learning berhasil dibuat!')
+        history.push('/learning')
+      })
       .catch(() => toast.error('Oops, terjadi sesuatu. Coba lain nanti.'))
   }
 
