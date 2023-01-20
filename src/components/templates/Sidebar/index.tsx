@@ -6,7 +6,8 @@ import {
   UserOutlined,
   HomeOutlined,
   PieChartOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  ReadOutlined
 } from '@ant-design/icons'
 
 import Icons from '@assets/Icons'
@@ -63,6 +64,11 @@ const Sidebar = () => {
                     <Menu.Item key="promo" icon={<Icons name="megaphone" width={16} height={16} />}>
                       <Link to="/promo" className="ml-2">
                         Promo
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="learning" icon={<ReadOutlined />}>
+                      <Link to="/learning" className="ml-2">
+                        Learning
                       </Link>
                     </Menu.Item>
                   </>
