@@ -5,8 +5,8 @@
 
 import { ApiResponse } from '@configs/axios'
 import { useQuery } from 'react-query'
-import { getCategoryLearning, getLearningList } from '../api'
-import { ILearningCategory, ILearningList, ILearningListParams } from '../Learning.type'
+import { getCategoryLearning, getLearningDetail, getLearningList } from '../api'
+import { ILearning, ILearningCategory, ILearningList, ILearningListParams } from '../Learning.type'
 
 export const useFetchLearningList = (params: ILearningListParams) => {
   const { data, isError, isLoading, refetch, ...result } = useQuery(
@@ -39,3 +39,9 @@ export const useFetchCategoryLearning = () => {
 
   return { data, optionsCategoryLearning, ...result }
 }
+
+export const useFetchLearningDetail = (id: number) =>
+  useQuery(['learning-detail', id], async () => {
+    const response: ApiResponse<ILearning> = await getLearningDetail(id)
+    return response.data.Data
+  })

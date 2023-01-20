@@ -19,6 +19,7 @@ import MerchantDetail from '@features/Merchant/screens/Detail'
 import LearningPage from '@features/Learning/screens/List'
 import CreateLearningPage from '@features/Learning/screens/Create'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import EditLearningPage from '@features/Learning/screens/Edit'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -82,6 +83,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/learning/create">
               <CreateLearningPage />
+            </Route>
+            <Route exact path="/learning/edit/:id">
+              <EditLearningPage />
             </Route>
             <Route exact path="/master-data">
               <MasterDataPage />

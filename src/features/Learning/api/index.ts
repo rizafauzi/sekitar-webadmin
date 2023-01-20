@@ -32,6 +32,12 @@ export const getCategoryLearning = () =>
     method: 'GET'
   })
 
+export const getLearningDetail = (id: number) =>
+  apiRequest({
+    path: `/api/v1/article/${id}`,
+    method: 'GET'
+  })
+
 export const createLearning = (bodyRequest: any) =>
   apiRequest({
     path: '/api/v1/article/create',

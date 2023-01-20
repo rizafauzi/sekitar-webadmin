@@ -30,11 +30,14 @@ export interface ILearningCategory {
   name: string
 }
 
-export interface ICreateLearningPayload {
+export interface ILearning {
+  id: number
+  image: string
   title: string
   link: string
+  created_at: string
+  updated_at: string
   active_date: string
-  deactive_date: string
-  category_id?: number
-  image: File
+  deactivate_date: string
+  category_id: number
 }
