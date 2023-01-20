@@ -41,3 +41,12 @@ export const createLearning = (bodyRequest: any) =>
       access_token: sekitarEnv.merchantToken
     }
   })
+
+export const deleteLearning = (id: number) =>
+  apiRequest({
+    path: `/api/v1/article/${id}`,
+    method: 'DELETE',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })

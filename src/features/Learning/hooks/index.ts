@@ -9,16 +9,20 @@ import { getCategoryLearning, getLearningList } from '../api'
 import { ILearningCategory, ILearningList, ILearningListParams } from '../Learning.type'
 
 export const useFetchLearningList = (params: ILearningListParams) => {
-  const { data, isError, isLoading, refetch } = useQuery(['learning-list', params], async () => {
-    const response: ApiResponse<ILearningList[]> = await getLearningList(params)
-    return response.data.Data.map((item, index) => ({ ...item, index: index + 1 }))
-  })
+  const { data, isError, isLoading, refetch, ...result } = useQuery(
+    ['learning-list', params],
+    async () => {
+      const response: ApiResponse<ILearningList[]> = await getLearningList(params)
+      return response.data.Data.map((item, index) => ({ ...item, index: index + 1 }))
+    }
+  )
 
   return {
     isLoading,
     isError,
     data,
-    refetch
+    refetch,
+    ...result
   }
 }
 

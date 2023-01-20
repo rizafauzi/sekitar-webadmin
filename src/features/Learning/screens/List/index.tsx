@@ -10,7 +10,7 @@ const LearningPage: React.FC = () => {
   const history = useHistory()
   const { data, isLoading } = useFetchLearningList({
     page: 1,
-    limit: 100
+    limit: 20
   })
 
   const onAddPromo = () => history.push('/learning/create')

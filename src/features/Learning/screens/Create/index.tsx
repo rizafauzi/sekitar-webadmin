@@ -8,6 +8,7 @@
 
 import React, { ChangeEvent, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import moment, { Moment } from 'moment'
 import { Card, DatePicker, Select } from 'antd'
 import { useFetchCategoryLearning } from '@features/Learning/hooks'
@@ -47,7 +48,6 @@ const CreateLearningPage: React.FC = () => {
   }
 
   const onInputFile = (file: File, key: string) => {
-    console.log('file', file)
     setForm(previousState => ({
       ...previousState,
       [key]: file
@@ -66,7 +66,6 @@ const CreateLearningPage: React.FC = () => {
   }
 
   const handleSubmit = () => {
-    console.log('SUBMIT', form)
     const formData = new FormData()
     formData.append('title', form.title)
     formData.append('category_id', String(form.category_id))
@@ -75,6 +74,8 @@ const CreateLearningPage: React.FC = () => {
     formData.append('active_date', form.active_date)
     formData.append('deactive_date', form.deactive_date)
     createLearning(formData)
+      .then(() => toast.error('Learning berhasil dibuat!'))
+      .catch(() => toast.error('Oops, terjadi sesuatu. Coba lain nanti.'))
   }
 
   return (

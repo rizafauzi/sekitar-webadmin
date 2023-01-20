@@ -8,18 +8,32 @@
 import React from 'react'
 import { Dropdown, Menu } from 'antd'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import Icons from '@assets/Icons'
 import { DropdownLearningProps } from '../Learning.type'
+import { deleteLearning } from '../api'
+import { useFetchLearningList } from '../hooks'
 
 const DropdownLearning: React.FC<DropdownLearningProps> = ({ id }) => {
   const history = useHistory()
+  const { refetch } = useFetchLearningList({
+    page: 1,
+    limit: 20
+  })
 
   const onEdit = () => {
     history.push(`/learning/edit/${id}`)
   }
 
-  const onDelete = () => console.info('DELETE')
+  const onDelete = () => {
+    deleteLearning(id)
+      .then(() => {
+        refetch()
+        toast.success('Berhasil menghapus Learning.')
+      })
+      .catch(() => toast.error('Oops, terjadi sesuatu. Coba lain nanti.'))
+  }
 
   const onSeeDetail = () => console.info('SEE DETAIL')
 
