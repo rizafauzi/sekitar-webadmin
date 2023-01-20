@@ -48,6 +48,16 @@ export const createLearning = (bodyRequest: any) =>
     }
   })
 
+export const editLearning = (id: number, bodyRequest: any) =>
+  apiRequest({
+    path: `/api/v1/article/${id}`,
+    method: 'PUT',
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
+
 export const deleteLearning = (id: number) =>
   apiRequest({
     path: `/api/v1/article/${id}`,

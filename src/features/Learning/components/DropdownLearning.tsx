@@ -35,8 +35,6 @@ const DropdownLearning: React.FC<DropdownLearningProps> = ({ id }) => {
       .catch(() => toast.error('Oops, terjadi sesuatu. Coba lain nanti.'))
   }
 
-  const onSeeDetail = () => console.info('SEE DETAIL')
-
   const options = [
     {
       key: 'edit',
@@ -45,10 +43,6 @@ const DropdownLearning: React.FC<DropdownLearningProps> = ({ id }) => {
     {
       key: 'delete',
       label: <a onClick={onDelete}>Delete</a>
-    },
-    {
-      key: 'see-detail',
-      label: <a onClick={onSeeDetail}>See Detail</a>
     }
   ]
 

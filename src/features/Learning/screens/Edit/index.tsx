@@ -6,9 +6,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import moment, { Moment } from 'moment'
 import { Card, DatePicker, Select } from 'antd'
 import { useFetchCategoryLearning, useFetchLearningDetail } from '@features/Learning/hooks'
@@ -16,6 +18,7 @@ import Button from '@components/atoms/Button'
 import Input from '@components/atoms/Input'
 import TextField from '@components/molecules/TextField'
 import UploadImage from '@components/atoms/UploadImage'
+import { editLearning } from '@features/Learning/api'
 
 const EditLearningPage: React.FC = () => {
   const history = useHistory()
@@ -66,7 +69,23 @@ const EditLearningPage: React.FC = () => {
     return current && current > moment(form.deactive_date).endOf('day')
   }
 
-  const handleSubmit = () => console.info('SUBMIT')
+  const getStringDate = (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss')
+
+  const handleSubmit = () => {
+    const formData = new FormData()
+    formData.append('title', form.title)
+    formData.append('category_id', String(form.category_id))
+    formData.append('link', String(form.link))
+    formData.append('image', String(form.image))
+    formData.append('active_date', getStringDate(form.active_date))
+    formData.append('deactive_date', getStringDate(form.deactive_date))
+    editLearning(Number(id), formData)
+      .then(() => {
+        toast.success('Learning berhasil diubah!')
+        history.push('/learning')
+      })
+      .catch(() => toast.error('Oops, terjadi sesuatu. Coba lain nanti.'))
+  }
 
   useEffect(() => {
     if (data) {
