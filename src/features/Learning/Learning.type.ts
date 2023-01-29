@@ -23,6 +23,8 @@ export interface ILearningList {
   index?: number
   link?: string
   title?: string
+  deactivate_date?: Date
+  active_date?: Date
 }
 
 export interface ILearningCategory {

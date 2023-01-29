@@ -5,6 +5,7 @@
 
 import DropdownLearning from '@features/Learning/components/DropdownLearning'
 import { ILearningList } from '@features/Learning/Learning.type'
+import { formatDate } from '@utils/format-date'
 
 const ListLearningColumn = [
   {
@@ -28,19 +29,19 @@ const ListLearningColumn = [
   {
     width: '10rem',
     title: 'Active Date',
-    dataIndex: 'activeDate',
-    key: 'activeDate',
+    dataIndex: 'active_date',
+    key: 'active_date',
     render: (_: null, data: ILearningList) => (
-      <div dangerouslySetInnerHTML={{ __html: data.title || '' }}></div>
+      <span>{data.active_date ? formatDate(data.active_date) : ''}</span>
     )
   },
   {
     width: '10rem',
     title: 'Deactive Date',
-    dataIndex: 'deactiveDate',
-    key: 'deactiveDate',
+    dataIndex: 'deactivate_date',
+    key: 'deactivate_date',
     render: (_: null, data: ILearningList) => (
-      <div dangerouslySetInnerHTML={{ __html: data.title || '' }}></div>
+      <span>{data.deactivate_date ? formatDate(data.deactivate_date) : ''}</span>
     )
   },
   {
