@@ -7,6 +7,11 @@ export interface IWithdrawListParams {
   status?: StatusWithdraw
 }
 
+export interface IWithdrawStateParams {
+  id: number
+  status: 2 | 3
+}
+
 export interface IWithdrawList {
   id: number
   amount: number

@@ -19,7 +19,10 @@ const ListWithdrawColumn = [
     width: '12rem',
     title: 'Merchant',
     dataIndex: 'merchant_name',
-    key: 'merchant_name'
+    key: 'merchant_name',
+    render: (_: null, { id, merchant_name }: IWithdrawList) => (
+      <a href={`/withdraw-request/${id}`}>{merchant_name}</a>
+    )
   },
   {
     width: '13rem',
