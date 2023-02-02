@@ -20,6 +20,7 @@ import LearningPage from '@features/Learning/screens/List'
 import CreateLearningPage from '@features/Learning/screens/Create'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import EditLearningPage from '@features/Learning/screens/Edit'
+import WithdrawPage from '@features/Withdraw/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -101,6 +102,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route path="/couriers">
               <CourierPage />
+            </Route>
+            <Route path="/withdraw-request">
+              <WithdrawPage />
             </Route>
           </Switch>
         </Layout>
