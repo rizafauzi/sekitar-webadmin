@@ -3,10 +3,11 @@ import Cookies from 'js-cookie'
 import { Menu, Layout } from 'antd'
 import { Link } from 'react-router-dom'
 import {
-  UserOutlined,
+  // UserOutlined,
   HomeOutlined,
   PieChartOutlined,
-  UnorderedListOutlined,
+  // UnorderedListOutlined,
+  DollarOutlined,
   ReadOutlined
 } from '@ant-design/icons'
 
@@ -76,12 +77,15 @@ const Sidebar = () => {
 
                 {role === 'courier' && (
                   <>
-                    <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
+                    <Menu.Item key="withdraw-request" icon={<DollarOutlined />}>
+                      <Link to="/withdraw-request">Withdraw Request</Link>
+                    </Menu.Item>
+                    {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
                       <Link to="/orders">Daftar Pesanan</Link>
-                    </Menu.Item>
-                    <Menu.Item key="couriers" icon={<UserOutlined />}>
+                    </Menu.Item> */}
+                    {/* <Menu.Item key="couriers" icon={<UserOutlined />}>
                       <Link to="/couriers">Daftar Kurir</Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
                   </>
                 )}
 
