@@ -8,23 +8,35 @@
 
 import React from 'react'
 import { Dropdown, Menu } from 'antd'
-// import { toast } from 'react-toastify'
 import Icons from '@assets/Icons'
+import { toast } from 'react-toastify'
 import { IWithdrawList } from '../Withdraw.types'
+import { patchWithdrawStatus } from '../api'
 
-const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = () => {
-  const onAccepted = () => console.info('ACCEPTED')
-
-  const onRejected = () => console.info('REJECTED')
+const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = ({ item }) => {
+  const onAcceptReject = async (value: 2 | 3) => {
+    try {
+      const response = await patchWithdrawStatus({
+        id: item.id,
+        status: value
+      })
+      if (!response) return
+      if (value === 2) toast.success('Dana Berhasil diteruskan')
+      if (value === 3) toast.success('Tolak Penarikan Berhasil')
+    } catch {
+      console.error('Something wrong, try again later')
+      toast.error('Oops, terjadi kesalahan sistem. Coba lagi nanti.')
+    }
+  }
 
   const options = [
     {
       key: 'edit',
-      label: <a onClick={onAccepted}>Dana Diteruskan</a>
+      label: <a onClick={() => onAcceptReject(2)}>Dana Diteruskan</a>
     },
     {
       key: 'set-status',
-      label: <a onClick={onRejected}>Tolak Penarikan</a>
+      label: <a onClick={() => onAcceptReject(3)}>Tolak Penarikan</a>
     }
   ]
 

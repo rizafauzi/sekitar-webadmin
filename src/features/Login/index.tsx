@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
       Cookies.set('token', 'U0VLSVRBUi5JRA==')
       Cookies.set('role', 'courier')
       Cookies.set('email', 'courier@gmail.com')
-      history.push('/orders?page=1')
+      history.push('/withdraw-request?page=1')
       window.location.reload()
     }
   }
