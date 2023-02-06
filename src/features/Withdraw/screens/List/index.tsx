@@ -1,19 +1,23 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { PlusOutlined } from '@ant-design/icons'
-import Button from '@components/atoms/Button'
+import React, { useState } from 'react'
 import ListLayout from '@components/organisms/ListLayout'
 import { useFetchWithdrawList } from '@features/Withdraw/hooks'
+import { Select } from 'antd'
+import { Option } from 'antd/lib/mentions'
 import ListWithdrawColumn from './enum'
 
 const WithdrawPage: React.FC = () => {
-  const history = useHistory()
+  const [filter, setFilter] = useState()
   const { data, isLoading } = useFetchWithdrawList({
     page: 1,
-    limit: 100
+    limit: 100,
+    status: filter
   })
 
-  const onAddPromo = () => history.push('/promo/create')
+  const optionFilter = [
+    { label: 'Pending', value: '1' },
+    { label: 'Selesai', value: '2' },
+    { label: 'Gagal', value: '3' }
+  ]
 
   return (
     <div>
@@ -25,10 +29,17 @@ const WithdrawPage: React.FC = () => {
           isLoading
         }}
         extendButton={[
-          <Button onClick={onAddPromo}>
-            <PlusOutlined />
-            <span className="text-sm font-bold">Tambah</span>
-          </Button>
+          <Select
+            className="w-full"
+            optionFilterProp="children"
+            onChange={setFilter}
+            value={filter}
+            placeholder="Filter"
+          >
+            {optionFilter?.map(item => (
+              <Option value={item.value}>{item.label}</Option>
+            ))}
+          </Select>
         ]}
         columns={ListWithdrawColumn}
       />
