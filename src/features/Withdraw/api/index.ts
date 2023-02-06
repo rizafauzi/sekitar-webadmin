@@ -30,3 +30,12 @@ export const patchWithdrawStatus = ({ id, status }: IWithdrawStateParams) =>
       access_token: sekitarEnv.merchantToken
     }
   })
+
+export const getWithdrawDetail = ({ id }: { id: number }) =>
+  apiRequest({
+    path: `/api/v1/withdraw_transaction/${id}`,
+    method: 'GET',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
