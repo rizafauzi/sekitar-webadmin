@@ -24,3 +24,16 @@ export interface IWithdrawList {
   status: StatusWithdraw
   index: number
 }
+
+export interface IWithdrawDetail {
+  id: number
+  amount: number
+  created_at: string
+  updated_at: string
+  merchant_name: string
+  merchant_phone: string
+  bank_code: string
+  bank_number: string
+  bank_account_name: string
+  status: string
+}
