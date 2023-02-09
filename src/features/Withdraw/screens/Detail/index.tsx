@@ -26,7 +26,7 @@ const DetailWithdrawPage: React.FC = () => {
     updated_at
   } = data || {}
 
-  const onAcceptReject = async (value: 2 | 3) => {
+  const onAcceptReject = async (value: 2 | 3 | 4) => {
     try {
       const response = await patchWithdrawStatus({
         id: Number(id),
@@ -35,6 +35,7 @@ const DetailWithdrawPage: React.FC = () => {
       if (!response) return
       if (value === 2) toast.success('Dana Berhasil diteruskan')
       if (value === 3) toast.success('Tolak Penarikan Berhasil')
+      if (value === 4) toast.success('Dana disita Berhasil')
     } catch {
       console.error('Something wrong, try again later')
       toast.error('Oops, terjadi kesalahan sistem. Coba lagi nanti.')
@@ -65,6 +66,9 @@ const DetailWithdrawPage: React.FC = () => {
           </Button>
           <Button variant="primary" onClick={() => onAcceptReject(2)}>
             Dana Diteruskan
+          </Button>
+          <Button variant="primary" onClick={() => onAcceptReject(4)}>
+            Dana Disita
           </Button>
         </div>
       </Card>

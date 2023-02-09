@@ -9,7 +9,7 @@ export interface IWithdrawListParams {
 
 export interface IWithdrawStateParams {
   id: number
-  status: 2 | 3
+  status: 2 | 3 | 4
 }
 
 export interface IWithdrawList {
