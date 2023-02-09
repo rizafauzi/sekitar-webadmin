@@ -31,12 +31,16 @@ const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = ({ item }) => {
 
   const options = [
     {
-      key: 'edit',
+      key: 'dana-diteruskan',
       label: <a onClick={() => onAcceptReject(2)}>Dana Diteruskan</a>
     },
     {
-      key: 'set-status',
+      key: 'tolak-penarikan',
       label: <a onClick={() => onAcceptReject(3)}>Tolak Penarikan</a>
+    },
+    {
+      key: 'dana-disita',
+      label: <a onClick={() => onAcceptReject(3)}>Dana Disita</a>
     }
   ]
 

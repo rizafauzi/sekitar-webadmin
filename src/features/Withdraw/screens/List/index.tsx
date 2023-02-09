@@ -14,6 +14,7 @@ const WithdrawPage: React.FC = () => {
   })
 
   const optionFilter = [
+    { label: 'Semua', value: undefined },
     { label: 'Pending', value: '1' },
     { label: 'Selesai', value: '2' },
     { label: 'Gagal', value: '3' }
