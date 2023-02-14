@@ -8,7 +8,8 @@ import {
   PieChartOutlined,
   // UnorderedListOutlined,
   DollarOutlined,
-  ReadOutlined
+  ReadOutlined,
+  BankOutlined
 } from '@ant-design/icons'
 
 import Icons from '@assets/Icons'
@@ -79,6 +80,9 @@ const Sidebar = () => {
                   <>
                     <Menu.Item key="withdraw-request" icon={<DollarOutlined />}>
                       <Link to="/withdraw-request">Withdraw Request</Link>
+                    </Menu.Item>
+                    <Menu.Item key="bank-account" icon={<BankOutlined />}>
+                      <Link to="/bank-account">Bank Account</Link>
                     </Menu.Item>
                     {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
                       <Link to="/orders">Daftar Pesanan</Link>
