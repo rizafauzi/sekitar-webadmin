@@ -22,6 +22,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import EditLearningPage from '@features/Learning/screens/Edit'
 import WithdrawPage from '@features/Withdraw/screens/List'
 import DetailWithdrawPage from '@features/Withdraw/screens/Detail'
+import BankAccountList from '@features/BankAccount/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -55,6 +56,9 @@ const AppRouter: React.FC = () => {
           <Switch>
             <Route exact path="/">
               <MerchantPage />
+            </Route>
+            <Route exact path="/bank-account">
+              <BankAccountList />
             </Route>
             <Route exact path="/Dashboard">
               <Dashboard />
