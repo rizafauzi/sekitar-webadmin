@@ -14,7 +14,7 @@ import { IWithdrawList } from '../Withdraw.types'
 import { patchWithdrawStatus } from '../api'
 
 const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = ({ item }) => {
-  const onAcceptReject = async (value: 2 | 3) => {
+  const onAcceptReject = async (value: 2 | 3 | 4) => {
     try {
       const response = await patchWithdrawStatus({
         id: item.id,
@@ -23,6 +23,7 @@ const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = ({ item }) => {
       if (!response) return
       if (value === 2) toast.success('Dana Berhasil diteruskan')
       if (value === 3) toast.success('Tolak Penarikan Berhasil')
+      if (value === 4) toast.success('Dana disita Berhasil')
     } catch {
       console.error('Something wrong, try again later')
       toast.error('Oops, terjadi kesalahan sistem. Coba lagi nanti.')
@@ -40,7 +41,7 @@ const DropdownWithdraw: React.FC<{ item: IWithdrawList }> = ({ item }) => {
     },
     {
       key: 'dana-disita',
-      label: <a onClick={() => onAcceptReject(3)}>Dana Disita</a>
+      label: <a onClick={() => onAcceptReject(4)}>Dana Disita</a>
     }
   ]
 
