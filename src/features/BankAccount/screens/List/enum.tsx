@@ -10,7 +10,7 @@ const columnBankAccount = [
     dataIndex: 'merchant',
     className: 'max-w-20',
     key: 'merchant',
-    render: (value: any) => <a href="/bank-account/1">{value}</a>
+    render: (value: string) => <a href="/bank-account/1">{value}</a>
   },
   {
     title: 'Nama Rekening',
