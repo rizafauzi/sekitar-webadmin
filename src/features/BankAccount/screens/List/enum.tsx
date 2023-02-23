@@ -7,20 +7,20 @@ const columnBankAccount = [
   },
   {
     title: 'Merchant',
-    dataIndex: 'merchant',
+    dataIndex: 'name',
     className: 'max-w-20',
-    key: 'merchant',
+    key: 'name',
     render: (value: string) => <a href="/bank-account/1">{value}</a>
   },
   {
     title: 'Nama Rekening',
-    dataIndex: 'account_name',
-    key: 'account_name'
+    dataIndex: 'bank_owner',
+    key: 'bank_owner'
   },
   {
     title: 'No Rekening',
-    dataIndex: 'account_number',
-    key: 'account_number'
+    dataIndex: 'bank_number',
+    key: 'bank_number'
   },
   {
     title: 'Kode Bank',

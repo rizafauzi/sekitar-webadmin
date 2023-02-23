@@ -6,11 +6,11 @@
 import { ApiResponse } from '@configs/axios'
 import { useQuery } from 'react-query'
 import { getWithdrawDetail, getWithdrawList } from '../api'
-import { IWithdrawDetail, IWithdrawListParams } from '../Withdraw.types'
+import { IWithdrawDetail, IWithdrawList, IWithdrawListParams } from '../Withdraw.types'
 
 export const useFetchWithdrawList = (params: IWithdrawListParams) => {
   const { data, isError, isLoading, refetch } = useQuery(['withdraw-list', params], async () => {
-    const response: ApiResponse<IWithdrawListParams[]> = await getWithdrawList(params)
+    const response: ApiResponse<IWithdrawList[]> = await getWithdrawList(params)
     return response.data.Data.map((item, index: number) => ({ ...item, index: index + 1 }))
   })
 
