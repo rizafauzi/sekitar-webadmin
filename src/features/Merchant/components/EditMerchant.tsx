@@ -116,6 +116,13 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
             placeholder="Input name here..."
             onChange={event => handleChange('name', event)}
           />
+          <h4>Path</h4>
+          <Input
+            value={payload.path}
+            style={{ marginBottom: 15 }}
+            placeholder="Input path here..."
+            onChange={event => handleChange('path', event)}
+          />
           <h4>Description</h4>
           <TextArea
             value={payload.description}
