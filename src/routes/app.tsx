@@ -23,6 +23,7 @@ import EditLearningPage from '@features/Learning/screens/Edit'
 import WithdrawPage from '@features/Withdraw/screens/List'
 import DetailWithdrawPage from '@features/Withdraw/screens/Detail'
 import BankAccountList from '@features/BankAccount/screens/List'
+import BankAccountDetail from '@features/BankAccount/screens/Detail'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -59,6 +60,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/bank-account">
               <BankAccountList />
+            </Route>
+            <Route exact path="/bank-account/:bankAccountId">
+              <BankAccountDetail />
             </Route>
             <Route exact path="/Dashboard">
               <Dashboard />
