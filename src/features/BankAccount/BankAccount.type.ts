@@ -2,6 +2,7 @@
 export interface IBankAccountListParams {
   page: number
   limit: number
+  search?: string | undefined
 }
 
 export interface IBankAccountList {
