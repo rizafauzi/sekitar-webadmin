@@ -1,3 +1,5 @@
+import { IBankAccountList } from '@features/BankAccount/BankAccount.type'
+
 const columnBankAccount = [
   {
     width: '5em',
@@ -10,7 +12,9 @@ const columnBankAccount = [
     dataIndex: 'name',
     className: 'max-w-20',
     key: 'name',
-    render: (value: string) => <a href="/bank-account/1">{value}</a>
+    render: (value: string, { store_id }: IBankAccountList) => (
+      <a href={`/bank-account/${store_id}`}>{value}</a>
+    )
   },
   {
     title: 'Nama Rekening',

@@ -5,7 +5,7 @@
 
 import { apiRequest } from '@configs/axios'
 import sekitarEnv from '@utils/ENV'
-import { IBankAccountListParams } from '../BankAccount.type'
+import { IBankAccountListParams, UpdateBankAccountRequest } from '../BankAccount.type'
 
 export const getBankAccountList = ({ page, limit, search }: IBankAccountListParams) =>
   apiRequest({
@@ -16,6 +16,32 @@ export const getBankAccountList = ({ page, limit, search }: IBankAccountListPara
       c: limit,
       name: search || ''
     },
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
+
+export const getAllBank = ({ page, limit }: IBankAccountListParams) =>
+  apiRequest({
+    path: '/api/v1/bank_list',
+    method: 'GET',
+    params: {
+      p: page,
+      c: limit
+    }
+  })
+
+export const getDetailBankAccount = (storeId: number) =>
+  apiRequest({
+    path: `/api/dashboard/stores/bank_list/${storeId}`,
+    method: 'GET'
+  })
+
+export const updateBankAccount = (bodyRequest: UpdateBankAccountRequest) =>
+  apiRequest({
+    path: '/api/dashboard/stores/bank_list',
+    method: 'PUT',
+    bodyRequest,
     headers: {
       access_token: sekitarEnv.merchantToken
     }
