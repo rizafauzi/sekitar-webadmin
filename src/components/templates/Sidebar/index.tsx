@@ -78,11 +78,19 @@ const Sidebar = () => {
 
                 {role === 'courier' && (
                   <>
+                    <Menu.Item key="merchants" icon={<HomeOutlined />}>
+                      <Link to="/merchants">Merchants</Link>
+                    </Menu.Item>
                     <Menu.Item key="withdraw-request" icon={<DollarOutlined />}>
                       <Link to="/withdraw-request">Withdraw Request</Link>
                     </Menu.Item>
                     <Menu.Item key="bank-account" icon={<BankOutlined />}>
                       <Link to="/bank-account">Bank Account</Link>
+                    </Menu.Item>
+                    <Menu.Item key="learning" icon={<ReadOutlined />}>
+                      <Link to="/learning" className="ml-2">
+                        Learning
+                      </Link>
                     </Menu.Item>
                     {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
                       <Link to="/orders">Daftar Pesanan</Link>
