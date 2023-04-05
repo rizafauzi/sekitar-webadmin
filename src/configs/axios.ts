@@ -31,6 +31,7 @@ export type ApiResponse<T> = {
   data: {
     message: string
     Data: T
+    data?: T
     total?: number
   }
   status: number
