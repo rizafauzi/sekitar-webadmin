@@ -9,7 +9,8 @@ import {
   // UnorderedListOutlined,
   DollarOutlined,
   ReadOutlined,
-  BankOutlined
+  BankOutlined,
+  SyncOutlined
 } from '@ant-design/icons'
 
 import Icons from '@assets/Icons'
@@ -73,6 +74,11 @@ const Sidebar = () => {
                         Learning
                       </Link>
                     </Menu.Item>
+                    <Menu.Item key="refund" icon={<SyncOutlined />}>
+                      <Link to="/refund" className="ml-2">
+                        Refund
+                      </Link>
+                    </Menu.Item>
                   </>
                 )}
 
@@ -90,6 +96,11 @@ const Sidebar = () => {
                     <Menu.Item key="learning" icon={<ReadOutlined />}>
                       <Link to="/learning" className="ml-2">
                         Learning
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="refund" icon={<SyncOutlined />}>
+                      <Link to="/refund" className="ml-2">
+                        Refund
                       </Link>
                     </Menu.Item>
                     {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>

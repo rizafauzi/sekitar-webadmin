@@ -24,6 +24,7 @@ import WithdrawPage from '@features/Withdraw/screens/List'
 import DetailWithdrawPage from '@features/Withdraw/screens/Detail'
 import BankAccountList from '@features/BankAccount/screens/List'
 import BankAccountDetail from '@features/BankAccount/screens/Detail'
+import RefundList from '@features/Refund/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -117,6 +118,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/withdraw-request/:id">
               <DetailWithdrawPage />
+            </Route>
+            <Route exact path="/refund">
+              <RefundList />
             </Route>
           </Switch>
         </Layout>
