@@ -1,0 +1,43 @@
+/* eslint-disable unicorn/prevent-abbreviations */
+import { apiRequest } from '@configs/axios'
+import sekitarEnv from '@utils/ENV'
+import { IMerchantVerificationListParams } from '../MerchantVerification.type'
+
+export const getMerchantVerificationList = ({ page, limit }: IMerchantVerificationListParams) =>
+  apiRequest({
+    path: '/api/v1/user/list/request_cod',
+    method: 'GET',
+    params: {
+      p: page,
+      c: limit
+    },
+    headers: {
+      access_token: sekitarEnv.accessToken
+    }
+  })
+
+export const rejectMerchant = (merchantId: number) =>
+  apiRequest({
+    path: '/api/v1/stores/verification',
+    method: 'POST',
+    bodyRequest: {
+      is_verified: 0,
+      store_id: merchantId
+    },
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
+
+export const approveMerchant = (cartId: number) =>
+  apiRequest({
+    path: '/api/v1/stores/verification',
+    method: 'POST',
+    bodyRequest: {
+      is_verified: 1,
+      store_id: cartId
+    },
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })

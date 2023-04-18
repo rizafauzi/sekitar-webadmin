@@ -25,6 +25,7 @@ import DetailWithdrawPage from '@features/Withdraw/screens/Detail'
 import BankAccountList from '@features/BankAccount/screens/List'
 import BankAccountDetail from '@features/BankAccount/screens/Detail'
 import RefundList from '@features/Refund/screens/List'
+import MerchantVerificationList from '@features/MerchantVerification/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -121,6 +122,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/refund">
               <RefundList />
+            </Route>
+            <Route exact path="/merchant-verification">
+              <MerchantVerificationList />
             </Route>
           </Switch>
         </Layout>

@@ -10,7 +10,8 @@ import {
   DollarOutlined,
   ReadOutlined,
   BankOutlined,
-  SyncOutlined
+  SyncOutlined,
+  SecurityScanOutlined
 } from '@ant-design/icons'
 
 import Icons from '@assets/Icons'
@@ -101,6 +102,11 @@ const Sidebar = () => {
                     <Menu.Item key="refund" icon={<SyncOutlined />}>
                       <Link to="/refund" className="ml-2">
                         Refund
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="merchant-verification" icon={<SecurityScanOutlined />}>
+                      <Link to="/merchant-verification" className="ml-2">
+                        Merchant Verification
                       </Link>
                     </Menu.Item>
                     {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
