@@ -1,10 +1,13 @@
 /* eslint-disable unicorn/no-abusive-eslint-disable */
 /* eslint-disable */
 
-import { IMerchantVerificationList } from '@features/MerchantVerification/MerchantVerification.type'
-import VerifyButton from '@features/MerchantVerification/components/VerifyButton'
+import { Image } from 'antd'
+
 import EmptyImage from '@assets/images/error.png'
+import VerifyButton from '@features/MerchantVerification/components/VerifyButton'
 import RejectButton from '@features/MerchantVerification/components/RejectButton'
+import { IMerchantVerificationList } from '@features/MerchantVerification/MerchantVerification.type'
+import ImageViewer from '@features/MerchantVerification/components/ImageViewer'
 
 const columnMerchantVerification = [
   {
@@ -33,17 +36,7 @@ const columnMerchantVerification = [
     title: 'KTP Image',
     dataIndex: 'image_ktp',
     key: 'image_ktp',
-    render: (_: null, { image_ktp }: IMerchantVerificationList) => (
-      <img
-        alt={image_ktp}
-        src={image_ktp}
-        className="h-[50px] w-[100px] object-cover rounded-md"
-        onError={({ currentTarget }) => {
-          currentTarget.onerror = null
-          currentTarget.src = EmptyImage
-        }}
-      />
-    )
+    render: (_: null, { image_ktp }: IMerchantVerificationList) => <ImageViewer image={image_ktp} />
   },
   {
     width: '20em',
@@ -51,10 +44,10 @@ const columnMerchantVerification = [
     title: 'Action',
     align: 'center',
     dataIndex: 'cart_id',
-    render: (cart_id: number) => (
+    render: (_: null, { store_id }: IMerchantVerificationList) => (
       <div className="flex flex-row gap-2 justify-center">
-        <VerifyButton cartId={cart_id} />
-        <RejectButton cartId={cart_id} />
+        <VerifyButton storeId={store_id} />
+        <RejectButton storeId={store_id} />
       </div>
     )
   }

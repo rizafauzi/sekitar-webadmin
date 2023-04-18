@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
+
 import React, { useState } from 'react'
 import Button from '@components/atoms/Button'
 import { toast } from 'react-toastify'
@@ -5,22 +8,26 @@ import { useRejectMerchant, useFetchMerchantVerificationList } from '../hooks'
 import ModalReject from './ModalReject'
 
 interface ButtonProperties {
-  cartId: number
+  storeId: number
 }
 
 const RejectButton: React.FC<ButtonProperties> = props => {
-  const { cartId } = props
+  const { storeId } = props
   const [showModal, setShowModal] = useState(false)
   const { refetch } = useFetchMerchantVerificationList({ page: 1, limit: 1000 })
   const { mutate: rejectMerchant } = useRejectMerchant({
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      if (!!data?.data?.error) {
+        toast.error(data?.data?.error)
+        return
+      }
       toast.success('Reject Merchant berhasil!')
       refetch()
     }
   })
 
   const handleRejectMerchant = () => {
-    rejectMerchant(cartId)
+    rejectMerchant(storeId)
     setShowModal(false)
   }
 

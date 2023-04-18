@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
+
 import React, { useState } from 'react'
 import Button from '@components/atoms/Button'
 import { toast } from 'react-toastify'
@@ -5,22 +8,26 @@ import ModalConfirmVerify from './ModalConfirmVerify'
 import { useApproveMerchant, useFetchMerchantVerificationList } from '../hooks'
 
 interface ButtonProperties {
-  cartId: number
+  storeId: number
 }
 
 const VerifyButton: React.FC<ButtonProperties> = props => {
-  const { cartId } = props
+  const { storeId } = props
   const [showModal, setShowModal] = useState(false)
   const { refetch } = useFetchMerchantVerificationList({ page: 1, limit: 1000 })
   const { mutate: approveMerchant } = useApproveMerchant({
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      if (data?.data?.error) {
+        toast.error(data?.data?.error)
+        return
+      }
       toast.success('Merchant berhasil diverifikasi!')
       refetch()
     }
   })
 
   const handleApproveMerchant = () => {
-    approveMerchant(cartId)
+    approveMerchant(storeId)
     setShowModal(false)
   }
 

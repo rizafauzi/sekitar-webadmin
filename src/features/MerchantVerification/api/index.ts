@@ -12,14 +12,14 @@ export const getMerchantVerificationList = ({ page, limit }: IMerchantVerificati
       c: limit
     },
     headers: {
-      access_token: sekitarEnv.accessToken
+      access_token: sekitarEnv.merchantToken
     }
   })
 
 export const rejectMerchant = (merchantId: number) =>
   apiRequest({
     path: '/api/v1/stores/verification',
-    method: 'POST',
+    method: 'PUT',
     bodyRequest: {
       is_verified: 0,
       store_id: merchantId
@@ -29,13 +29,13 @@ export const rejectMerchant = (merchantId: number) =>
     }
   })
 
-export const approveMerchant = (cartId: number) =>
+export const approveMerchant = (merchantId: number) =>
   apiRequest({
     path: '/api/v1/stores/verification',
-    method: 'POST',
+    method: 'PUT',
     bodyRequest: {
       is_verified: 1,
-      store_id: cartId
+      store_id: merchantId
     },
     headers: {
       access_token: sekitarEnv.merchantToken
