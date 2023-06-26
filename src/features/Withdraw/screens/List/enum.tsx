@@ -11,9 +11,9 @@ import { toCurrency } from '@utils/to-currency'
 const ListWithdrawColumn = [
   {
     width: '4rem',
-    title: 'No',
-    dataIndex: 'index',
-    key: 'index'
+    title: 'Reference ID',
+    dataIndex: 'id',
+    key: 'id'
   },
   {
     width: '12rem',
