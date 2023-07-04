@@ -11,7 +11,8 @@ import {
   ReadOutlined,
   BankOutlined,
   SyncOutlined,
-  SecurityScanOutlined
+  SecurityScanOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 
 import Icons from '@assets/Icons'
@@ -61,6 +62,9 @@ const Sidebar = () => {
                   <>
                     <Menu.Item key="merchants" icon={<HomeOutlined />}>
                       <Link to="/merchants">Merchants</Link>
+                    </Menu.Item>
+                    <Menu.Item key="merchants-subscription" icon={<TeamOutlined />}>
+                      <Link to="/merchants-subscription">Merchant Subscription</Link>
                     </Menu.Item>
                     <Menu.Item key="categories" icon={<PieChartOutlined />}>
                       <Link to="/categories">Product Categories</Link>

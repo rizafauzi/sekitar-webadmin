@@ -1,0 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable unicorn/prevent-abbreviations */
+
+import { apiRequest } from '@configs/axios'
+import clearEmptyObject from '@utils/object-utils'
+
+export interface IListParams {
+  page: number
+  limit: number
+  keyword?: string
+}
+
+export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParams) =>
+  apiRequest({
+    path: '/api/v1/premium/request_list',
+    method: 'GET',
+    params: clearEmptyObject({
+      p: String(page),
+      c: String(limit),
+      k: keyword
+    })
+  })
