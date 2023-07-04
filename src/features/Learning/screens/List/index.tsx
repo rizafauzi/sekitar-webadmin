@@ -13,8 +13,6 @@ const LearningPage: React.FC = () => {
     limit: 20
   })
 
-  console.info('DTAA', data)
-
   const onAddPromo = () => history.push('/learning/create')
 
   return (
