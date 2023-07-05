@@ -92,6 +92,9 @@ const Sidebar = () => {
                     <Menu.Item key="merchants" icon={<HomeOutlined />}>
                       <Link to="/merchants">Merchants</Link>
                     </Menu.Item>
+                    <Menu.Item key="merchants-subscription" icon={<TeamOutlined />}>
+                      <Link to="/merchants-subscription">Merchant Subscription</Link>
+                    </Menu.Item>
                     <Menu.Item key="withdraw-request" icon={<DollarOutlined />}>
                       <Link to="/withdraw-request">Withdraw Request</Link>
                     </Menu.Item>
