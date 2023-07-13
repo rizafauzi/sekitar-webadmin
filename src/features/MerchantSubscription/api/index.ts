@@ -5,6 +5,7 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 
 import { apiRequest } from '@configs/axios'
+import sekitarEnv from '@utils/ENV'
 import clearEmptyObject from '@utils/object-utils'
 
 export interface IListParams {
@@ -21,5 +22,17 @@ export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParam
       p: String(page),
       c: String(limit),
       k: keyword
+    })
+  })
+
+export const updateMerchantSubsStatus = ({ id, status }: { id: number; status: number }) =>
+  apiRequest({
+    path: `/api/v1/premium/premium_store/${id}`,
+    method: 'PATCH',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    },
+    bodyRequest: clearEmptyObject({
+      status
     })
   })

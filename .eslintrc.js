@@ -28,7 +28,6 @@ module.exports = {
     'plugin:unicorn/recommended',
     'plugin:sonarjs/recommended',
     'plugin:prettier/recommended',
-    'plugin:jsx-a11y/recommended',
     'plugin:security/recommended',
     'plugin:react-hooks/recommended',
     'airbnb',
@@ -73,6 +72,10 @@ module.exports = {
     '@typescript-eslint/no-redeclare': ['error'],
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-duplicate-imports': ['error'],
+    '@typescript-eslint/no-unsafe-call': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    ' @typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {

@@ -5,7 +5,7 @@ import { formatDate } from '@utils/format-date'
 import { RequestList } from './MerchantSubscription.type'
 import ButtonAction from '@features/MerchantSubscription/components/ButtonAction'
 
-const columnMerchant = [
+const columnMerchant = (refetch: () => void) => [
   {
     width: '4rem',
     title: 'ID',
@@ -56,7 +56,7 @@ const columnMerchant = [
     title: 'ACTIONS',
     dataIndex: 'id',
     key: 'action',
-    render: (_: null, data: RequestList) => <ButtonAction />
+    render: (_: null, data: RequestList) => <ButtonAction data={data} refetch={refetch} />
   }
 ]
 

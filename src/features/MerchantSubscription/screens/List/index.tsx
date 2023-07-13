@@ -14,7 +14,7 @@ const MerchantSubscriptionPage: React.FC = () => {
   const { search } = useLocation()
   const pagination = qs.parse(search)
 
-  const { data, isError, isLoading } = useFetchMerchantSubscriptionList({
+  const { data, isError, isLoading, refetch } = useFetchMerchantSubscriptionList({
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,
     keyword: String(pagination?.keyword)
@@ -32,7 +32,7 @@ const MerchantSubscriptionPage: React.FC = () => {
           isLoading,
           data: dataSubscription as RequestList[] | undefined
         }}
-        columns={columnMerchant}
+        columns={columnMerchant(refetch)}
       />
     </div>
   )
