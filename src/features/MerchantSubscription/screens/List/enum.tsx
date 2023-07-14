@@ -4,6 +4,20 @@
 import { formatDate } from '@utils/format-date'
 import { RequestList } from './MerchantSubscription.type'
 import ButtonAction from '@features/MerchantSubscription/components/ButtonAction'
+import { Tag } from 'antd'
+
+const statusEnum = [
+  {
+    label: 'Pending',
+    color: 'orange'
+  },
+  {
+    label: 'Selesai',
+    color: 'green'
+  }
+]
+
+const getStatus = (status: string) => statusEnum.find(dt => dt.label === status)
 
 const columnMerchant = (refetch: () => void) => [
   {
@@ -31,7 +45,10 @@ const columnMerchant = (refetch: () => void) => [
     width: '8rem',
     title: 'Status',
     key: 'status',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    render: (_: null, data: RequestList) => (
+      <Tag color={getStatus(data.status)?.color}>{data.status}</Tag>
+    )
   },
   {
     width: '10em',

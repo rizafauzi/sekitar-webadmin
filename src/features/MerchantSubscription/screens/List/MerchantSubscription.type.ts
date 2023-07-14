@@ -17,4 +17,5 @@ export interface RequestList {
   package_item: string
   request_at: Date
   type: string
+  status: string
 }

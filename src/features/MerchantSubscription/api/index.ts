@@ -18,6 +18,9 @@ export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParam
   apiRequest({
     path: '/api/v1/premium/request_list',
     method: 'GET',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    },
     params: clearEmptyObject({
       p: String(page),
       c: String(limit),
