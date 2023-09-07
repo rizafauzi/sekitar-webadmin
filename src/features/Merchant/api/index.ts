@@ -6,7 +6,7 @@
 
 import { apiRequest } from '@configs/axios'
 import clearEmptyObject from '@utils/object-utils'
-import { IMerchant, IProduct } from '../Merchant.type'
+import { BanStoreRequest, IMerchant, IProduct } from '../Merchant.type'
 
 export interface IListParams {
   page: number
@@ -124,6 +124,13 @@ export const putUpdateOperationalHour = (id: number, bodyRequest: IOperationalHo
     headers: {
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
     }
+  })
+
+export const postBanStore = (bodyRequest: BanStoreRequest) =>
+  apiRequest({
+    path: '/v1/cms/merchant/banned',
+    method: 'POST',
+    bodyRequest
   })
 
 export default getStoreById
