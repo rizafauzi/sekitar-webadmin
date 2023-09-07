@@ -4,6 +4,11 @@ export interface IMerchantList {
   name: string
   path: string
 }
+
+export interface BanStoreRequest {
+  store_id: number
+}
+
 export interface IOperationalHour {
   day: number
   key: string
@@ -36,6 +41,7 @@ export interface IMerchant {
   is_test: number
   is_active: boolean
   is_verified: string
+  is_banned: boolean
   latitude: number
   longitude: number
   merchant_flag: number

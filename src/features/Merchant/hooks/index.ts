@@ -2,9 +2,9 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 
 import { ApiResponse } from '@configs/axios'
-import { useQuery } from 'react-query'
-import { getProductList, getStoreById, getStoreList, IListParams } from '../api'
-import { IMerchant } from '../Merchant.type'
+import { UseMutationOptions, useMutation, useQuery } from 'react-query'
+import { getProductList, getStoreById, getStoreList, IListParams, postBanStore } from '../api'
+import { BanStoreRequest, IMerchant } from '../Merchant.type'
 
 export const useFetchMerchantById = (id: string) => {
   const { data, isError, isLoading, refetch } = useQuery(['merchant-detail', id], async () => {
@@ -56,5 +56,11 @@ export const useFetchProductList = (params: IListParams, storeId: number) => {
     refetch
   }
 }
+
+export const useToggleBanStore = (options?: UseMutationOptions<unknown, Error, BanStoreRequest>) =>
+  useMutation({
+    mutationFn: data => postBanStore(data),
+    ...options
+  })
 
 export default useFetchMerchantById
