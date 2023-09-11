@@ -18,6 +18,7 @@ interface IListLayout {
   isSearch?: boolean
   title: string
   extendButton?: React.ReactNode[]
+  prefixElement?: React.ReactNode[]
   source: {
     data: any
     isError: boolean
@@ -38,6 +39,7 @@ const ListLayout: React.FC<IListLayout> = ({
   source,
   columns,
   isSearch,
+  prefixElement = [],
   extendButton = []
 }) => {
   const { data, isError, isLoading } = source
@@ -76,6 +78,7 @@ const ListLayout: React.FC<IListLayout> = ({
       <div className="px-5 pt-5 flex flex-row justify-between items-center">
         <h2 className="font-bold">{title}</h2>
         <Space>
+          {prefixElement?.length > 0 && prefixElement.map(element => <div>{element}</div>)}
           {isSearch && (
             <Search
               value={keyword}

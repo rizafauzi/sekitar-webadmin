@@ -27,6 +27,7 @@ import BankAccountDetail from '@features/BankAccount/screens/Detail'
 import RefundList from '@features/Refund/screens/List'
 import MerchantVerificationList from '@features/MerchantVerification/screens/List'
 import MerchantSubscriptionPage from '@features/MerchantSubscription/screens/List'
+import OrderListPage from '@features/OrderList/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -78,6 +79,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/merchants-subscription">
               <MerchantSubscriptionPage />
+            </Route>
+            <Route exact path="/order-list">
+              <OrderListPage />
             </Route>
             <Route exact path="/categories">
               <CategoryPage />
