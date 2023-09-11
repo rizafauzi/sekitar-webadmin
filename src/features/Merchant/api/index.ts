@@ -128,7 +128,7 @@ export const putUpdateOperationalHour = (id: number, bodyRequest: IOperationalHo
 
 export const postBanStore = (bodyRequest: BanStoreRequest) =>
   apiRequest({
-    path: '/v1/cms/merchant/banned',
+    path: '/api/v1/cms/merchant/banned',
     method: 'POST',
     bodyRequest
   })
