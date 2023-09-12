@@ -130,7 +130,10 @@ export const postBanStore = (bodyRequest: BanStoreRequest) =>
   apiRequest({
     path: '/api/v1/cms/merchant/banned',
     method: 'POST',
-    bodyRequest
+    bodyRequest,
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
   })
 
 export default getStoreById
