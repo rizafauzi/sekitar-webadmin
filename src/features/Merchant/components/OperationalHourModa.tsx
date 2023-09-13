@@ -37,7 +37,6 @@ const EditMerchant: React.FC<ModalTypes> = () => {
     is_active: true,
     is_test: 0,
     is_verified: '',
-    is_banned: false,
     latitude: 0,
     longitude: 0,
     merchant_flag: 0,

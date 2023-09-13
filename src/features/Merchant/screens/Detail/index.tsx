@@ -48,7 +48,16 @@ const MerchantDetail: React.FC = () => {
     history.replace('/merchants?page=1')
   }
 
-  const handleToggleBan = () => toggleBan({ store_id: data?.id || 0 })
+  const handleCloseModal = () => setShowModal(false)
+
+  const handleToggleBan = () => {
+    toggleBan(
+      { store_id: data?.id || 0 },
+      {
+        onSuccess: () => handleCloseModal()
+      }
+    )
+  }
 
   useEffect(() => {
     setParameters({
@@ -83,7 +92,7 @@ const MerchantDetail: React.FC = () => {
     address,
     description,
     is_verified,
-    is_banned,
+    is_test: isBanned,
     has_whatsapp,
     category_name,
     operation_hour,
@@ -94,11 +103,11 @@ const MerchantDetail: React.FC = () => {
     <div>
       {/* Confirm Ban */}
       <ModalConfirmBan
-        isBanned={!is_banned}
+        isBanned={!isBanned}
         showModal={showModal}
         storeName={name}
         onAccepted={handleToggleBan}
-        onClose={() => setShowModal(false)}
+        onClose={handleCloseModal}
       />
 
       <Button
@@ -120,7 +129,7 @@ const MerchantDetail: React.FC = () => {
           <div className="w-full ml-4">
             <Flex columnGap="12px" alignItems="center">
               <span className="text-2xl font-bold">{name}</span>
-              {is_banned && (
+              {isBanned && (
                 <span className="px-2 py-1 border border-red-500 rounded-full text-xs text-red-500 bg-red-50 font-semibold">
                   Banned
                 </span>
@@ -130,11 +139,11 @@ const MerchantDetail: React.FC = () => {
           </div>
         </div>
         <Button
-          variant={is_banned ? 'secondary' : 'destructive'}
+          variant={isBanned ? 'secondary' : 'destructive'}
           style={{ borderRadius: 5, paddingRight: 20, paddingLeft: 20 }}
           onClick={() => setShowModal(true)}
         >
-          {is_banned ? 'Unban' : 'Ban'}
+          {isBanned ? 'Unban' : 'Ban'}
         </Button>
       </Flex>
       <Card title="Merchant Data" extra={<EditMerchant data={data} />}>

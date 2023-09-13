@@ -16,7 +16,7 @@ export interface IListParams {
 
 export const getStoreById = (id: string) =>
   apiRequest({
-    path: `/api/v1/stores/${id}`,
+    path: `/api/v1/stores/${id}?is_cms=true`,
     method: 'GET'
   })
 
