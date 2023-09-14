@@ -49,6 +49,7 @@ export interface IMerchant {
   path: string
   phone_number: string
   postal_code: string
+  premium_url: string
   product_categories: any | null
   product_count: number
   province: string

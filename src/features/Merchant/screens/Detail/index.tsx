@@ -92,18 +92,21 @@ const MerchantDetail: React.FC = () => {
     address,
     description,
     is_verified,
-    is_test: isBanned,
+    is_test,
     has_whatsapp,
     category_name,
     operation_hour,
-    has_offline_store
+    has_offline_store,
+    premium_url
   } = data
+
+  const isBanned = Boolean(is_test)
 
   return (
     <div>
       {/* Confirm Ban */}
       <ModalConfirmBan
-        isBanned={!isBanned}
+        isBanned={isBanned}
         showModal={showModal}
         storeName={name}
         onAccepted={handleToggleBan}
@@ -155,6 +158,7 @@ const MerchantDetail: React.FC = () => {
         <TextField label="Has offline store">{has_offline_store === 1 ? 'Yes' : 'No'}</TextField>
         <TextField label="Has Whatsapp">{has_whatsapp === 1 ? 'Yes' : 'No'}</TextField>
         <TextField label="Is Verified">{is_verified === '1' ? 'Yes' : 'No'}</TextField>
+        <TextField label="Premium Link">{premium_url}</TextField>
       </Card>
       <div className="mt-6" />
       <Card
