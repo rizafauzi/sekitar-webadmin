@@ -8,6 +8,7 @@ import React, { useState, ChangeEvent, useEffect } from 'react'
 import { Modal, Input, Button, Switch } from 'antd'
 
 import { toast } from 'react-toastify'
+import { useQueryClient } from 'react-query'
 import { IMerchant } from '../Merchant.type'
 import { postEditMerchant } from '../api'
 
@@ -51,12 +52,14 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
     path: '',
     phone_number: '',
     postal_code: '',
+    premium_url: '',
     product_categories: null,
     product_count: 0,
     province: '',
     subdistrict: '',
     user_id: 0
   })
+  const queryClient = useQueryClient()
 
   const toggle = () => {
     setShowModal(!showModal)
@@ -67,6 +70,8 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
       const response = await postEditMerchant(payload.id, payload)
       if (response) {
         toast.success('SUCCESS')
+        setShowModal(false)
+        queryClient.invalidateQueries('merchant-detail')
       }
     } catch (error) {
       toast.error('Something wrong, Please try again later')
@@ -176,6 +181,13 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
             style={{ marginBottom: 15 }}
             checked={payload.has_whatsapp === 1}
             onChange={value => handleSwitchChange('has_whatsapp', value)}
+          />
+          <h4>Premium Url</h4>
+          <Input
+            value={payload.premium_url}
+            style={{ marginBottom: 15 }}
+            placeholder="Input premium url here..."
+            onChange={event => handleChange('premium_url', event)}
           />
         </Modal>
       )}
