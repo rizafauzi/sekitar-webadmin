@@ -14,6 +14,7 @@ export interface OrderList {
   cart_id: number
   customer_name: string
   date: Date
+  invoice_id: string
   merchant_link: string
   status: string
   total_price: number
