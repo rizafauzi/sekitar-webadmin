@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 import { useQuery } from 'react-query'
-import { getListOrder } from '../api'
+import { getDetailOrder, getListOrder } from '../api'
 import { IOrderListParams, OrderList, OrderListResponse } from '../models/OrderList'
+import { IOrderDetailParams } from '../models/OrderDetail'
 
 export const useFetchOrderList = (params: IOrderListParams) => {
   const { data, isError, isLoading, refetch } = useQuery(
@@ -25,3 +26,9 @@ export const useFetchOrderList = (params: IOrderListParams) => {
     refetch
   }
 }
+
+export const useFetchOrderDetail = (params: IOrderDetailParams) =>
+  useQuery({
+    queryKey: ['order-detail-merchant', params],
+    queryFn: () => getDetailOrder({ cartId: params.cartId })
+  })

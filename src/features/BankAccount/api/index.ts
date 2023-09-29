@@ -17,7 +17,7 @@ export const getBankAccountList = ({ page, limit, search }: IBankAccountListPara
       name: search || ''
     },
     headers: {
-      access_token: sekitarEnv.accessToken
+      access_token: sekitarEnv.merchantToken
     }
   })
 
