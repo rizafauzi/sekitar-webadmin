@@ -99,3 +99,8 @@ export interface Voucher {
   voucher_code: string
   voucher_amount: number
 }
+
+export interface OrderStatusRequest {
+  cart_id: number
+  status: number
+}

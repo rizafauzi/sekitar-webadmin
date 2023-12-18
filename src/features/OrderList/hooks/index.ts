@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
-import { useQuery } from 'react-query'
-import { getDetailOrder, getListOrder } from '../api'
+import { UseMutationOptions, useMutation, useQuery } from 'react-query'
+import { getDetailOrder, getListOrder, postOrderStatus } from '../api'
 import { IOrderListParams, OrderList, OrderListResponse } from '../models/OrderList'
-import { IOrderDetailParams } from '../models/OrderDetail'
+import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
 
 export const useFetchOrderList = (params: IOrderListParams) => {
   const { data, isError, isLoading, refetch } = useQuery(
@@ -31,4 +31,12 @@ export const useFetchOrderDetail = (params: IOrderDetailParams) =>
   useQuery({
     queryKey: ['order-detail-merchant', params],
     queryFn: () => getDetailOrder({ cartId: params.cartId })
+  })
+
+export const useUpdateStatusOrder = (
+  options?: UseMutationOptions<unknown, Error, OrderStatusRequest>
+) =>
+  useMutation({
+    mutationFn: data => postOrderStatus(data),
+    ...options
   })

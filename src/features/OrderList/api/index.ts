@@ -8,7 +8,7 @@
 import { apiRequest } from '@configs/axios'
 import sekitarEnv from '@utils/ENV'
 import { IOrderListParams } from '../models/OrderList'
-import { IOrderDetailParams } from '../models/OrderDetail'
+import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
 
 export const getListOrder = ({ page, limit, ...params }: IOrderListParams) =>
   apiRequest({
@@ -28,6 +28,16 @@ export const getDetailOrder = ({ cartId }: IOrderDetailParams) =>
   apiRequest({
     path: `/api/v4/cart/${cartId}`,
     method: 'GET',
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })
+
+export const postOrderStatus = (bodyRequest: OrderStatusRequest) =>
+  apiRequest({
+    path: '/api/v7/cart/order_state/update',
+    method: 'POST',
+    bodyRequest,
     headers: {
       access_token: sekitarEnv.merchantToken
     }
