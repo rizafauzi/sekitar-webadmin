@@ -9,6 +9,7 @@ import moment from 'moment'
 import { useLocation } from 'react-router-dom'
 import { toCurrency } from '@utils/to-currency'
 import Button from '@components/atoms/Button'
+import DropwdownStatus from '@features/OrderList/components/DropdownStatus'
 import columnProductOrderList from './enum'
 
 const OrderListDetailPage = () => {
@@ -22,9 +23,12 @@ const OrderListDetailPage = () => {
     <div className="flex flex-col gap-4">
       <div className="flex flex-row items-center justify-between">
         <h2>Detail Pesanan</h2>
-        <Button variant="primary" onClick={() => window.open(cart.invoice_file, '_blank')}>
-          Lihat Invoice
-        </Button>
+        <div className="flex flex-row items-center gap-3">
+          <DropwdownStatus cartId={Number(cartId)} />
+          <Button variant="primary" onClick={() => window.open(cart.invoice_file, '_blank')}>
+            Lihat Invoice
+          </Button>
+        </div>
       </div>
       <Card title="Data Umum">
         <TextField label="Date">
