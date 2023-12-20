@@ -31,6 +31,7 @@ const OrderListDetailPage = () => {
         </div>
       </div>
       <Card title="Data Umum">
+        <TextField label="ID Pesanan">{cart.cart_id}</TextField>
         <TextField label="Date">
           {moment(cart?.created_at).format('DD MMM YYYY, HH:mm')} WIB
         </TextField>
