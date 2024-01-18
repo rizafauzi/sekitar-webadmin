@@ -9,6 +9,7 @@ import { Modal, Input, Button, Switch } from 'antd'
 
 import { toast } from 'react-toastify'
 import { useQueryClient } from 'react-query'
+import { ApiResponse } from '@configs/axios'
 import { IMerchant } from '../Merchant.type'
 import { postEditMerchant } from '../api'
 
@@ -67,9 +68,13 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await postEditMerchant(payload.id, payload)
+      const response: ApiResponse<IEditMerchant> = await postEditMerchant(payload.id, payload)
       if (response) {
-        toast.success('SUCCESS')
+        if (response.data?.status !== 0) {
+          toast.error(response.data?.message)
+        } else {
+          toast.success('SUCCESS')
+        }
         setShowModal(false)
         queryClient.invalidateQueries('merchant-detail')
       }
