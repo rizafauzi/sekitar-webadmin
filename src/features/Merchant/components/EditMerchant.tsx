@@ -66,9 +66,15 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
     setShowModal(!showModal)
   }
 
+  interface IResponse {
+    status: number
+    message: string
+    error: string
+  }
+
   const handleSubmit = async () => {
     try {
-      const response: ApiResponse<IEditMerchant> = await postEditMerchant(payload.id, payload)
+      const response: ApiResponse<IResponse> = await postEditMerchant(payload.id, payload)
       if (response) {
         if (response.data?.status !== 0) {
           toast.error(response.data?.message)
