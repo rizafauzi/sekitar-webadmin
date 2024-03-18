@@ -64,7 +64,10 @@ const Sidebar = () => {
                       <Link to="/merchants">Merchants</Link>
                     </Menu.Item>
                     <Menu.Item key="merchants-subscription" icon={<TeamOutlined />}>
-                      <Link to="/merchants-subscription">Merchant Subscription</Link>
+                      <Link to="/merchants-subscription">Merchant Subscription1</Link>
+                    </Menu.Item>
+                    <Menu.Item key="merchants-subscription2" icon={<TeamOutlined />}>
+                      <Link to="/merchants-subscription">Merchant Subscription2</Link>
                     </Menu.Item>
                     <Menu.Item key="categories" icon={<PieChartOutlined />}>
                       <Link to="/categories">Product Categories</Link>
@@ -94,6 +97,9 @@ const Sidebar = () => {
                     </Menu.Item>
                     <Menu.Item key="merchants-subscription" icon={<TeamOutlined />}>
                       <Link to="/merchants-subscription">Merchant Subscription</Link>
+                    </Menu.Item>
+                    <Menu.Item key="merchants-subscription2" icon={<TeamOutlined />}>
+                      <Link to="/merchants-subscription2">Merchant Subscription2</Link>
                     </Menu.Item>
                     <Menu.Item key="withdraw-request" icon={<DollarOutlined />}>
                       <Link to="/withdraw-request">Withdraw Request</Link>

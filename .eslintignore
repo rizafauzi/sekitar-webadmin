@@ -12,3 +12,4 @@ yarn.lock
 craco.config.js
 react-app-env.d.ts
 
+.DS_Store

@@ -39,7 +39,7 @@ export type ApiResponse<T> = {
   message?: string
 }
 
-const BASE_URL = 'https://api.setoko.co'
+const BASE_URL = 'https://api-staging.setoko.co'
 
 export const apiRequest = (arguments_: ApiRequestProperties): AxiosPromise => {
   const { method, bodyRequest, params, path, url, timeout, headers } = arguments_
