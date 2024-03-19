@@ -14,6 +14,12 @@ export interface IListParams {
   keyword?: string
 }
 
+export const getMerchantReview = (storeId: number) =>
+  apiRequest({
+    path: `/api/v1/review/latest/${storeId}`,
+    method: 'GET'
+  })
+
 export const getStoreById = (id: string) =>
   apiRequest({
     path: `/api/v1/stores/${id}?is_cms=true`,

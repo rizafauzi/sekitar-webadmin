@@ -3,8 +3,16 @@
 
 import { ApiResponse } from '@configs/axios'
 import { UseMutationOptions, useMutation, useQuery } from 'react-query'
-import { getProductList, getStoreById, getStoreList, IListParams, postBanStore } from '../api'
+import {
+  getMerchantReview,
+  getProductList,
+  getStoreById,
+  getStoreList,
+  IListParams,
+  postBanStore
+} from '../api'
 import { BanStoreRequest, IMerchant } from '../Merchant.type'
+import { IReviewSummary } from '../screens/Detail2/type'
 
 export const useFetchMerchantById = (id: string) => {
   const { data, isError, isLoading, refetch } = useQuery(['merchant-detail', id], async () => {
@@ -63,4 +71,17 @@ export const useToggleBanStore = (options?: UseMutationOptions<unknown, Error, B
     ...options
   })
 
+export const useMerchantReview = (storeId: number) => {
+  const { data, isError, isLoading, refetch } = useQuery(['merchant-review', storeId], async () => {
+    const response: ApiResponse<IReviewSummary> = await getMerchantReview(storeId)
+    return response.data.Data
+  })
+
+  return {
+    isLoading,
+    isError,
+    data,
+    refetch
+  }
+}
 export default useFetchMerchantById

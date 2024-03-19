@@ -14,3 +14,7 @@ img.marker {
     transform: scale(2.5);
   }
 }
+
+img.star {
+  width: 24px;
+}

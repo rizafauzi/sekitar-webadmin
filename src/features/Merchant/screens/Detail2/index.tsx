@@ -5,7 +5,7 @@
 import qs from 'query-string'
 import { useLocation } from 'react-router-dom'
 
-import useFetchMerchantById from '@features/Merchant/hooks'
+import useFetchMerchantById, { useMerchantReview } from '@features/Merchant/hooks'
 import Flex from '@components/atoms/Flex'
 import { IMerchant } from '@features/Merchant/Merchant.type'
 import TabComponent from '@components/atoms/Tab'
@@ -13,12 +13,19 @@ import { useState } from 'react'
 import { ITabItems } from '@components/atoms/Tab/Tab.type'
 import HeaderDetail from './components/Header'
 import DetailMerchant from './components/Detail'
+import { IReviewSummary } from './type'
 
 const MerchantDetail2 = () => {
   const { pathname } = useLocation()
   // const pagination = qs.parse(search)
   const storePath = pathname.replace('/merchants2/', '')
   const { data, isError, isLoading, refetch } = useFetchMerchantById(storePath)
+  const {
+    data: dataReview,
+    isError: isErrorReview,
+    isLoading: isLoadingReview,
+    refetch: refetchReview
+  } = useMerchantReview(data?.id as number)
   const [section, setSection] = useState(0)
 
   // console.log(pathname, pagination, storePath)
@@ -37,6 +44,7 @@ const MerchantDetail2 = () => {
 
   const handleChangeTab = (item: number) => {
     setSection(item)
+    console.log('dataReview', dataReview)
   }
 
   return (
@@ -46,7 +54,11 @@ const MerchantDetail2 = () => {
         <div className="my-6">
           <TabComponent section={section} handleChangeTab={handleChangeTab} items={TabItems} />
         </div>
-        {section === 0 ? <DetailMerchant data={data as IMerchant} /> : <div>Notes</div>}
+        {section === 0 ? (
+          <DetailMerchant data={data as IMerchant} dataReview={dataReview as IReviewSummary} />
+        ) : (
+          <div>Notes</div>
+        )}
       </div>
     </Flex>
   )
