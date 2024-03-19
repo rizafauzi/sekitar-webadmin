@@ -6,7 +6,7 @@ const DetailMerchant = ({ data }: { data: IMerchant }) => {
   console.log(data)
   return (
     <div className="flex flex-col gap-4">
-      <Description data={data.description} />
+      <Description data={data?.description} />
       <Address data={data} />
     </div>
   )
