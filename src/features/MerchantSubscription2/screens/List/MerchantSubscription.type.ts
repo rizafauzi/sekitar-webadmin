@@ -18,6 +18,7 @@ export interface RequestList {
   request_at: Date
   type: string
   status: string
+  transaction_status: string
 }
 
 export interface IMerchantSubscriptionNew {

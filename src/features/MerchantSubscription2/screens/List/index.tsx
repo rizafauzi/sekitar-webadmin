@@ -28,11 +28,12 @@ const MerchantSubscriptionPage2: React.FC = () => {
 
   return (
     <div>
-      <h2 className="font-bold">Merchant Subscription Request 2</h2>
+      <h2 className="font-bold">Merchant Subscription</h2>
       <Summary data={storeCounts} />
       <ListLayout
-        title="Daftar Merchant Subscription"
-        isSearch
+        title="Semua Merchant"
+        placeholder="Cari Merchant"
+        isSearchNew
         source={{
           isError,
           isLoading,

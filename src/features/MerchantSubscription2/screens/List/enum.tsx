@@ -3,17 +3,22 @@
 
 import { formatDate } from '@utils/format-date'
 import { RequestList } from './MerchantSubscription.type'
-import ButtonAction from '@features/MerchantSubscription/components/ButtonAction'
+// import ButtonAction from '@features/MerchantSubscription/components/ButtonAction'
 import { Tag } from 'antd'
+import { RightOutlined } from '@ant-design/icons'
 
 const statusEnum = [
   {
-    label: 'Pending',
+    label: 'Menengah',
     color: 'orange'
   },
   {
-    label: 'Selesai',
-    color: 'green'
+    label: 'Aktif',
+    color: 'cyan'
+  },
+  {
+    label: 'Tidak Aktif',
+    color: 'red'
   }
 ]
 
@@ -28,52 +33,53 @@ const columnMerchant = (refetch: () => void) => [
   },
   {
     width: '12rem',
-    title: 'Path',
+    title: 'NAMA MERCHANT',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    width: '12rem',
+    title: 'PATH MERCHANT',
     dataIndex: 'path',
-    key: 'path'
+    key: 'path',
+    render: (_: null, data: RequestList) => <a className="text-[#06BAAD] underline">{data.path}</a>
+  },
+  {
+    width: '10em',
+    title: 'JENIS PAKET',
+    key: 'package_name',
+    dataIndex: 'package_name'
   },
   {
     width: '9rem',
-    title: 'Tanggal Request Berlangganan',
-    dataIndex: 'request_at',
-    key: 'request_at',
+    title: 'WAKTU BERLANGGANAN',
+    dataIndex: 'subscribe_date',
+    key: 'subscribe_date',
     render: (_: null, data: RequestList) => (
       <span>{data.request_at ? formatDate(data.request_at) : ''}</span>
     )
   },
   {
     width: '8rem',
-    title: 'Status',
-    key: 'status',
-    dataIndex: 'status',
+    title: 'TRANSAKSI',
+    key: 'transaction_status',
+    dataIndex: 'transaction_status',
     render: (_: null, data: RequestList) => (
-      <Tag color={getStatus(data.status)?.color}>{data.status}</Tag>
+      <Tag color={getStatus(data?.transaction_status)?.color}>{data.transaction_status}</Tag>
     )
-  },
-  {
-    width: '10em',
-    title: 'Paket',
-    key: 'package',
-    dataIndex: 'package'
-  },
-  {
-    width: '9rem',
-    title: 'Periode Berlangganan',
-    key: 'package_item',
-    dataIndex: 'package_item'
-  },
-  {
-    width: '10em',
-    title: 'Jenis Paket',
-    key: 'type',
-    dataIndex: 'type'
   },
   {
     width: '7rem',
     title: 'ACTIONS',
     dataIndex: 'id',
     key: 'action',
-    render: (_: null, data: RequestList) => <ButtonAction data={data} refetch={refetch} />
+    render: (_: null, data: RequestList) => (
+      <div className="">
+        <button>
+          <RightOutlined style={{ color: '#00DFBD' }} />
+        </button>
+      </div>
+    )
   }
 ]
 
