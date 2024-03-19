@@ -93,12 +93,13 @@ module.exports = {
         leadingUnderscore: 'allow'
       }
     ],
-    'no-console': [
-      'error',
-      {
-        allow: ['warn', 'error', 'info']
-      }
-    ],
+    // 'no-console': [
+    //   'error',
+    //   {
+    //     allow: ['warn', 'error', 'info']
+    //   }
+    // ],
+    'no-console': 'off',
     'unicorn/prevent-abbreviations': [
       'error',
       {
