@@ -3,9 +3,8 @@
 
 import { formatDate } from '@utils/format-date'
 import { RequestList } from './MerchantSubscription.type'
-// import ButtonAction from '@features/MerchantSubscription/components/ButtonAction'
 import { Tag } from 'antd'
-import { RightOutlined } from '@ant-design/icons'
+import ActionButton from '@features/MerchantSubscription2/components/ActionButton'
 
 const statusEnum = [
   {
@@ -23,7 +22,6 @@ const statusEnum = [
 ]
 
 const getStatus = (status: string) => statusEnum.find(dt => dt.label === status)
-
 const columnMerchant = (refetch: () => void) => [
   {
     width: '4rem',
@@ -75,9 +73,7 @@ const columnMerchant = (refetch: () => void) => [
     key: 'action',
     render: (_: null, data: RequestList) => (
       <div className="">
-        <button>
-          <RightOutlined style={{ color: '#00DFBD' }} />
-        </button>
+        <ActionButton path={data?.path} />
       </div>
     )
   }
