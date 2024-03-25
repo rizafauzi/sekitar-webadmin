@@ -103,7 +103,8 @@ const ListLayout: React.FC<IListLayout> = ({
         search: qs.stringify(
           clearEmptyObject({
             page: '1',
-            status: section
+            status: section,
+            keyword
           })
         )
       })
@@ -116,7 +117,8 @@ const ListLayout: React.FC<IListLayout> = ({
           clearEmptyObject({
             page: '1',
             status: section,
-            date: `${start},${end}`
+            date: `${start},${end}`,
+            keyword
           })
         )
       })
