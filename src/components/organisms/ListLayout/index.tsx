@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable unicorn/consistent-function-scoping */
@@ -77,7 +79,6 @@ const ListLayout: React.FC<IListLayout> = ({
   }
 
   const handleChangeSection = (sectionId: number) => {
-    // console.log('section', sectionId)
     setSection(sectionId)
     history.push({
       pathname,
@@ -95,6 +96,33 @@ const ListLayout: React.FC<IListLayout> = ({
     return <div>Something wrong....</div>
   }
 
+  const handleChangeDate = (dateObject: any): void => {
+    if (dateObject === null) {
+      history.push({
+        pathname,
+        search: qs.stringify(
+          clearEmptyObject({
+            page: '1',
+            status: section
+          })
+        )
+      })
+    } else {
+      const start = dateObject[0].format('YYYY-MM-DD')
+      const end = dateObject[1].format('YYYY-MM-DD')
+      history.push({
+        pathname,
+        search: qs.stringify(
+          clearEmptyObject({
+            page: '1',
+            status: section,
+            date: `${start},${end}`
+          })
+        )
+      })
+    }
+  }
+
   return (
     <Wrapper>
       {isSearchNew ? (
@@ -102,7 +130,7 @@ const ListLayout: React.FC<IListLayout> = ({
           <div className="flex flex-row justify-between items-center border-b-2 pb-4">
             <h2 className="font-bold">{title}</h2>
             <div className="flex gap-2">
-              <RangePicker className="!rounded-md" />
+              <RangePicker className="!rounded-md" onChange={handleChangeDate} />
               {/* <Button onClick={onAddPromo}>
                 <span className="text-sm font-bold text-white">Export CSV</span>
               </Button> */}

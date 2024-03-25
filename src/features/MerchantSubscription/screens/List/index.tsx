@@ -19,7 +19,8 @@ const MerchantSubscriptionPage: React.FC = () => {
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,
     keyword: String(pagination?.keyword),
-    status: Number(pagination?.status) === 1 ? '' : pagination?.status?.toString()
+    status: Number(pagination?.status) === 1 ? '' : pagination?.status?.toString(),
+    date: String(pagination?.date) || ''
   })
   const dataSubscription = data?.request_list
   const storeCounts = data?.store_counts || ([] as StoreCount[])
