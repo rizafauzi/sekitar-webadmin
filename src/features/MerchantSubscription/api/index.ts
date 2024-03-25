@@ -12,9 +12,10 @@ export interface IListParams {
   page: number
   limit: number
   keyword?: string
+  status?: string
 }
 
-export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParams) =>
+export const getMerchantSubscriptionList = ({ limit, page, keyword, status }: IListParams) =>
   apiRequest({
     path: '/api/v1/premium/request_list',
     method: 'GET',
@@ -24,7 +25,8 @@ export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParam
     params: clearEmptyObject({
       p: String(page),
       c: String(limit),
-      k: keyword
+      search: keyword,
+      status_active: String(status) || ''
     })
   })
 
