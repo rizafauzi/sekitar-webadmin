@@ -57,8 +57,8 @@ const ListLayout: React.FC<IListLayout> = ({
   const pagination = qs.parse(search)
   const history = useHistory()
 
-  const [keyword, setKeyword] = useState('')
-  const [section, setSection] = useState(1)
+  const [keyword, setKeyword] = useState(pagination.keyword ? String(pagination.keyword) : '')
+  const [section, setSection] = useState(pagination.status ? Number(pagination.status) : 1)
   const searchDebounce = useDebounce(keyword, 1000)
 
   useEffect(() => {
