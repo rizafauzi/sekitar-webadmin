@@ -1,6 +1,7 @@
 export interface IMerchantSubscription {
   action: Action[]
   request_list: RequestList[]
+  store_counts: StoreCount[]
 }
 
 export interface Action {
@@ -18,4 +19,11 @@ export interface RequestList {
   request_at: Date
   type: string
   status: string
+  status_active: string
+}
+
+export interface StoreCount {
+  StatusId: number
+  StatusName: string
+  Count: number
 }

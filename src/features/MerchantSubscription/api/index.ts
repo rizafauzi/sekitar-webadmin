@@ -12,10 +12,19 @@ export interface IListParams {
   page: number
   limit: number
   keyword?: string
+  status?: string
+  date?: string | (string | null)[] | null
 }
 
-export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParams) =>
-  apiRequest({
+export const getMerchantSubscriptionList = ({
+  limit,
+  page,
+  keyword,
+  status,
+  date
+}: IListParams) => {
+  const [startDateString, endDateString] = typeof date === 'string' ? date.split(',') : [null, null]
+  return apiRequest({
     path: '/api/v1/premium/request_list',
     method: 'GET',
     headers: {
@@ -24,9 +33,13 @@ export const getMerchantSubscriptionList = ({ limit, page, keyword }: IListParam
     params: clearEmptyObject({
       p: String(page),
       c: String(limit),
-      k: keyword
+      search: keyword,
+      status_active: String(status) || '',
+      start_date: startDateString || '',
+      end_date: endDateString || ''
     })
   })
+}
 
 export const updateMerchantSubsStatus = ({ id, status }: { id: number; status: number }) =>
   apiRequest({

@@ -1,0 +1,9 @@
+.active {
+  color: #00ddcc !important;
+  border-bottom: 2px solid #00ddcc;
+  padding: 5px 0;
+}
+
+button {
+  @apply text-base !text-[#828282];
+}

@@ -14,6 +14,18 @@ const statusEnum = [
   {
     label: 'Selesai',
     color: 'green'
+  },
+  {
+    label: 'Menengah',
+    color: 'orange'
+  },
+  {
+    label: 'Aktif',
+    color: 'cyan'
+  },
+  {
+    label: 'Tidak Aktif',
+    color: 'red'
   }
 ]
 
@@ -67,6 +79,15 @@ const columnMerchant = (refetch: () => void) => [
     title: 'Jenis Paket',
     key: 'type',
     dataIndex: 'type'
+  },
+  {
+    width: '8rem',
+    title: 'TRANSAKSI',
+    key: 'status_active',
+    dataIndex: 'status_active',
+    render: (_: null, data: RequestList) => (
+      <Tag color={getStatus(data?.status_active)?.color}>{data.status_active}</Tag>
+    )
   },
   {
     width: '7rem',

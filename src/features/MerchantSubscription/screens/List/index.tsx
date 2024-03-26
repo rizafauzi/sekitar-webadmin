@@ -8,7 +8,8 @@ import ListLayout from '@components/organisms/ListLayout'
 import { useLocation } from 'react-router-dom'
 import useFetchMerchantSubscriptionList from '@features/MerchantSubscription/hooks'
 import columnMerchant from './enum'
-import { RequestList } from './MerchantSubscription.type'
+import { RequestList, StoreCount } from './MerchantSubscription.type'
+import Summary from '../../components/Summary'
 
 const MerchantSubscriptionPage: React.FC = () => {
   const { search } = useLocation()
@@ -17,16 +18,20 @@ const MerchantSubscriptionPage: React.FC = () => {
   const { data, isError, isLoading, refetch } = useFetchMerchantSubscriptionList({
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,
-    keyword: String(pagination?.keyword)
+    keyword: String(pagination?.keyword),
+    status: Number(pagination?.status) === 1 ? '' : pagination?.status?.toString(),
+    date: String(pagination?.date) || ''
   })
   const dataSubscription = data?.request_list
+  const storeCounts = data?.store_counts || ([] as StoreCount[])
 
   return (
     <div>
       <h2 className="font-bold">Merchant Subscription Request</h2>
+      <Summary data={storeCounts} />
       <ListLayout
         title="Daftar Merchant Subscription"
-        isSearch
+        isSearchNew
         source={{
           isError,
           isLoading,
