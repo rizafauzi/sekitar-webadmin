@@ -38,7 +38,7 @@ const MerchantSubscriptionPage: React.FC = () => {
           data: dataSubscription as RequestList[] | undefined
         }}
         columns={columnMerchant(refetch)}
-        total={storeCounts[1].Count || 100}
+        total={storeCounts[1]?.Count || 100}
       />
     </div>
   )
