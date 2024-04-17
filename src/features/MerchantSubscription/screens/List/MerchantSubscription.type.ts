@@ -20,6 +20,8 @@ export interface RequestList {
   type: string
   status: string
   status_active: string
+  finish_date: Date
+  start_date: Date
 }
 
 export interface StoreCount {
