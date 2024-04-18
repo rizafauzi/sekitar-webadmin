@@ -31,7 +31,7 @@ const statusEnum = [
 
 const getStatus = (status: string) => statusEnum.find(dt => dt.label === status)
 
-const columnMerchant = (refetch: () => void) => [
+const columnMerchant = (refetch: () => void, handleSorting: () => void) => [
   {
     width: '4rem',
     title: 'ID',
@@ -55,9 +55,12 @@ const columnMerchant = (refetch: () => void) => [
   },
   {
     width: '12em',
-    title: 'Tanggal berakhir Berlangganan',
+    title: 'Tanggal Berakhir Berlangganan',
     dataIndex: 'finish_date',
     key: 'finish_date',
+    onHeaderCell: () => ({
+      onClick: () => handleSorting()
+    }),
     render: (_: null, data: RequestList) => (
       <span>{data.finish_date ? formatDate(data.finish_date) : ''}</span>
     )

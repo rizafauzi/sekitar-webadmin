@@ -14,6 +14,7 @@ export interface IListParams {
   keyword?: string
   status?: string
   date?: string | (string | null)[] | null
+  sorting?: string
 }
 
 export const getMerchantSubscriptionList = ({
@@ -21,7 +22,8 @@ export const getMerchantSubscriptionList = ({
   page,
   keyword,
   status,
-  date
+  date,
+  sorting
 }: IListParams) => {
   const [startDateString, endDateString] = typeof date === 'string' ? date.split(',') : [null, null]
   return apiRequest({
@@ -36,7 +38,8 @@ export const getMerchantSubscriptionList = ({
       search: keyword,
       status_active: String(status) || '',
       start_date: startDateString || '',
-      end_date: endDateString || ''
+      end_date: endDateString || '',
+      sorting: String(sorting)
     })
   })
 }
