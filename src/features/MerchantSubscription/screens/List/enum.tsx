@@ -58,6 +58,7 @@ const columnMerchant = (refetch: () => void, handleSorting: () => void) => [
     title: 'Tanggal Berakhir Berlangganan',
     dataIndex: 'finish_date',
     key: 'finish_date',
+    sorter: true,
     onHeaderCell: () => ({
       onClick: () => handleSorting()
     }),
