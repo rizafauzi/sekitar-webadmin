@@ -29,6 +29,14 @@ const MerchantSubscriptionPage: React.FC = () => {
   const storeCounts = data?.store_counts || ([] as StoreCount[])
 
   const handleSorting = () => {
+    // const sortingValue = pagination?.sorting
+    // const isSorting = () => {
+    //   if (sortingValue === '' || !sortingValue) return 'ASC'
+    //   if (sortingValue) {
+    //     return sortingValue === 'ASC' ? 'DESC' : 'ASC'
+    //   }
+    // }
+    // const sorting = isSorting()
     const sorting = pagination?.sorting === 'ASC' ? 'DESC' : 'ASC'
     history.push({
       pathname,
