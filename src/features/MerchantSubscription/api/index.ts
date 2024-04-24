@@ -39,7 +39,7 @@ export const getMerchantSubscriptionList = ({
       status_active: String(status) || '',
       start_date: startDateString || '',
       end_date: endDateString || '',
-      sorting: sorting === 'DESC' ? 'DESC' : ''
+      sorting: sorting === 'DESC' ? '' : sorting
     })
   })
 }
