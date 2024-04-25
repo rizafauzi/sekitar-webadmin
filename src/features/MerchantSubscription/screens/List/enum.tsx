@@ -47,10 +47,10 @@ const columnMerchant = (refetch: () => void, handleSorting: () => void) => [
   {
     width: '10rem',
     title: 'Tanggal Request Berlangganan',
-    dataIndex: 'start_date',
-    key: 'start_date',
+    dataIndex: 'request_at',
+    key: 'request_at',
     render: (_: null, data: RequestList) => (
-      <span>{data.start_date ? formatDate(data.start_date) : ''}</span>
+      <span>{data.request_at ? formatDate(data.request_at) : ''}</span>
     )
   },
   {
