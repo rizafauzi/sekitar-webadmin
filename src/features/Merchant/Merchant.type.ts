@@ -55,6 +55,7 @@ export interface IMerchant {
   province: string
   subdistrict: string
   user_id: number
+  wablas_token: string
 }
 
 export interface IProduct {
