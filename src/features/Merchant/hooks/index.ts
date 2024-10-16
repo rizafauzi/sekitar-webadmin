@@ -3,7 +3,15 @@
 
 import { ApiResponse } from '@configs/axios'
 import { UseMutationOptions, useMutation, useQuery } from 'react-query'
-import { getProductList, getStoreById, getStoreList, IListParams, postBanStore } from '../api'
+import {
+  getProductList,
+  getStoreById,
+  getStoreList,
+  getWablasToken,
+  IListParams,
+  Iwablas,
+  postBanStore
+} from '../api'
 import { BanStoreRequest, IMerchant } from '../Merchant.type'
 
 export const useFetchMerchantById = (id: string) => {
@@ -48,6 +56,20 @@ export const useFetchProductList = (params: IListParams, storeId: number) => {
       return response.data.Data
     }
   )
+
+  return {
+    isLoading,
+    isError,
+    data,
+    refetch
+  }
+}
+
+export const useFetchWablas = (storeId: number) => {
+  const { data, isError, isLoading, refetch } = useQuery(['wablas-token', storeId], async () => {
+    const response: ApiResponse<Iwablas[]> = await getWablasToken(storeId)
+    return response.data?.data
+  })
 
   return {
     isLoading,
