@@ -58,7 +58,8 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
     product_count: 0,
     province: '',
     subdistrict: '',
-    user_id: 0
+    user_id: 0,
+    wablas_token: ''
   })
   const queryClient = useQueryClient()
 
@@ -199,6 +200,13 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
             style={{ marginBottom: 15 }}
             placeholder="Input premium url here..."
             onChange={event => handleChange('premium_url', event)}
+          />
+          <h4>Wablas Token</h4>
+          <Input
+            value={payload.wablas_token}
+            style={{ marginBottom: 15 }}
+            placeholder="Input Wablas Token here..."
+            onChange={event => handleChange('wablas_token', event)}
           />
         </Modal>
       )}

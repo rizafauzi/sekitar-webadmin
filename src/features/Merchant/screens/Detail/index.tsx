@@ -97,7 +97,8 @@ const MerchantDetail: React.FC = () => {
     category_name,
     operation_hour,
     has_offline_store,
-    premium_url
+    premium_url,
+    wablas_token
   } = data
 
   const isBanned = Boolean(is_test)
@@ -159,6 +160,7 @@ const MerchantDetail: React.FC = () => {
         <TextField label="Has Whatsapp">{has_whatsapp === 1 ? 'Yes' : 'No'}</TextField>
         <TextField label="Is Verified">{is_verified === '1' ? 'Yes' : 'No'}</TextField>
         <TextField label="Premium Link">{premium_url}</TextField>
+        <TextField label="Wablas Token">{wablas_token}</TextField>
       </Card>
       <div className="mt-6" />
       <Card

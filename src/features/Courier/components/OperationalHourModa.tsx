@@ -49,7 +49,8 @@ const EditMerchant: React.FC<ModalTypes> = () => {
     product_count: 0,
     province: '',
     subdistrict: '',
-    user_id: 0
+    user_id: 0,
+    wablas_token: ''
   })
 
   const toggle = () => {
