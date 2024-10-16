@@ -11,13 +11,14 @@ import { toast } from 'react-toastify'
 import { useQueryClient } from 'react-query'
 import { ApiResponse } from '@configs/axios'
 import { IMerchant } from '../Merchant.type'
-import { postEditMerchant } from '../api'
+import { Iwablas, postEditMerchant, postWablas, putWablasToken } from '../api'
 
 interface IEditMerchant {
   data: IMerchant
+  wablas?: Iwablas[]
 }
 
-const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
+const EditMerchant: React.FC<IEditMerchant> = ({ data, wablas }) => {
   const { TextArea } = Input
   const [showModal, setShowModal] = useState(false)
   const [payload, setPayload] = useState<IMerchant>({
@@ -73,15 +74,55 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
     error: string
   }
 
+  const updateWablasToken = async () => {
+    try {
+      if (wablas && wablas.length > 0) {
+        const payloadPut = [
+          {
+            id: wablas[0].id,
+            is_active: true,
+            wablas_token: payload.wablas_token
+          }
+        ]
+        const response: ApiResponse<IResponse> = await putWablasToken(payloadPut)
+        if (response && response?.error) {
+          toast.error(response.error)
+        } else {
+          toast.success('SUCCESS')
+          // window.location.reload()
+        }
+      } else {
+        const payloadWablas = [
+          {
+            is_active: true,
+            store_id: data.id,
+            wablas_token: payload.wablas_token,
+            wablas_type: 1
+          }
+        ]
+        const response: ApiResponse<IResponse> = await postWablas(payloadWablas)
+        if (response && response?.error) {
+          toast.error(response.error)
+        } else {
+          toast.success('SUCCESS')
+          // window.location.reload()
+        }
+      }
+    } catch (error) {
+      toast.error('Something wrong, Please try again later')
+      console.error('[ERROR] Edit Merchant:', error)
+    }
+  }
+
   const handleSubmit = async () => {
     try {
       const response: ApiResponse<IResponse> = await postEditMerchant(payload.id, payload)
       if (response) {
         if (response.data?.status !== 0) {
           toast.error(response.data?.message)
-        } else {
-          toast.success('SUCCESS')
-        }
+        } else if ((wablas && wablas.length > 0) || payload.wablas_token) {
+          updateWablasToken()
+        } else toast.success('SUCCESS')
         setShowModal(false)
         queryClient.invalidateQueries('merchant-detail')
       }
@@ -93,7 +134,10 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data }) => {
 
   useEffect(() => {
     if (showModal) {
-      setPayload(data)
+      setPayload({
+        ...data,
+        wablas_token: wablas?.[0]?.wablas_token || ''
+      })
     }
   }, [data, showModal])
 
