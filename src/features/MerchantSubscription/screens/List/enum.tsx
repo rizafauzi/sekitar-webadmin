@@ -14,12 +14,24 @@ const statusEnum = [
   {
     label: 'Selesai',
     color: 'green'
+  },
+  {
+    label: 'Menengah',
+    color: 'orange'
+  },
+  {
+    label: 'Aktif',
+    color: 'cyan'
+  },
+  {
+    label: 'Tidak Aktif',
+    color: 'red'
   }
 ]
 
 const getStatus = (status: string) => statusEnum.find(dt => dt.label === status)
 
-const columnMerchant = (refetch: () => void) => [
+const columnMerchant = (refetch: () => void, handleSorting: () => void) => [
   {
     width: '4rem',
     title: 'ID',
@@ -33,7 +45,7 @@ const columnMerchant = (refetch: () => void) => [
     key: 'path'
   },
   {
-    width: '9rem',
+    width: '10rem',
     title: 'Tanggal Request Berlangganan',
     dataIndex: 'request_at',
     key: 'request_at',
@@ -42,16 +54,20 @@ const columnMerchant = (refetch: () => void) => [
     )
   },
   {
-    width: '8rem',
-    title: 'Status',
-    key: 'status',
-    dataIndex: 'status',
+    width: '12em',
+    title: 'Tanggal Berakhir Berlangganan',
+    dataIndex: 'finish_date',
+    key: 'finish_date',
+    sorter: true,
+    onHeaderCell: () => ({
+      onClick: () => handleSorting()
+    }),
     render: (_: null, data: RequestList) => (
-      <Tag color={getStatus(data.status)?.color}>{data.status}</Tag>
+      <span>{data.finish_date ? formatDate(data.finish_date) : ''}</span>
     )
   },
   {
-    width: '10em',
+    width: '7em',
     title: 'Paket',
     key: 'package',
     dataIndex: 'package'
@@ -63,10 +79,22 @@ const columnMerchant = (refetch: () => void) => [
     dataIndex: 'package_item'
   },
   {
-    width: '10em',
-    title: 'Jenis Paket',
-    key: 'type',
-    dataIndex: 'type'
+    width: '8rem',
+    title: 'TRANSAKSI',
+    key: 'status_active',
+    dataIndex: 'status_active',
+    render: (_: null, data: RequestList) => (
+      <Tag color={getStatus(data?.status_active)?.color}>{data.status_active}</Tag>
+    )
+  },
+  {
+    width: '6rem',
+    title: 'Status',
+    key: 'status',
+    dataIndex: 'status',
+    render: (_: null, data: RequestList) => (
+      <Tag color={getStatus(data.status)?.color}>{data.status}</Tag>
+    )
   },
   {
     width: '7rem',

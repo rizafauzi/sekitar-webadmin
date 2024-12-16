@@ -5,34 +5,65 @@ import qs from 'query-string'
 
 import ListLayout from '@components/organisms/ListLayout'
 
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import useFetchMerchantSubscriptionList from '@features/MerchantSubscription/hooks'
+import clearEmptyObject from '@utils/object-utils'
 import columnMerchant from './enum'
-import { RequestList } from './MerchantSubscription.type'
+import { RequestList, StoreCount } from './MerchantSubscription.type'
+import Summary from '../../components/Summary'
 
 const MerchantSubscriptionPage: React.FC = () => {
-  const { search } = useLocation()
+  const { search, pathname } = useLocation()
   const pagination = qs.parse(search)
+  const history = useHistory()
 
   const { data, isError, isLoading, refetch } = useFetchMerchantSubscriptionList({
     page: Number(pagination?.page) || 1,
     limit: Number(pagination?.limit) || 20,
-    keyword: String(pagination?.keyword)
+    keyword: String(pagination?.keyword),
+    status: Number(pagination?.status) === 1 ? '' : pagination?.status?.toString(),
+    date: String(pagination?.date) || '',
+    sorting: String(pagination?.sorting) || 'ASC'
   })
   const dataSubscription = data?.request_list
+  const storeCounts = data?.store_counts || ([] as StoreCount[])
+
+  const handleSorting = () => {
+    // const sortingValue = pagination?.sorting
+    // const isSorting = () => {
+    //   if (sortingValue === '' || !sortingValue) return 'ASC'
+    //   if (sortingValue) {
+    //     return sortingValue === 'ASC' ? 'DESC' : 'ASC'
+    //   }
+    // }
+    // const sorting = isSorting()
+    const sorting = pagination?.sorting === 'ASC' ? 'DESC' : 'ASC'
+    history.push({
+      pathname,
+      search: qs.stringify(
+        clearEmptyObject({
+          ...pagination,
+          page: '1',
+          sorting
+        })
+      )
+    })
+  }
 
   return (
     <div>
       <h2 className="font-bold">Merchant Subscription Request</h2>
+      <Summary data={storeCounts} />
       <ListLayout
         title="Daftar Merchant Subscription"
-        isSearch
+        isSearchNew
         source={{
           isError,
           isLoading,
           data: dataSubscription as RequestList[] | undefined
         }}
-        columns={columnMerchant(refetch)}
+        columns={columnMerchant(refetch, handleSorting)}
+        total={storeCounts[Number(pagination?.status) || 1]?.Count || 100}
       />
     </div>
   )
