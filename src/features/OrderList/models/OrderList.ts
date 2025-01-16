@@ -8,6 +8,7 @@ export interface IOrderListParams {
   limit: number
   search: string
   status?: number
+  isFetching?: boolean
 }
 
 export interface OrderList {

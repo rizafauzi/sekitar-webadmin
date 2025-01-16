@@ -16,6 +16,9 @@ export const useFetchOrderList = (params: IOrderListParams) => {
         ...item,
         index: index + 1
       }))
+    },
+    {
+      enabled: params?.isFetching
     }
   )
 
