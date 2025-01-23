@@ -3,21 +3,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 import { UseMutationOptions, useMutation, useQuery } from 'react-query'
-import { getDetailOrder, getListOrder, postOrderStatus } from '../api'
-import { IOrderListParams, OrderList, OrderListResponse } from '../models/OrderList'
+import { getDetailOrder, getListDelivery, postOrderStatus } from '../api'
+import { IOrderListParams, DeliveryList, OrderListResponse } from '../models/DeliveryList'
 import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
 
-export const useFetchOrderList = (params: IOrderListParams) => {
+export const useFetchDeliveryList = (params: IOrderListParams) => {
+  console.info('useFetchDeliveryList', params)
   const { data, isError, isLoading, refetch } = useQuery(
-    ['order-list-merchant', params],
+    ['delivery-list-merchant', params],
     async () => {
-      const response: OrderListResponse = await getListOrder(params)
-      console.info('params', params)
-      console.info('orders', response)
-      return response.data.data?.map((item: OrderList, index: number) => ({
+      const response: OrderListResponse = await getListDelivery(params)
+      console.info('response', response)
+      return response.data.data?.map((item: DeliveryList, index: number) => ({
         ...item,
         index: index + 1
       }))
+    },
+    {
+      enabled: params?.isFetching
     }
   )
 

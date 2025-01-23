@@ -29,6 +29,7 @@ import MerchantVerificationList from '@features/MerchantVerification/screens/Lis
 import MerchantSubscriptionPage from '@features/MerchantSubscription/screens/List'
 import OrderListPage from '@features/OrderList/screens/List'
 import OrderListDetailPage from '@features/OrderList/screens/Detail'
+import DeliveryListPage from '@features/DeliveryList/screens/List'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -83,6 +84,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/order-list">
               <OrderListPage />
+            </Route>
+            <Route exact path="/delivery-list">
+              <DeliveryListPage />
             </Route>
             <Route exact path="/order-list/:cartId">
               <OrderListDetailPage />
