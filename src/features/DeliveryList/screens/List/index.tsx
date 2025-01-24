@@ -22,6 +22,7 @@ const DeliveryListPage: React.FC = () => {
     <div>
       <ListLayout
         title="List Pengiriman"
+        titleSearch="Search by ID / Path"
         isSearch
         source={{
           data,

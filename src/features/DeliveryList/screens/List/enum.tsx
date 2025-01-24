@@ -50,8 +50,8 @@ const columnOrderList = [
   {
     title: 'Status',
     width: '110px',
-    dataIndex: 'status',
-    key: 'status'
+    dataIndex: 'status_order',
+    key: 'status_order'
   },
   {
     width: '140px',
