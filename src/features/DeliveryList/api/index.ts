@@ -42,3 +42,13 @@ export const postOrderStatus = (bodyRequest: OrderStatusRequest) =>
       access_token: sekitarEnv.merchantToken
     }
   })
+
+export const updateDeliveryStatus = (bodyRequest: OrderStatusRequest) =>
+  apiRequest({
+    path: '/api/v1/cms/update-delivery-status',
+    method: 'PUT',
+    bodyRequest,
+    headers: {
+      access_token: sekitarEnv.merchantToken
+    }
+  })

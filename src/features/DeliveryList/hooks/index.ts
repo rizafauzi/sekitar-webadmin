@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 import { UseMutationOptions, useMutation, useQuery } from 'react-query'
-import { getDetailOrder, getListDelivery, postOrderStatus } from '../api'
+import { getDetailOrder, getListDelivery, updateDeliveryStatus } from '../api'
 import { IOrderListParams, DeliveryList, OrderListResponse } from '../models/DeliveryList'
 import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
 
@@ -38,10 +38,10 @@ export const useFetchOrderDetail = (params: IOrderDetailParams) =>
     queryFn: () => getDetailOrder({ cartId: params.cartId })
   })
 
-export const useUpdateStatusOrder = (
+export const useUpdateStatusDelivery = (
   options?: UseMutationOptions<unknown, Error, OrderStatusRequest>
 ) =>
   useMutation({
-    mutationFn: data => postOrderStatus(data),
+    mutationFn: data => updateDeliveryStatus(data),
     ...options
   })

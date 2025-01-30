@@ -1,77 +1,69 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable unicorn/consistent-function-scoping */
+
 import { Dropdown, Menu, Modal } from 'antd'
 import Icons from '@assets/Icons'
-import useDisclosure from '@hooks/useDisclosure'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useHistory } from 'react-router-dom'
-import { useUpdateStatusOrder } from '../hooks'
+import { useQueryClient } from 'react-query'
+import { useUpdateStatusDelivery } from '../hooks'
 
 interface DropdownStatusProperties {
-  cartId: number
+  deliveryId: number
 }
 
 enum OrderStatus {
-  NEW = 2,
-  CANCELED = 6
+  DONE = 1,
+  CANCELED = 2,
+  COURIER_ORDER_FAILED = 3,
+  RETUR = 4,
+  WAITING_FOR_PAYMENT = 9
 }
 
-const DropwdownStatus: React.FC<DropdownStatusProperties> = ({ cartId }) => {
-  const history = useHistory()
-  const { isOpen, onOpen, onClose } = useDisclosure({ open: false })
-  const { isLoading, mutate: updateStatusOrder } = useUpdateStatusOrder({
+const DropwdownStatus: React.FC<DropdownStatusProperties> = ({ deliveryId }) => {
+  const queryClient = useQueryClient()
+  const { mutate: updateStatusDelivery } = useUpdateStatusDelivery({
     onSuccess: () => {
-      toast.success('Update Order Status Success')
-      history.push('/order-list')
-      onClose()
+      toast.success('Update Delivery Status Success')
+      queryClient.invalidateQueries({ queryKey: ['delivery-list-merchant'] })
     }
   })
-  const [selectedStatus, setSelectedStatus] = useState<OrderStatus>()
-  const orderStatus = selectedStatus === OrderStatus.NEW ? 'Baru' : 'Dibatalkan'
-
-  const handleDropdownStatus = (status: OrderStatus) => {
-    setSelectedStatus(status)
-    onOpen()
-  }
-
-  const handleSubmit = () => {
-    if (selectedStatus) updateStatusOrder({ cart_id: cartId, status: selectedStatus })
+  const handleSubmit = (status: OrderStatus) => {
+    updateStatusDelivery({ delivery_id: deliveryId, status })
   }
 
   const options = [
     {
-      key: 'new',
-      label: <a onClick={() => handleDropdownStatus(OrderStatus.NEW)}>Baru</a>
+      key: 1,
+      label: <a onClick={() => handleSubmit(OrderStatus.DONE)}>Selesai</a>
     },
     {
-      key: 'delete',
-      label: <a onClick={() => handleDropdownStatus(OrderStatus.CANCELED)}>Dibatalkan</a>
+      key: 2,
+      label: <a onClick={() => handleSubmit(OrderStatus.CANCELED)}>Dibatalkan</a>
+    },
+    {
+      key: 3,
+      label: <a onClick={() => handleSubmit(OrderStatus.COURIER_ORDER_FAILED)}>Gagal Pesan Kurir</a>
+    },
+    {
+      key: 4,
+      label: <a onClick={() => handleSubmit(OrderStatus.RETUR)}>Retur</a>
+    },
+    {
+      key: 9,
+      label: (
+        <a onClick={() => handleSubmit(OrderStatus.WAITING_FOR_PAYMENT)}>Menunggu Pembayaran</a>
+      )
     }
   ]
 
   return (
     <div>
-      {/* Modal Confirm Cancel */}
-      <Modal
-        visible={isOpen}
-        centered
-        okText="Update"
-        title="Update Status"
-        cancelText="Batal"
-        okButtonProps={{ disabled: isLoading }}
-        cancelButtonProps={{ disabled: isLoading }}
-        onOk={handleSubmit}
-        onCancel={onClose}
-      >
-        <h4>
-          Apakah anda yakin akan mengubah status menjadi <b>{orderStatus}</b>?
-        </h4>
-      </Modal>
-
-      <Dropdown overlay={<Menu items={options} />} placement="bottomLeft" arrow>
-        <div className="flex flex-row justify-center items-center gap-2 py-1.5 px-4 border border-green1 text-sm font-bold rounded-lg bg-green1OPC10">
-          <div className="text-green1">Options</div>
+      <Dropdown overlay={<Menu items={options} />} trigger={['click']} placement="bottomLeft" arrow>
+        <div className="flex flex-row justify-center items-center gap-2 py-1.5 px-4 border border-green1 text-sm font-bold rounded-lg bg-green1OPC10 cursor-pointer">
+          <div className="text-green1 cursor-pointer">Options</div>
           <Icons name="chevron-down" />
         </div>
       </Dropdown>

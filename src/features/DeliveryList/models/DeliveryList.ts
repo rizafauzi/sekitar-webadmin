@@ -12,7 +12,7 @@ export interface IOrderListParams {
 }
 
 export interface DeliveryList {
-  cart_id: number
+  delivery_id: number
   customer_name: string
   date: Date
   invoice_id: string

@@ -101,6 +101,6 @@ export interface Voucher {
 }
 
 export interface OrderStatusRequest {
-  cart_id: number
+  delivery_id: number
   status: number
 }

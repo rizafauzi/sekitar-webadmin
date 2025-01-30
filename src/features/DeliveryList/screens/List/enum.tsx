@@ -1,6 +1,7 @@
 import { formatDate } from '@utils/format-date'
 import { DeliveryList } from '@features/DeliveryList/models/DeliveryList'
-import SeeDetail from './SeeDetail'
+// import SeeDetail from './SeeDetail'
+import DropwdownStatus from '@features/DeliveryList/components/DropdownStatus'
 
 const columnOrderList = [
   {
@@ -59,7 +60,7 @@ const columnOrderList = [
     title: 'Action',
     dataIndex: 'action',
     align: 'center',
-    render: (_: null, { cart_id }: DeliveryList) => <SeeDetail cartId={cart_id} />
+    render: (_: null, { delivery_id }: DeliveryList) => <DropwdownStatus deliveryId={delivery_id} />
   }
 ]
 
