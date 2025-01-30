@@ -3,17 +3,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable unicorn/prevent-abbreviations */
 import { UseMutationOptions, useMutation, useQuery } from 'react-query'
-import { getDetailOrder, getListDelivery, updateDeliveryStatus } from '../api'
-import { IOrderListParams, DeliveryList, OrderListResponse } from '../models/DeliveryList'
-import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
+import { getListDelivery, updateDeliveryStatus } from '../api'
+import {
+  IOrderListParams,
+  DeliveryList,
+  OrderListResponse,
+  DeliveryStatusRequest
+} from '../models/DeliveryList'
 
 export const useFetchDeliveryList = (params: IOrderListParams) => {
-  console.info('useFetchDeliveryList', params)
   const { data, isError, isLoading, refetch } = useQuery(
     ['delivery-list-merchant', params],
     async () => {
       const response: OrderListResponse = await getListDelivery(params)
-      console.info('response', response)
       return response.data.data?.map((item: DeliveryList, index: number) => ({
         ...item,
         index: index + 1
@@ -32,14 +34,8 @@ export const useFetchDeliveryList = (params: IOrderListParams) => {
   }
 }
 
-export const useFetchOrderDetail = (params: IOrderDetailParams) =>
-  useQuery({
-    queryKey: ['order-detail-merchant', params],
-    queryFn: () => getDetailOrder({ cartId: params.cartId })
-  })
-
 export const useUpdateStatusDelivery = (
-  options?: UseMutationOptions<unknown, Error, OrderStatusRequest>
+  options?: UseMutationOptions<unknown, Error, DeliveryStatusRequest>
 ) =>
   useMutation({
     mutationFn: data => updateDeliveryStatus(data),

@@ -21,3 +21,8 @@ export interface DeliveryList {
   total_price: number
   store_name: string
 }
+
+export interface DeliveryStatusRequest {
+  delivery_id: number
+  status: number
+}

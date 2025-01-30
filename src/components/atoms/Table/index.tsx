@@ -41,15 +41,12 @@ const Table: React.FC<IListLayout> = ({ columns, data, loading, total, ...rest }
       })
     })
   }
-  console.info('pagination', pagination)
 
   const paginationConfig: TablePaginationConfig = {
     total,
     current: !isEmpty(pagination?.page) ? Number(pagination?.page) : 1,
     pageSize: !isEmpty(pagination?.limit) ? Number(pagination?.limit) : 20
   }
-  console.info('data', data)
-  console.info('paginationConfig', paginationConfig)
 
   const tableProperties: TableProps<any> = {
     columns,

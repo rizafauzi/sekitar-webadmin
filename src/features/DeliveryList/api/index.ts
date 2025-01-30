@@ -7,8 +7,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { apiRequest } from '@configs/axios'
 import sekitarEnv from '@utils/ENV'
-import { IOrderListParams } from '../models/DeliveryList'
-import { IOrderDetailParams, OrderStatusRequest } from '../models/OrderDetail'
+import { DeliveryStatusRequest, IOrderListParams } from '../models/DeliveryList'
 
 export const getListDelivery = ({ page, limit, ...params }: IOrderListParams) =>
   apiRequest({
@@ -24,26 +23,7 @@ export const getListDelivery = ({ page, limit, ...params }: IOrderListParams) =>
     }
   })
 
-export const getDetailOrder = ({ cartId }: IOrderDetailParams) =>
-  apiRequest({
-    path: `/api/v4/cart/${cartId}`,
-    method: 'GET',
-    headers: {
-      access_token: sekitarEnv.merchantToken
-    }
-  })
-
-export const postOrderStatus = (bodyRequest: OrderStatusRequest) =>
-  apiRequest({
-    path: '/api/v7/cart/order_state/update',
-    method: 'POST',
-    bodyRequest,
-    headers: {
-      access_token: sekitarEnv.merchantToken
-    }
-  })
-
-export const updateDeliveryStatus = (bodyRequest: OrderStatusRequest) =>
+export const updateDeliveryStatus = (bodyRequest: DeliveryStatusRequest) =>
   apiRequest({
     path: '/api/v1/cms/update-delivery-status',
     method: 'PUT',

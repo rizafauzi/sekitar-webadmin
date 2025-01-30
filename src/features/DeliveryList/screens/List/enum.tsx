@@ -1,6 +1,5 @@
 import { formatDate } from '@utils/format-date'
 import { DeliveryList } from '@features/DeliveryList/models/DeliveryList'
-// import SeeDetail from './SeeDetail'
 import DropwdownStatus from '@features/DeliveryList/components/DropdownStatus'
 
 const columnOrderList = [
@@ -12,10 +11,14 @@ const columnOrderList = [
   },
   {
     title: 'Merchant Link',
-    dataIndex: 'store_name',
+    dataIndex: 'merchant_link',
     width: '320px',
-    key: 'store_name',
-    render: (_: null, data: DeliveryList) => <div>{data.store_name}</div>
+    key: 'merchant_link',
+    render: (_: null, data: DeliveryList) => (
+      <a href={data.merchant_link} target="_blank" rel="noreferrer">
+        {data.merchant_link}
+      </a>
+    )
   },
   {
     title: 'Ekspedisi',

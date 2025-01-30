@@ -12,8 +12,6 @@ export const useFetchOrderList = (params: IOrderListParams) => {
     ['order-list-merchant', params],
     async () => {
       const response: OrderListResponse = await getListOrder(params)
-      console.info('params', params)
-      console.info('orders', response)
       return response.data.data?.map((item: OrderList, index: number) => ({
         ...item,
         index: index + 1
