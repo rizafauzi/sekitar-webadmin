@@ -42,8 +42,8 @@ const columnOrderList = [
   {
     title: 'Customer Name',
     width: '200px',
-    dataIndex: 'customer_name',
-    key: 'customer_name'
+    dataIndex: 'buyer_name',
+    key: 'buyer_name'
   },
   {
     title: 'Total Harga',
