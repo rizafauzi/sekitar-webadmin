@@ -34,6 +34,7 @@ export type ApiResponse<T> = {
     data?: T
     total?: number
     status?: number
+    error?: string
   }
   status: number
   message?: string
