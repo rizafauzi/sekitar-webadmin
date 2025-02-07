@@ -6,7 +6,7 @@ import { UseMutationOptions, useMutation, useQuery } from 'react-query'
 import { getListDelivery, updateDeliveryStatus } from '../api'
 import {
   IOrderListParams,
-  DeliveryList,
+  // DeliveryList,
   OrderListResponse,
   DeliveryStatusRequest
 } from '../models/DeliveryList'
@@ -16,10 +16,11 @@ export const useFetchDeliveryList = (params: IOrderListParams) => {
     ['delivery-list-merchant', params],
     async () => {
       const response: OrderListResponse = await getListDelivery(params)
-      return response.data.data?.map((item: DeliveryList, index: number) => ({
-        ...item,
-        index: index + 1
-      }))
+      // return response.data.data?.map((item: DeliveryList, index: number) => ({
+      //   ...item,
+      //   index: index + 1
+      // }))
+      return response.data
     },
     {
       enabled: params?.isFetching
