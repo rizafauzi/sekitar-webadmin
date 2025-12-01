@@ -30,6 +30,7 @@ import MerchantSubscriptionPage from '@features/MerchantSubscription/screens/Lis
 import OrderListPage from '@features/OrderList/screens/List'
 import OrderListDetailPage from '@features/OrderList/screens/Detail'
 import DeliveryListPage from '@features/DeliveryList/screens/List'
+import OtpSource from '@features/VerificationLogin'
 
 const AppRouter: React.FC = () => {
   const token = Cookies.get('token')
@@ -141,6 +142,9 @@ const AppRouter: React.FC = () => {
             </Route>
             <Route exact path="/merchant-verification">
               <MerchantVerificationList />
+            </Route>
+            <Route exact path="/verification-login">
+              <OtpSource />
             </Route>
           </Switch>
         </Layout>

@@ -122,6 +122,11 @@ const Sidebar = () => {
                         Merchant Verification
                       </Link>
                     </Menu.Item>
+                    <Menu.Item key="otp-source" icon={<SecurityScanOutlined />}>
+                      <Link to="/otp-source" className="ml-2">
+                        OTP Source
+                      </Link>
+                    </Menu.Item>
                     {/* <Menu.Item key="orders" icon={<UnorderedListOutlined />}>
                       <Link to="/orders">Daftar Pesanan</Link>
                     </Menu.Item> */}
