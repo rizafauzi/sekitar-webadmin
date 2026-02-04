@@ -8,7 +8,8 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import useFetchMerchantById, {
   useFetchProductList,
-  useToggleBanStore
+  useToggleBanStore,
+  useFetchWablas
 } from '@features/Merchant/hooks'
 import TextField from '@components/atoms/TextField'
 import EditMerchant from '@features/Merchant/components/EditMerchant'
@@ -29,6 +30,7 @@ const MerchantDetail: React.FC = () => {
   const history = useHistory()
   const storePath = pathname.replace('/merchants/', '')
   const { data, isError, isLoading, refetch } = useFetchMerchantById(storePath)
+  const { data: wablas } = useFetchWablas(data?.id as number)
   const { mutate: toggleBan } = useToggleBanStore()
   const [params, setParameters] = useState({
     page: 1,
@@ -100,6 +102,8 @@ const MerchantDetail: React.FC = () => {
     premium_url
   } = data
 
+  const wablas_token = wablas?.[0]?.wablas_token || ''
+
   const isBanned = Boolean(is_test)
 
   return (
@@ -149,7 +153,7 @@ const MerchantDetail: React.FC = () => {
           {isBanned ? 'Unban' : 'Ban'}
         </Button>
       </Flex>
-      <Card title="Merchant Data" extra={<EditMerchant data={data} />}>
+      <Card title="Merchant Data" extra={<EditMerchant data={data} wablas={wablas} />}>
         <TextField label="Name">{name}</TextField>
         <TextField label="Path">{path}</TextField>
         <TextField label="Category">{category_name}</TextField>
@@ -159,6 +163,7 @@ const MerchantDetail: React.FC = () => {
         <TextField label="Has Whatsapp">{has_whatsapp === 1 ? 'Yes' : 'No'}</TextField>
         <TextField label="Is Verified">{is_verified === '1' ? 'Yes' : 'No'}</TextField>
         <TextField label="Premium Link">{premium_url}</TextField>
+        <TextField label="Wablas Token">{wablas_token}</TextField>
       </Card>
       <div className="mt-6" />
       <Card

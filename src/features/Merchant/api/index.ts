@@ -14,6 +14,14 @@ export interface IListParams {
   keyword?: string
 }
 
+export interface Iwablas {
+  is_active: boolean
+  store_id?: number
+  wablas_token: string
+  wablas_type?: number
+  id?: number
+}
+
 export const getStoreById = (id: string) =>
   apiRequest({
     path: `/api/v1/stores/${id}?is_cms=true`,
@@ -130,6 +138,35 @@ export const postBanStore = (bodyRequest: BanStoreRequest) =>
   apiRequest({
     path: '/api/v1/cms/merchant/banned',
     method: 'POST',
+    bodyRequest,
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+
+export const postWablas = (bodyRequest: Iwablas[]) =>
+  apiRequest({
+    path: '/api/v1/notification/wablas/store',
+    method: 'POST',
+    bodyRequest,
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+
+export const getWablasToken = (id: number) =>
+  apiRequest({
+    path: `/api/v1/notification/wablas/store?store_id=${id}`,
+    method: 'GET',
+    headers: {
+      access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'
+    }
+  })
+
+export const putWablasToken = (bodyRequest: Iwablas[]) =>
+  apiRequest({
+    path: '/api/v1/notification/wablas/store',
+    method: 'PUT',
     bodyRequest,
     headers: {
       access_token: 'asdasd123qwepoi%^&vmnbweihuf716823'

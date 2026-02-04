@@ -104,6 +104,9 @@ const Sidebar = () => {
                     <Menu.Item key="order-list" icon={<BankOutlined />}>
                       <Link to="/order-list">List Pesanan</Link>
                     </Menu.Item>
+                    <Menu.Item key="delivery-list" icon={<BankOutlined />}>
+                      <Link to="/delivery-list">List Pengiriman</Link>
+                    </Menu.Item>
                     <Menu.Item key="learning" icon={<ReadOutlined />}>
                       <Link to="/learning" className="ml-2">
                         Learning

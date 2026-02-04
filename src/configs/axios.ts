@@ -34,9 +34,11 @@ export type ApiResponse<T> = {
     data?: T
     total?: number
     status?: number
+    error?: string
   }
   status: number
   message?: string
+  error?: string
 }
 
 const BASE_URL = 'https://api.setoko.co'

@@ -22,6 +22,7 @@ interface IListLayout {
   isSearch?: boolean
   isSearchNew?: boolean
   title: string
+  titleSearch?: string
   extendButton?: React.ReactNode[]
   prefixElement?: React.ReactNode[]
   source: {
@@ -43,6 +44,7 @@ const { RangePicker } = DatePicker
 const ListLayout: React.FC<IListLayout> = ({
   total,
   title,
+  titleSearch,
   source,
   columns,
   isSearch,
@@ -145,7 +147,7 @@ const ListLayout: React.FC<IListLayout> = ({
                 value={keyword}
                 style={{ width: 300 }}
                 onChange={handleSearch}
-                placeholder={`Search ${title} here`}
+                placeholder={titleSearch ?? `Search ${title} here`}
                 prefix={
                   <SearchOutlined className="site-form-item-icon" style={{ color: '#BDBDBD' }} />
                 }
@@ -164,7 +166,7 @@ const ListLayout: React.FC<IListLayout> = ({
                 value={keyword}
                 style={{ width: 400 }}
                 onChange={handleSearch}
-                placeholder={`Search ${title} here`}
+                placeholder={titleSearch ?? `Search ${title} here`}
               />
             )}
             {extendButton?.length > 0 && extendButton.map(element => <div>{element}</div>)}

@@ -30,6 +30,12 @@ const columnRefund = [
     key: 'total_refund'
   },
   {
+    title: 'Order Id',
+    width: '100px',
+    dataIndex: 'cart_id',
+    key: 'cart_id'
+  },
+  {
     width: '18em',
     key: 'action',
     title: 'Action',
