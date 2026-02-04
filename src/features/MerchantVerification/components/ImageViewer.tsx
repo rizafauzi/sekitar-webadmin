@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import React, { useState } from 'react'
-import EmptyImage from '@assets/images/error.png'
+// import EmptyImage from '@assets/images/error.png'
 import ReactImageViewer from 'react-simple-image-viewer'
 
 const ImageViewer: React.FC<{ image: string }> = ({ image }) => {
@@ -27,10 +27,10 @@ const ImageViewer: React.FC<{ image: string }> = ({ image }) => {
           alt={image}
           src={image}
           className="h-[50px] w-[100px] object-cover rounded-md"
-          onError={({ currentTarget }) => {
-            currentTarget.onerror = null
-            currentTarget.src = EmptyImage
-          }}
+          // onError={({ currentTarget }) => {
+          //   currentTarget.onerror = null
+          //   currentTarget.src = EmptyImage
+          // }}
         />
       </button>
     </>
