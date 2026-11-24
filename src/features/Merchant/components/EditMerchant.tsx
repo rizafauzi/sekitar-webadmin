@@ -203,7 +203,7 @@ const EditMerchant: React.FC<IEditMerchant> = ({ data, wablas }) => {
             value={payload.address}
             style={{ marginBottom: 15 }}
             placeholder="Input address here..."
-            onChange={event => handleChange('name', event)}
+            onChange={event => handleChange('address', event)}
           />
           <h4>District</h4>
           <Input
